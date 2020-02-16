@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Administrador Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item style="margin: 8px;">
+    <ion-col col-4>
+      <button [routerLink]="['/administrador-mecanicos-lista']" ion-button icon-left clear style="background-color: white; ">
+        <ion-label>
+          <ion-icon name="people" style="zoom:2.0;"></ion-icon>
+          <br />
+          Mecanicos
+        </ion-label>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button [routerLink]="['/administrador-aceites-lista']"  ion-button icon-left clear style="background-color: white;">
+        <ion-label>
+          <ion-icon name="water" style="zoom:2.0;"></ion-icon>
+          <br />
+          Aceite
+        </ion-label>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button [routerLink]="['/administrador-autos-lista']"  ion-button icon-left clear style="background-color: white;">
+        <ion-label>
+          <ion-icon name="car" style="zoom:2.0;"></ion-icon>
+          <br />
+          Automovil
+        </ion-label>
+      </button>
+    </ion-col>
+  </ion-item>
+  <ion-item style="margin: 8px;">
+    <ion-col col-6>
+      <button [routerLink]="['/administrador-servicios-lista']" ion-button icon-left clear style="background-color: white;">
+        <ion-label>
+          <ion-icon name="logo-buffer" style="zoom:2.0;"></ion-icon>
+          <br />
+          Tipo Servicio
+        </ion-label>
+      </button>
+    </ion-col>
+    <ion-col col-6>
+      <button [routerLink]="['/administrador-formadepago-lista']" ion-button icon-left clear style="background-color: white;">
+        <ion-label>
+          <ion-icon name="cash" style="zoom:2.0;"></ion-icon>
+          <br />
+          Forma de pago
+        </ion-label>
+      </button>
+    </ion-col>
+  </ion-item>
+</ion-content>

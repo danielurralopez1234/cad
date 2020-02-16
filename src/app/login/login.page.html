@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Log In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="login(form)">
+    <ion-item lines="full">
+      <ion-label  position="floating">Email</ion-label>
+      <ion-input name="mail"  type="text" required ngModel></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label  position="floating">Password</ion-label>
+      <ion-input name="pass" type="password" required ngModel></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Registrarse</ion-button>
+        <!-- <ion-button expand="block" color="danger" (click)="doGoogleLogin()">Google Login<ion-button></ion-button> -->
+        <ion-button  color="danger" expand="block" >Google Login</ion-button>
+        <a [routerLink]="['/olvido-contrasena']" class="small-text">Olvidaste tu contraseña?</a>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

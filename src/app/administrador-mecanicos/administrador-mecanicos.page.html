@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mecanicos
+      <ion-icon name="person-add" style="zoom:2.0;"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form>
+    <ion-item lines="full">
+      <ion-icon name="person-add"></ion-icon>
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Nombre Mecanico">
+        <ion-select-option value="red">Juan Perez</ion-select-option>
+        <ion-select-option value="purple">Rodolfo rodriguez</ion-select-option>
+        <ion-select-option value="yellow">Pedor Pablo</ion-select-option>
+        </ion-select>      
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon name="grid"></ion-icon>
+      <ion-label position="floating">Rut</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-icon name="trophy"></ion-icon>
+      <ion-label position="floating">Fecha cumpleaños</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+
+    <ion-item lines="full">
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Region">
+        <ion-select-option value="red">I</ion-select-option>
+        <ion-select-option value="purple">II</ion-select-option>
+        <ion-select-option value="yellow">III</ion-select-option>
+        </ion-select>   
+    
+        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Comuna">
+          <ion-select-option value="red">Comuna A</ion-select-option>
+          <ion-select-option value="purple">Comuna B</ion-select-option>
+          <ion-select-option value="yellow">Comuna C</ion-select-option>
+          </ion-select>   
+    
+      <ion-label position="floating">Calle</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Cancelar</ion-button>
+        <ion-button type="submit" color="primary" expand="block">Crear</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>
