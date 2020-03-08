@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from  "@angular/router";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,20 +9,23 @@ import { Router } from  "@angular/router";
 })
 export class LoginPage implements OnInit {
 
-   constructor(private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  login(form){
-    switch(form.form.value.mail) {
-      case "administrador@administrador.com":
+  login(form) {
+    switch (form.form.value.mail) {
+      //case 'administrador@administrador.com':
+      case 'administrador':
         this.router.navigate(['/administrador-inicio']);
         break;
-      case "cliente@cliente.com":
+      //case 'cliente@cliente.com':
+      case 'cliente':
         this.router.navigate(['/cliente-inicio']);
         break;
-        case "usuario@usuario.com":
+      //case 'usuario@usuario.com:
+      case 'usuario':
         this.router.navigate(['/usuario-inicio']);
         break;
       default:

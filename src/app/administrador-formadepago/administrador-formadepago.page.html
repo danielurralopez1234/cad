@@ -9,4 +9,44 @@
 
 <ion-content>
 
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Nombre forma de Pago</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Datos - opcional</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Cancelar</ion-button>
+        <ion-button type="submit" color="primary" expand="block">Crear</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
 </ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom" >
+
+    <ion-tab-button tab="home" [routerLink]="['/administrador-inicio']">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="mentenedor" [routerLink]="['/administrador-mecanicos']">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Mantenedor</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="estadistica">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Estadistica</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

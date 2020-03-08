@@ -63,7 +63,47 @@ const routes: Routes = [
   {
     path: 'administrador-mecanicos',
     loadChildren: () => import('./administrador-mecanicos/administrador-mecanicos.module').then( m => m.AdministradorMecanicosPageModule)
+  },  {
+    path: 'cliente-inicio',
+    loadChildren: () => import('./cliente-inicio/cliente-inicio.module').then( m => m.ClienteInicioPageModule)
   },
+  {
+    path: 'mecanico-inicio',
+    loadChildren: () => import('./mecanico-inicio/mecanico-inicio.module').then( m => m.MecanicoInicioPageModule)
+  },
+  {
+    path: 'mecanico-pedidos',
+    loadChildren: () => import('./mecanico-pedidos/mecanico-pedidos.module').then( m => m.MecanicoPedidosPageModule)
+  },
+  {
+    path: 'cliente-agrega-auto',
+    loadChildren: () => import('./cliente-agrega-auto/cliente-agrega-auto.module').then( m => m.ClienteAgregaAutoPageModule)
+  },
+  {
+    path: 'cliente-servicio',
+    loadChildren: () => import('./cliente-servicio/cliente-servicio.module').then( m => m.ClienteServicioPageModule)
+  },
+  {
+    path: 'cliente-lugar',
+    loadChildren: () => import('./cliente-lugar/cliente-lugar.module').then( m => m.ClienteLugarPageModule)
+  },
+  {
+    path: 'cliente-mecanico',
+    loadChildren: () => import('./cliente-mecanico/cliente-mecanico.module').then( m => m.ClienteMecanicoPageModule)
+  },
+  {
+    path: 'cliente-pago',
+    loadChildren: () => import('./cliente-pago/cliente-pago.module').then( m => m.ClientePagoPageModule)
+  },
+  {
+    path: 'cliente-mis-servicios',
+    loadChildren: () => import('./cliente-mis-servicios/cliente-mis-servicios.module').then( m => m.ClienteMisServiciosPageModule)
+  },
+  {
+    path: 'cliente-agenda-mantencion',
+    loadChildren: () => import('./cliente-agenda-mantencion/cliente-agenda-mantencion.module').then( m => m.ClienteAgendaMantencionPageModule)
+  },
+
 ];
 
 @NgModule({
