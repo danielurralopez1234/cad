@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  navigate: any;
   constructor(
     private router: Router,
     private platform: Platform,
@@ -21,6 +22,7 @@ export class AppComponent {
     private authenticationService: AuthenticationService
   ) {
     this.initializeApp();
+    this.sideMenu();
   }
 
   initializeApp() {
@@ -37,5 +39,26 @@ export class AppComponent {
       });
 
     });
+  }
+
+  sideMenu() {
+    this.navigate =
+        [
+          {
+            title : 'Home',
+            url   : '/home',
+            icon  : 'home'
+          },
+          {
+            title : 'Autos',
+            url   : '/autos',
+            icon  : 'car'
+          },
+          {
+            title : 'Logout',
+            url   : '/logout',
+            icon  : 'log-out'
+          }
+        ];
   }
 }

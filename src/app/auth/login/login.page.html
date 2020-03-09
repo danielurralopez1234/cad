@@ -1,9 +1,14 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center" color="primary">
+    <ion-title><h3>Acceder</h3></ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content color="primary" padding>
   <form #form="ngForm" (ngSubmit)="login(form)">
     <ion-grid>
       <ion-row color="primary" class="ion-justify-content-center">
         <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <h3>Acceder</h3>
           <ion-item>
             <ion-input name="correo" type="email" placeholder="tu@email.com" ngModel required></ion-input>
           </ion-item>
