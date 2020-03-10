@@ -53,12 +53,11 @@ export class AppComponent {
             title : 'Autos',
             url   : '/autos',
             icon  : 'car'
-          },
-          {
-            title : 'Logout',
-            url   : '/logout',
-            icon  : 'log-out'
           }
         ];
+  }
+
+  logoutUser() {
+    this.authenticationService.logout();
   }
 }

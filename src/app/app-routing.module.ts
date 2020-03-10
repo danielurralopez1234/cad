@@ -13,6 +13,8 @@ const routes: Routes = [
   },
   { path: 'register', loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
+  { path: 'forgot', loadChildren: () => import('./auth/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+  },
 ];
 
 @NgModule({
