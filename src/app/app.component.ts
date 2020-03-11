@@ -45,14 +45,24 @@ export class AppComponent {
     this.navigate =
         [
           {
-            title : 'Home',
-            url   : '/home',
-            icon  : 'home'
+            title : 'Perfil',
+            url   : '/perfil',
+            icon  : 'person-circle-outline'
           },
           {
             title : 'Autos',
             url   : '/autos',
             icon  : 'car'
+          },
+          {
+            title : 'Terminos y Condiciones',
+            url   : '/terminos-y-condiciones',
+            icon  : 'information-circle-outline'
+          },
+          {
+            title : 'Contacto y Soporte',
+            url   : '/contacto',
+            icon  : 'call-outline'
           }
         ];
   }
