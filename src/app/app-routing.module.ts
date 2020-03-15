@@ -63,6 +63,10 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
   },
+  {
+    path: 'finalizacion',
+    loadChildren: () => import('./home/modals/finalizacion/finalizacion.module').then( m => m.FinalizacionPageModule)
+  },
 ];
 
 @NgModule({

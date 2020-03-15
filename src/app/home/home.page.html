@@ -7,56 +7,54 @@
       Agenda
     </ion-title>
   </ion-toolbar>
-
+  <ion-segment value="paso1" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="paso1" [disabled]="hidePaso1" >
+      <ion-label>1. Agrega auto</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="paso2" [disabled]="hidePaso2">
+      <ion-label>2. Servicio</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="paso3" [disabled]="hidePaso3">
+      <ion-label>3. Lugar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="paso4" [disabled]="hidePaso4">
+      <ion-label>4. Mecanico</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="paso5" [disabled]="hidePaso5">
+      <ion-label>5. Pago</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
-<ion-segment value="paso1" (ionChange)="segmentChanged($event)">
-  <ion-segment-button value="paso1" [disabled]="hidePaso1" >
-    <ion-label>1. Agrega auto</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="paso2" [disabled]="hidePaso2">
-    <ion-label>2. Servicio</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="paso3" [disabled]="hidePaso3">
-    <ion-label>3. Lugar</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="paso4" [disabled]="hidePaso4">
-    <ion-label>4. Mecanico</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="paso5" [disabled]="hidePaso5">
-    <ion-label>5. Pago</ion-label>
-  </ion-segment-button>
-</ion-segment>
-
 <ion-content [fullscreen]="true" id="c1" *ngIf="hideC1">
-
-  <ion-item>
-    <ion-label position="floating">Patente</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Marca</ion-label>
-    <ion-select placeholder="Selecciona..">
-      <ion-select-option value="f">Chevrolet</ion-select-option>
-      <ion-select-option value="m">Hyundai</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Modelo</ion-label>
-    <ion-select placeholder="Selecciona..">
-      <ion-select-option value="f">Sonic</ion-select-option>
-      <ion-select-option value="m">Grand I-10</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Año</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Cilindrada</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-
+  <form [formGroup]="myForm">
+    <ion-item>
+      <ion-label position="floating">Patente</ion-label>
+      <ion-input formControlName="patente" placeholder="MMBB00"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Marca</ion-label>
+      <ion-select formControlName="marca" placeholder="Selecciona..">
+        <ion-select-option value="f">Chevrolet</ion-select-option>
+        <ion-select-option value="m">Hyundai</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Modelo</ion-label>
+      <ion-select formControlName="modelo" placeholder="Selecciona..">
+        <ion-select-option value="f">Sonic</ion-select-option>
+        <ion-select-option value="m">Grand I-10</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Año</ion-label>
+      <ion-input formControlName="anio" placeholder="2000"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Cilindrada</ion-label>
+      <ion-input formControlName="cilindrada" placeholder="1.2"></ion-input>
+    </ion-item>
+  </form>
 </ion-content>
 <ion-content [fullscreen]="true" id="c2" *ngIf="hideC2">
   <ion-item>
@@ -203,8 +201,9 @@
   </ion-radio-group>
   <ion-label class="ion-float-md-right">Total: $ 0</ion-label>
 
-  <ion-button>Finalizar</ion-button>
+  <ion-button (click)="finalizaModal()">Finalizar</ion-button>
   <!-- Mensaje de finalizacion, y se limpian los campos y se vuelve a la pagina principal, deberia quedar registrado en la parte mis reservas -->
+
 
 </ion-content>
 

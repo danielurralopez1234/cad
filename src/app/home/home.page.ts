@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
+import {ModalController} from '@ionic/angular';
+import {AutosPage} from '../mantenedores/autos/autos.page';
+import {FinalizacionPage} from './modals/finalizacion/finalizacion.page';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +13,14 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class HomePage {
   items: any[] = [];
+  patente: string;
+  modelo: string;
+  marca: string;
+  anio: number;
+  cilindrada: string;
+  myForm: FormGroup;
   hidePaso1 = false;
-  hidePaso2 = false;
+  hidePaso2 = true;
   hidePaso3 = true;
   hidePaso4 = true;
   hidePaso5 = true;
@@ -25,8 +36,23 @@ export class HomePage {
     initialSlide: 1,
     speed: 400
   };
-  constructor() {
+  constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder) {
+    this.myForm = formBuilder.group({
+      patente: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
+      marca: ['', Validators.compose([Validators.required])],
+      modelo: ['', Validators.compose([Validators.required])],
+      anio: ['', Validators.compose([Validators.required])],
+      cilindrada: ['', Validators.compose([Validators.maxLength(3), Validators.pattern('[0-9.]*'), Validators.required])],
+    });
   }
+  async finalizaModal() {
+    const modal = await this.modalController.create({
+      component: FinalizacionPage
+    });
+    // await this.router.navigateByUrl('home');
+    return await modal.present();
+  }
+
 
 
   habilita1() {
