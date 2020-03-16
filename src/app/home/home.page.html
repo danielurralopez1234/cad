@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title class="ion-text-center">
       Agenda
     </ion-title>
   </ion-toolbar>
@@ -48,7 +48,9 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Año</ion-label>
-      <ion-input formControlName="anio" placeholder="2000"></ion-input>
+      <ion-datetime placeholder="2000" formControlName="anio"
+                    displayFormat="YYYY"
+                    cancelText="Cancelar!!!"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Cilindrada</ion-label>
@@ -83,7 +85,6 @@
       <h1>Slide 3</h1>
     </ion-slide>
   </ion-slides>
-
 </ion-content>
 
 <ion-content [fullscreen]="true" id="c3" *ngIf="hideC3">
