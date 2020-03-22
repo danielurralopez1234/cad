@@ -9,21 +9,114 @@
 
 <ion-content>
 
-</ion-content>
+  <ion-button [routerLink]="['/cliente-inicio']" class="ion-button-size" expand="small" color="success">
+    Auto
+  </ion-button>
 
-<ion-tabs>
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button type="button" [routerLink]="['/cliente-servicio']" class="ion-button-size" expand="small" color="primary">
+    Servicio
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button [routerLink]="['/cliente-lugar']" class="ion-button-size" expand="small" color="light">
+    Lugar
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button [routerLink]="['/cliente-mecanico']" class="ion-button-size" expand="small" color="light">
+    Mecanico
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+  
+  <ion-button [routerLink]="['/cliente-pago']" class="ion-button-size" expand="small" color="light">
+    Pago
+  </ion-button>
+
+  <form #form="ngForm" (ngSubmit)="servicio(form)">
+       <ion-item lines="full">
+      <ion-icon name="search-circle-outline"></ion-icon>
+      <ion-select interface="action-sheet" placeholder="Tipo de Mantencion">
+        <ion-select-option value="red">I</ion-select-option>
+        <ion-select-option value="purple">II</ion-select-option>
+        <ion-select-option value="yellow">III</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-icon name="search-circle-outline"></ion-icon>
+      <ion-select interface="action-sheet" placeholder="Mantencion">
+        <ion-select-option value="red">I</ion-select-option>
+        <ion-select-option value="purple">II</ion-select-option>
+        <ion-select-option value="yellow">III</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    
+    
+    
+        <h4>Aceites disponibles</h4>
+        <ion-slides pager="true">
+            <ion-slide>
+                <h1>Aceite Castrol 10w-40 Gtx 3.78 Lt</h1>
+                <pre>
+                <ion-img src="assets/img/aceite.JPG"></ion-img>
+                </pre>
+            </ion-slide>
+            
+            <ion-slide>
+                <h1>Aceite Motor Shell 10w40 Para 10.000km</h1>
+                <pre>
+                <ion-img src="assets/img/aceite0.JPG"></ion-img>
+                </pre>
+            </ion-slide>
+            
+            <ion-slide>
+                <h1>Aceite 10w40 4 Litros Hyundai Gasoline G700 Envio Grat</h1>
+                <pre>
+                <ion-img src="assets/img/aceite1.JPG"></ion-img>
+              </pre>
+            </ion-slide>
+        </ion-slides>
+    
+
+
+
+
+
+    <ion-row>
+      <ion-col col-6>
+        <ion-button [routerLink]="['/cliente-inicio']"  type="submit" color="danger" expand="block">
+          <ion-icon name="caret-back-outline"></ion-icon>
+          Volver
+        </ion-button>
+      </ion-col>
+      <ion-col col-6>
+        <ion-button [routerLink]="['/cliente-lugar']"  type="submit" color="primary" expand="block">
+          Siguiente
+          <ion-icon name="caret-forward-sharp"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    
+
+  </form>
+
+</ion-content>
   <ion-tab-bar slot="bottom" >
 
-    <ion-tab-button tab="home" [routerLink]="['/cliente-inicio']">
+    <ion-tab-button  [routerLink]="['/cliente-inicio']">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="mentenedor" [routerLink]="['/cliente-mis-servicios']">
+    <ion-tab-button  [routerLink]="['/cliente-mis-servicios']">
       <ion-icon name="person"></ion-icon>
       <ion-label>Mis Servicios</ion-label>
     </ion-tab-button>
-
-
   </ion-tab-bar>
-</ion-tabs>

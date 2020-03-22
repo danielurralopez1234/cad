@@ -9,17 +9,45 @@
 
 <ion-content>
 
+  <ion-button [routerLink]="['/cliente-inicio']" class="ion-button-size" expand="small" color="success">
+    Auto
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button type="button" [routerLink]="['/cliente-servicio']" class="ion-button-size" expand="small" color="primary">
+    Servicio
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button [routerLink]="['/cliente-lugar']" class="ion-button-size" expand="small" color="light">
+    Lugar
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+
+  <ion-button [routerLink]="['/cliente-mecanico']" class="ion-button-size" expand="small" color="light">
+    Mecanico
+  </ion-button>
+
+  <ion-icon name="code-outline" class="code-outline-aling"></ion-icon>
+  
+  <ion-button [routerLink]="['/cliente-pago']" class="ion-button-size" expand="small" color="light">
+    Pago
+  </ion-button>
+
 </ion-content>
 
 <ion-tabs>
   <ion-tab-bar slot="bottom" >
 
-    <ion-tab-button tab="home" [routerLink]="['/cliente-inicio']">
+    <ion-tab-button [routerLink]="['/cliente-inicio']">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="mentenedor" [routerLink]="['/cliente-mis-servicios']">
+    <ion-tab-button  [routerLink]="['/cliente-mis-servicios']">
       <ion-icon name="person"></ion-icon>
       <ion-label>Mis Servicios</ion-label>
     </ion-tab-button>

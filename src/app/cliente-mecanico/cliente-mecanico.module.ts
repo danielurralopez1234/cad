@@ -15,6 +15,7 @@ import { ClienteMecanicoPage } from './cliente-mecanico.page';
     IonicModule,
     ClienteMecanicoPageRoutingModule
   ],
+  
   declarations: [ClienteMecanicoPage]
 })
 export class ClienteMecanicoPageModule {}
