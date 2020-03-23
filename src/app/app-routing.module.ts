@@ -103,6 +103,10 @@ const routes: Routes = [
     path: 'cliente-agenda-mantencion',
     loadChildren: () => import('./cliente-agenda-mantencion/cliente-agenda-mantencion.module').then( m => m.ClienteAgendaMantencionPageModule)
   },
+  {
+    path: 'cliente-pago-exito',
+    loadChildren: () => import('./cliente-pago-exito/cliente-pago-exito.module').then( m => m.ClientePagoExitoPageModule)
+  },
 
 ];
 

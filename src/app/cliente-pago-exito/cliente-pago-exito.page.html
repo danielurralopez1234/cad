@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>cliente-pago-exito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-card>
+    <ion-item>
+      <ion-icon name="trophy-outline"></ion-icon>
+      <ion-label style="background-color: #eb445a; color:white">
+        Felicidades, ya registramos tu reserva!
+      </ion-label>
+      
+      
+    </ion-item>
+    <ion-card-content>
+      <ion-label style="color:#eb445a;">
+        Estimado/a: Juan Pericles
+      </ion-label>
+      <br />
+      <ion-label style="color:#eb445a;">
+        codigo: 88544785
+      </ion-label>
+      <br />
+      <ion-label style="margin-left: 50%;color: darkgrey;">
+      Tu servicio de mantencion 10.000km fue agendado para el dia Martes 25 de Febrero, 2020, en la dirección Perico los Palotes 452, Maipu - Santiago.
+    </ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row>
+    <ion-col>
+    <ion-button [routerLink]="['/cliente-pago']"  size="full" type="submit" color="danger" expand="block">
+      <ion-icon name="caret-back-outline"></ion-icon>
+      Volver
+    </ion-button>  
+  </ion-col>
+</ion-row>
+
+</ion-content>

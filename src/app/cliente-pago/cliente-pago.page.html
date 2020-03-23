@@ -37,12 +37,58 @@
     Pago
   </ion-button>
 
+<ion-list>
+    <ion-radio-group >  
+      <ion-item>
+        <ion-label>Transferecia Bancaria</ion-label>
+        <ion-radio value="1"></ion-radio>
+        </ion-item>
+  
+      <ion-item>
+        <ion-label>Efectivo</ion-label>
+        <ion-radio value="2"></ion-radio>        
+      </ion-item>  
+
+      <ion-item>
+        <ion-card style="width: 100%;">        
+          <ion-card-content>
+            <ion-label>< Nombre: Servicentro Ltda. </ion-label>
+            <ion-label>< Rut: 78.548.666-7 </ion-label>
+            <ion-label>< Banco: Estado Tipo </ion-label>
+            <ion-label>< cuenta: Corriente </ion-label>
+            <ion-label>< N° cuenta: 001-548-98847</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      
+    </ion-radio-group>
+  </ion-list>
+
+<ion-item>
+  <label style="margin-left: 50%;color: darkgrey;"><h1>Total: $25.000</h1></label>
+</ion-item>
+
+
+
+  <ion-row>
+    <ion-col col-6>
+      <ion-button [routerLink]="['/cliente-lugar']"  type="submit" color="danger" expand="block">
+        <ion-icon name="caret-back-outline"></ion-icon>
+        Volver
+      </ion-button>
+    </ion-col>
+    <ion-col col-6>
+      <ion-button  type="submit" [routerLink]="['/cliente-pago-exito']"  color="primary" expand="block">
+        Finalizar
+        <ion-icon name="star"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
 
 </ion-content>
 
-<ion-tabs>
   <ion-tab-bar slot="bottom" >
-
     <ion-tab-button [routerLink]="['/cliente-inicio']">
       <ion-icon name="home"></ion-icon>
       <ion-label>Home</ion-label>
@@ -52,7 +98,4 @@
       <ion-icon name="person"></ion-icon>
       <ion-label>Mis Servicios</ion-label>
     </ion-tab-button>
-
-
   </ion-tab-bar>
-</ion-tabs>

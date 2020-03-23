@@ -37,15 +37,89 @@
       <ion-select-option value="purple">II</ion-select-option>
       <ion-select-option value="yellow">III</ion-select-option>
     </ion-select>
-  </ion-item>
+  </ion-item>   
 
-  <ion-item lines="full">
-    <ion-label position="floating">Fecha</ion-label>
-    <ion-datetime value="2019-10-01T15:43:40.394Z" display-timezone="utc"></ion-datetime>
-  </ion-item>
+ <ion-card>
+  <ion-card-header tappable (click)="collapseCard = !collapseCard">
+    <ion-card-title>Reservar</ion-card-title>
+  </ion-card-header>
+  <ion-card-content *ngIf="!collapseCard">
 
-   
- 
+    <ion-item>
+      <ion-input type="text" placeholder="Asunto" [(ngModel)]="event.title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Descripcion" [(ngModel)]="event.desc"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Inicio</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fin</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
+    </ion-item>
+    <!-- <ion-item>
+      <ion-label>All Day?</ion-label>
+      <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
+    </ion-item> -->
+    <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Agregar</ion-button>
+
+  </ion-card-content>
+</ion-card>
+
+<ion-row>
+  <ion-col size="4">
+    <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" (click)="changeMode('month')">Month</ion-button>
+  </ion-col>
+  <ion-col size="4">
+    <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" (click)="changeMode('week')">Week</ion-button>
+  </ion-col>
+  <ion-col size="4">
+    <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeMode('day')">Day</ion-button>
+  </ion-col>
+
+  <ion-col size="6" text-left>
+    <ion-button fill="clear" (click)="back()">
+      <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+
+  <ion-col size="6" text-right>
+    <ion-button fill="clear" (click)="next()">
+      <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+
+<calendar 
+[eventSource]="eventSource" 
+[calendarMode]="calendar.mode" 
+[currentDate]="calendar.currentDate"
+(onEventSelected)="onEventSelected($event)"
+(onTitleChanged)="onViewTitleChanged($event)"
+(onTimeSelected)="onTimeSelected($event)" 
+startHour="6"
+endHour="20"
+step="30"
+startingDayWeek="1">
+</calendar>
+
+<ion-row>
+  <ion-col col-6>
+    <ion-button [routerLink]="['/cliente-lugar']"  type="submit" color="danger" expand="block">
+      <ion-icon name="caret-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-col>
+  <ion-col col-6>
+    <ion-button [routerLink]="['/cliente-pago']"  type="submit" color="primary" expand="block">
+      Siguiente
+      <ion-icon name="caret-forward-sharp"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+
 
 </ion-content>
 
