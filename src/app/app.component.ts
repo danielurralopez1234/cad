@@ -32,9 +32,9 @@ export class AppComponent {
 
       this.authenticationService.authState.subscribe(state => {
         if (state) {
-          this.router.navigate(['home']);
+          this.router.navigate(['app']);
         } else {
-          this.router.navigate(['login']);
+          this.router.navigate(['bienvenida']);
         }
       });
 

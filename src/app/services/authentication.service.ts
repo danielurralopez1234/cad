@@ -7,6 +7,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EnvService} from './env.service';
 import {tap} from 'rxjs/operators';
 import { User } from '../models/user';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class AuthenticationService {
       private platform: Platform,
       public toastController: ToastController,
       private http: HttpClient,
-      private env: EnvService
+      private env: EnvService,
+      public afAuth: AngularFireAuth
   ) {
     this.platform.ready().then(() => {
       this.ifLoggedIn();
@@ -31,7 +33,7 @@ export class AuthenticationService {
   }
 
   ifLoggedIn() {
-    this.storage.get('USER_INFO').then((response) => {
+    this.storage.get('USER_UID').then((response) => {
       if (response) {
         this.authState.next(true);
       }
@@ -39,15 +41,25 @@ export class AuthenticationService {
   }
 
 
-  login() {
-    var dummy_response = {
-      user_id: '007',
-      user_name: 'test'
-    };
-    this.storage.set('USER_INFO', dummy_response).then((response) => {
-      this.router.navigate(['home']);
-      this.authState.next(true);
-    });
+  async onLogin(user: User) {
+      return new Promise(async (resolve, rejected) => {
+          await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(res => {
+              resolve(res);
+              const uid = res.user.uid;
+              this.storage.set('USER_UID', uid).then((response) => {
+                  this.authState.next(true);
+              });
+          }).catch(err => rejected(err));
+      });
+  }
+
+  async onRegister(user: User) {
+      return new Promise(async (resolve, rejected) => {
+          await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(res => {
+              resolve(res);
+              const uid = res.user.uid;
+          }).catch(err => rejected(err));
+      });
   }
 
   login2(email: string, password: string) {
@@ -70,8 +82,8 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.storage.remove('USER_INFO').then(() => {
-      this.router.navigate(['login']);
+    this.storage.remove('USER_UID').then(() => {
+      this.router.navigate(['bienvenida']);
       this.authState.next(false);
     });
   }
@@ -94,7 +106,7 @@ export class AuthenticationService {
   register2(fName: string, lName: string, email: string, password: string) {
     return this.http.post(this.env.API_URL + 'auth/register',
         {fName, lName, email, password}
-    )
+    );
   }
 
   isAuthenticated() {

@@ -1,36 +1,30 @@
-<ion-header>
-  <ion-toolbar class="ion-text-center" color="primary">
-    <ion-title><h3>Acceder</h3></ion-title>
+<ion-header class="ion-text-center">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inicia sesion</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="primary" padding>
-  <form #form="ngForm" (ngSubmit)="login(form)">
-    <ion-grid>
-      <ion-row color="primary" class="ion-justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <ion-item>
-            <ion-input name="correo" type="email" placeholder="tu@email.com" ngModel required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input name="clave" type="password" placeholder="Clave" ngModel required></ion-input>
-          </ion-item>
-          <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <a routerLink='/forgot'>Olvidaste tu contraseña?</a>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-align-items-center">
-        <ion-col>
-          Si no tienes una cuenta favor  <a routerLink='/register'>
-          registrate</a> primero!
-        </ion-col>
-      </ion-row>
+<ion-content padding="true">
+  <form #form="ngForm" (ngSubmit)="onLogin()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Correo</ion-label>
+        <ion-input [(ngModel)]="user.email" name="correo" autocomplete="off" type="text" placeholder="tu@email.com" ngModel required></ion-input>
+      </ion-item>
 
-    </ion-grid>
+      <ion-item>
+        <ion-label position="stacked">Clave</ion-label>
+        <ion-input [(ngModel)]="user.password" name="clave" autocomplete="off" type="password" placeholder="Clave" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item lines='none'>
+        <a routerLink='/forgot'>Olvidaste tu contraseña?</a>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Ingresar</ion-button>
   </form>
 </ion-content>
 

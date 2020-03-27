@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
+import {User} from '../../models/user';
+import {Router} from '@angular/router';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -7,14 +10,27 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-  constructor(private authService: AuthenticationService) { }
+  user: User = new User();
+  constructor(private authService: AuthenticationService,
+              private router: Router,
+              private toastController: ToastController) { }
 
   ngOnInit() {
   }
 
-  login(form) {
-    this.authService.login();
+  async onLogin() {
+    await this.authService.onLogin(this.user).then(res => {
+      this.presentToast('Sesion iniciada.');
+      this.router.navigate(['/app/tabs']);
+    }).catch(err => this.presentToast('Los datos son incorrectos o no existe usuario.'));
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
