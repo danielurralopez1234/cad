@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-item-group class="ion-item-group-aling">
   <ion-button [routerLink]="['/cliente-inicio']" class="ion-button-size" expand="small" color="success">
     Auto
   </ion-button>
@@ -36,6 +36,7 @@
   <ion-button [routerLink]="['/cliente-pago']" class="ion-button-size" expand="small" color="light">
     Pago
   </ion-button>
+  </ion-item-group>
 
   <form #form="ngForm" (ngSubmit)="servicio(form)">
        <ion-item lines="full">
@@ -112,7 +113,7 @@
 
     <ion-tab-button  [routerLink]="['/cliente-inicio']">
       <ion-icon name="home"></ion-icon>
-      <ion-label>Home</ion-label>
+      <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
     <ion-tab-button  [routerLink]="['/cliente-mis-servicios']">

@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="aling">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Mecanicos
+    <ion-title >Mecanicos
       <ion-icon name="person-add" style="zoom:2.0;"></ion-icon>
     </ion-title>
   </ion-toolbar>
@@ -12,24 +12,17 @@
 <ion-content>
 
   <form>
-    <ion-item lines="full">
-      <ion-icon name="person-add"></ion-icon>
-      <ion-select  interface="action-sheet" placeholder="Nombre Mecanico">
-        <ion-select-option value="red">Juan Perez</ion-select-option>
-        <ion-select-option value="purple">Rodolfo rodriguez</ion-select-option>
-        <ion-select-option value="yellow">Pedor Pablo</ion-select-option>
-        </ion-select>      
+    <ion-item lines="full">      
+      <ion-label position="floating"><ion-icon name="person-add"></ion-icon>Nombre Mecanico</ion-label>
       <ion-input type="text" required></ion-input>
     </ion-item>
 
-    <ion-item lines="full">
-      <ion-icon name="grid"></ion-icon>
-      <ion-label position="floating">Rut</ion-label>
+    <ion-item lines="full">      
+      <ion-label position="floating"><ion-icon name="grid"></ion-icon>Rut</ion-label>
       <ion-input type="text" required></ion-input>
     </ion-item>
-    <ion-item lines="full">
-      <ion-icon name="trophy"></ion-icon>
-      <ion-label position="floating">Fecha cumpleaños</ion-label>
+    <ion-item lines="full">      
+      <ion-label position="floating"><ion-icon name="trophy"></ion-icon>Fecha cumpleaños</ion-label>
       <ion-input type="text" required></ion-input>
     </ion-item>
 
@@ -66,7 +59,7 @@
 
     <ion-tab-button  [routerLink]="['/administrador-inicio']">
       <ion-icon name="home"></ion-icon>
-      <ion-label>Home</ion-label>
+      <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
     <ion-tab-button  [routerLink]="['/administrador-mecanicos']">

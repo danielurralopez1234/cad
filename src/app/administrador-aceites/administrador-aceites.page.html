@@ -10,9 +10,9 @@
 <ion-content>
 
   <form>
-    <ion-item lines="full">
-      <ion-icon name="water"></ion-icon>
-      <ion-label position="floating">Nombre aceite</ion-label>
+
+    <ion-item lines="full">      
+      <ion-label position="floating"><ion-icon name="water"></ion-icon>Nombre aceite</ion-label>
       <ion-input type="text" required></ion-input>
     </ion-item>
 
@@ -35,9 +35,7 @@
     </ion-item>
 
     <ion-item lines="full">
-      <ion-label position="floating">Foto</ion-label>
-      <br />
-      <ion-icon name="image-outline"></ion-icon>
+      <ion-label position="floating"><ion-icon name="image-outline"></ion-icon>Foto</ion-label>      
     </ion-item>
 
     <ion-row>
@@ -46,16 +44,18 @@
         <ion-button type="submit" color="primary" expand="block">Crear</ion-button>
       </ion-col>
     </ion-row>
+
   </form>
 
 </ion-content>
 
 <ion-tabs>
+
   <ion-tab-bar slot="bottom">
 
     <ion-tab-button  [routerLink]="['/administrador-inicio']">
       <ion-icon name="home"></ion-icon>
-      <ion-label>Home</ion-label>
+      <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
     <ion-tab-button  [routerLink]="['/administrador-mecanicos']">
@@ -69,4 +69,5 @@
     </ion-tab-button>
 
   </ion-tab-bar>
+
 </ion-tabs>

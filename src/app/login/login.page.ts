@@ -25,8 +25,8 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/cliente-inicio']);
         break;
       //case 'usuario@usuario.com:
-      case 'usuario':
-        this.router.navigate(['/usuario-inicio']);
+      case 'mecanico':
+        this.router.navigate(['/mecanico-inicio']);
         break;
       default:
         this.router.navigate(['/crear-cuenta']);

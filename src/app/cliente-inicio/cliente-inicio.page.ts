@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ClienteInicioPage implements OnInit {
 
+  navigate: any;
   constructor(private router: Router) { }
 
   ngOnInit() {
