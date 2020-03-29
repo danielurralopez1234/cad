@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>mecanico-inicio</ion-title>
+    <ion-title>Pedidos</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,11 +11,17 @@
   <ion-list>
     <ion-item>
       <ion-label>Matencion 15.000 km</ion-label>
+     <a (click)="alert()"> <ion-icon name="happy" style="zoom:1.5;"></ion-icon></a>
+     <a (click)="alert0()"> <ion-icon name="locate" style="zoom:1.5;"></ion-icon></a>
+     <a (click)="alert1()"><ion-icon name="car" style="zoom:1.5;"></ion-icon></a>
       <br />
       <ion-toggle slot="end"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>Matencion 15.000 km</ion-label>
+      <ion-icon name="happy"></ion-icon>
+      <ion-icon name="locate"></ion-icon>
+      <ion-icon name="car"></ion-icon>
       <br />     
       <ion-toggle slot="end"></ion-toggle>
     </ion-item>
@@ -24,17 +30,3 @@
 
 </ion-content>
 
-  <ion-tab-bar slot="bottom" >
-
-    <ion-tab-button [routerLink]="['/mecanico-inicio']">
-      <ion-icon name="home"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button  [routerLink]="['/mecanico-pedidos']">
-      <ion-icon name="notifications"></ion-icon>
-      <ion-label>Notificaciones</ion-label>
-    </ion-tab-button>
-
-
-  </ion-tab-bar>
