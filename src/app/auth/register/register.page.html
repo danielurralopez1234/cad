@@ -11,16 +11,23 @@
     <form #form="ngForm" (ngSubmit)="register()">
         <ion-list>
             <ion-item>
-                <ion-label position="stacked">Email</ion-label>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input [(ngModel)]="user.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Apellido</ion-label>
+                <ion-input [(ngModel)]="user.apellido" name="apellido" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Direccion</ion-label>
+                <ion-input [(ngModel)]="user.direccion" name="direccion" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Correo</ion-label>
                 <ion-input [(ngModel)]="user.email" name="correo" autocomplete="off" type="email" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Username</ion-label>
-                <ion-input name="usuario" autocomplete="off" type="text" ngModel required></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label position="stacked">Password</ion-label>
+                <ion-label position="stacked">Clave</ion-label>
                 <ion-input [(ngModel)]="user.password" name="clave" autocomplete="off" type="password" ngModel required></ion-input>
             </ion-item>
 

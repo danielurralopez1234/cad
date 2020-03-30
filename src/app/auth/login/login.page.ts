@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {User} from '../../models/user';
 import {Router} from '@angular/router';
-import {ToastController} from '@ionic/angular';
+import {LoadingController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -19,9 +19,8 @@ export class LoginPage implements OnInit {
   }
 
   async onLogin() {
-    await this.authService.onLogin(this.user).then(res => {
+    await this.authService.onLogin(this.user).then(async res => {
       this.presentToast('Sesion iniciada.');
-      this.router.navigate(['/app/tabs']);
     }).catch(err => this.presentToast('Los datos son incorrectos o no existe usuario.'));
   }
 
@@ -32,5 +31,7 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+
+
 
 }

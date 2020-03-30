@@ -16,13 +16,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule,
-    AngularFireModule.initializeApp(environment.FIREBASE_CONFIG), AngularFireAuthModule],
+    AngularFireModule.initializeApp(environment.FIREBASE_CONFIG), AngularFireAuthModule, AngularFireDatabaseModule],
   providers: [
     StatusBar,
     SplashScreen,

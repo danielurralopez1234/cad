@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
-import {ModalController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {AutosPage} from '../mantenedores/autos/autos.page';
 import {FinalizacionPage} from './modals/finalizacion/finalizacion.page';
 import {Router} from '@angular/router';
@@ -18,7 +18,11 @@ export class HomePage {
   marca: string;
   anio: number;
   cilindrada: string;
-  myForm: FormGroup;
+  carForm: FormGroup;
+  serviceForm: FormGroup;
+  placeForm: FormGroup;
+  mecanicoForm: FormGroup;
+  pagoForm: FormGroup;
   hidePaso1 = false;
   hidePaso2 = true;
   hidePaso3 = true;
@@ -29,6 +33,7 @@ export class HomePage {
   hideC3 = false;
   hideC4 = false;
   hideC5 = false;
+  valueDefault: string;
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   fechaHoy: Date = new Date();
 
@@ -36,13 +41,31 @@ export class HomePage {
     initialSlide: 1,
     speed: 400
   };
-  constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder) {
-    this.myForm = formBuilder.group({
+  constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
+              private alertController: AlertController) {
+    this.valueDefault = 'paso1';
+    this.carForm = formBuilder.group({
       patente: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
       marca: ['', Validators.compose([Validators.required])],
       modelo: ['', Validators.compose([Validators.required])],
       anio: ['', Validators.compose([Validators.required])],
       cilindrada: ['', Validators.compose([Validators.maxLength(3), Validators.pattern('[0-9.]*'), Validators.required])],
+    });
+    this.serviceForm = formBuilder.group({
+      tipo: ['', Validators.compose([Validators.required])],
+      mantencion: ['', Validators.compose([Validators.required])],
+    });
+    this.placeForm = formBuilder.group({
+      region: ['', Validators.compose([Validators.required])],
+      comuna: ['', Validators.compose([Validators.required])],
+      calle: ['', Validators.compose([Validators.required])],
+    });
+    this.mecanicoForm = formBuilder.group({
+      mecanico: ['', Validators.compose([Validators.required])],
+      fechaR: ['', Validators.compose([Validators.required])],
+    });
+    this.pagoForm = formBuilder.group({
+      pago: ['', Validators.compose([Validators.required])],
     });
   }
   async finalizaModal() {
@@ -71,11 +94,95 @@ export class HomePage {
     this.hidePaso1 = true;
   }
 
-  segmentChanged(ev: any) {
-    this.hidePaso3 = false;
-    this.hideC1 = false;
+
+  validaCarForm() {
+    if (this.carForm.valid) {
+      this.hideC1 = false;
+      this.hidePaso2 = false;
+      this.valueDefault = 'paso2';
+      this.hideC2 = true;
+    } else {
+      this.presentAlert();
+    }
+  }
+
+  validaServiceForm() {
+    if (this.serviceForm.valid) {
+      this.hideC2 = false;
+      this.hidePaso3 = false;
+      this.hideC3 = true;
+      this.valueDefault = 'paso3';
+    } else {
+      this.presentAlert();
+    }
+  }
+
+  serviceFormBack() {
+    this.hideC1 = true;
+    this.hidePaso2 = true;
+    this.hideC2 = false;
+    this.valueDefault = 'paso1';
+  }
+
+  validaDireccionForm() {
+    if (this.placeForm.valid) {
+      this.hideC3 = false;
+      this.hidePaso4 = false;
+      this.hideC4 = true;
+      this.valueDefault = 'paso4';
+    } else {
+      this.presentAlert();
+    }
+  }
+
+  direccionFormBack() {
     this.hideC2 = true;
-    console.log('Segment changed', ev);
+    this.hidePaso3 = true;
+    this.hideC3 = false;
+    this.valueDefault = 'paso2';
+  }
+
+  validaMecanicoForm() {
+    if (this.mecanicoForm.valid) {
+      this.hideC4 = false;
+      this.hidePaso5 = false;
+      this.hideC5 = true;
+      this.valueDefault = 'paso5';
+    } else {
+      this.presentAlert();
+    }
+  }
+
+  mecanicoFormBack() {
+    this.hideC3 = true;
+    this.hidePaso4 = true;
+    this.hideC4 = false;
+    this.valueDefault = 'paso3';
+  }
+
+  validaPagoForm() {
+    if (this.pagoForm.valid) {
+
+    } else {
+      this.presentAlert();
+    }
+  }
+
+  pagoFormBack() {
+    this.hideC4 = true;
+    this.hidePaso5 = true;
+    this.hideC5 = false;
+    this.valueDefault = 'paso4';
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Formulario',
+      message: 'Faltan campos que llenar.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

@@ -11,7 +11,7 @@
 
     <ion-content>
       <ion-list>
-        <ion-menu-toggle auto-hide="true" *ngFor="let pages of navigate">
+        <ion-menu-toggle auto-hide="false" *ngFor="let pages of navigate">
           <ion-item [routerLink]="pages.url" routerDirection="forward">
             <ion-icon [name]="pages.icon" slot="start"></ion-icon>
             {{pages.title}}
