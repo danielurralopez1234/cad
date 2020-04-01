@@ -63,7 +63,8 @@ const routes: Routes = [
   {
     path: 'administrador-mecanicos',
     loadChildren: () => import('./administrador-mecanicos/administrador-mecanicos.module').then( m => m.AdministradorMecanicosPageModule)
-  },  {
+  },
+  {
     path: 'cliente-inicio',
     loadChildren: () => import('./cliente-inicio/cliente-inicio.module').then( m => m.ClienteInicioPageModule)
   },
@@ -107,6 +108,10 @@ const routes: Routes = [
     path: 'cliente-pago-exito',
     loadChildren: () => import('./cliente-pago-exito/cliente-pago-exito.module').then( m => m.ClientePagoExitoPageModule)
   },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
+  }
 
 ];
 

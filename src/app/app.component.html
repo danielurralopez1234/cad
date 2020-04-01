@@ -1,3 +1,20 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-app>  
+  <ion-menu side = "start"  menuId = "first"  contentId = "content" >  
+    <ion-header>  
+      <ion-toolbar>  
+        <ion-title> Menu </ion-title>  
+      </ion-toolbar>  
+    </ion-header>  
+    <ion-content>  
+      <ion-list>
+        <ion-item ><ion-icon name="person"></ion-icon> Perfil</ion-item>
+        <ion-item [routerLink]="['/cliente-agregar-auto']"><ion-icon name="car"></ion-icon>Mis Autos</ion-item>
+        <ion-item ><ion-icon name="information"></ion-icon>Terminos y Condiciones</ion-item>
+        <ion-item><ion-icon name="build"></ion-icon>Preferencias</ion-item>
+        <ion-item><ion-icon name="call"></ion-icon>Contacto y soporte</ion-item>
+        <ion-item [routerLink]="['/home']" ><ion-icon name="log-out"></ion-icon>Cerrar Sesión</ion-item>
+      </ion-list> 
+    </ion-content>  
+  </ion-menu>  
+  <ion-router-outlet Id = "content" > </ion-router-outlet>  
+</ion-app>  

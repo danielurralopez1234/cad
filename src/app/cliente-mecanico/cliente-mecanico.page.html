@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button> </ion-menu-button>  
     </ion-buttons>
     <ion-title>Agenda Mantencion</ion-title>
   </ion-toolbar>
@@ -41,76 +41,61 @@
     </ion-select>
   </ion-item>   
 
- <ion-card>
-  <ion-card-header tappable (click)="collapseCard = !collapseCard">
-    <ion-card-title>Reservar</ion-card-title>
-  </ion-card-header>
-  <ion-card-content *ngIf="!collapseCard">
-
-    <ion-item>
-      <ion-input type="text" placeholder="Asunto" [(ngModel)]="event.title"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="text" placeholder="Descripcion" [(ngModel)]="event.desc"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Inicio</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Fin</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
-    </ion-item>
-    <!-- <ion-item>
-      <ion-label>All Day?</ion-label>
-      <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-    </ion-item> -->
-    <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Agregar</ion-button>
-
-  </ion-card-content>
-</ion-card>
-
-<ion-row>
-  <ion-col size="4">
-    <!-- <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" (click)="changeMode('month')">Mes</ion-button> -->
-    <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" >Mes</ion-button>
-  </ion-col>
-  <ion-col size="4">
-    <!-- <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" (click)="changeMode('week')">Semana</ion-button> -->
-    <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" >Semana</ion-button>
-  </ion-col>
-  <ion-col size="4">
-    <!-- <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeMode('day')">Día</ion-button> -->
-    <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" >Día</ion-button>
-  </ion-col>
-
-  <ion-col size="6" text-left>
-    <!-- <ion-button fill="clear" (click)="back()"> -->
-      <ion-button fill="clear" >
-      <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-
-  <ion-col size="6" text-right>
-    <ion-button fill="clear" (click)="next()">
-      <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-</ion-row>
-
-<calendar 
-[eventSource]="eventSource" 
-[calendarMode]="calendar.mode" 
-[currentDate]="calendar.currentDate"
- (onEventSelected)="onEventSelected($event)"
-(onTitleChanged)="onViewTitleChanged($event)"
-(onTimeSelected)="onTimeSelected($event)" 
-startHour="6"
-endHour="20"
-step="30"
-startingDayWeek="1">
-</calendar>
-
+  <ion-item>
+    <ion-label position="floating">Fecha</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14"  value="2020-09-23T15:03:46.789"></ion-datetime>    
+  </ion-item>
+  <ion-item>
+    <ion-label style="text-align-last: center;">
+    <strong>Martes</strong> 11,2020
+  </ion-label>
+  </ion-item>
+<ion-item style="background: darkgrey;">  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div style="text-align-last: center;">
+          09:00
+          <br>
+          <ion-icon name="information-circle" style="color: green;"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="text-decoration:line-through;text-align-last: center;">
+          11:00
+          <br>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="text-align-last: center;">
+          13:00
+          <br>
+          <ion-icon name="information-circle" style="color: orange;"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="text-align-last: center;">
+          15:00
+          <br>
+          <ion-icon name="information-circle" style="color: green;"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="text-align-last: center;">
+         17:00
+         <br>
+         <ion-icon name="information-circle" style="color: green;"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="text-decoration:line-through;text-align-last: center;">
+         18:00
+         <br>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
 <ion-row>
   <ion-col col-6>
     <ion-button [routerLink]="['/cliente-lugar']"  type="submit" color="danger" expand="block">

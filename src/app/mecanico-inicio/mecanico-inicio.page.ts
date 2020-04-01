@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ModalPage } from '../modal/modal.page';
+
 
 @Component({
   selector: 'app-mecanico-inicio',
@@ -8,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class MecanicoInicioPage implements OnInit {
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController, public modalController: ModalController) { }
 
   ngOnInit() {
   }
@@ -24,15 +26,11 @@ export class MecanicoInicioPage implements OnInit {
   }
 
   async alert0() {
-    const alert = await this.alertController.create({
-      header: 'Ubicacion',
-      message: '<img src="https://static2.abc.es/media/tecnologia/2020/02/06/google-maps2-0004-keCE--620x349@abc.jpg>',
-      buttons: ['Aceptar',]
+    const modal = await this.modalController.create({
+      component: ModalPage
     });
-
-    await alert.present();
+    return await modal.present();
   }
-
 
   async alert1() {
     const alert = await this.alertController.create({
@@ -43,4 +41,8 @@ export class MecanicoInicioPage implements OnInit {
 
     await alert.present();
   }
+
+  closeModal() {
+    this.modalController.getTop();
+}
 }

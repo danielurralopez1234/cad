@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button> </ion-menu-button>  
     </ion-buttons>
     <ion-title>Agenda Mantencion</ion-title>
   </ion-toolbar>
@@ -55,39 +55,62 @@
         <ion-select-option value="purple">II</ion-select-option>
         <ion-select-option value="yellow">III</ion-select-option>
       </ion-select>
-    </ion-item>
-
-    
+    </ion-item>   
     
     
         <h4>Aceites disponibles</h4>
-        <ion-slides pager="true">
-            <ion-slide>
-                <h1>Aceite Castrol 10w-40 Gtx 3.78 Lt</h1>
-                <pre>
-                <ion-img src="assets/img/aceite.JPG"></ion-img>
-                </pre>
-            </ion-slide>
-            
-            <ion-slide>
-                <h1>Aceite Motor Shell 10w40 Para 10.000km</h1>
-                <pre>
-                <ion-img src="assets/img/aceite0.JPG"></ion-img>
-                </pre>
-            </ion-slide>
-            
-            <ion-slide>
-                <h1>Aceite 10w40 4 Litros Hyundai Gasoline G700 Envio Grat</h1>
-                <pre>
-                <ion-img src="assets/img/aceite1.JPG"></ion-img>
-              </pre>
-            </ion-slide>
-        </ion-slides>
-    
+        <ion-list radio-group >
+        <ion-card>
+          <ion-item>
+            <ion-label>Seleccionar</ion-label>
+            <ion-checkbox></ion-checkbox>
+          </ion-item>
+          <img src="assets/img/aceite.JPG">
+          <ion-card-content>
+            <ion-card-title>
+              Aceites Lubricantes
+              </ion-card-title>
+            <p>
+              Manteniendo una relación de trabajo y mejora continua de primer nivel, 
+              con una constante asesoría técnica.
+            </p>
+          </ion-card-content>          
+        </ion-card>      
 
+        <ion-card>
+          <ion-item>
+            <ion-label>Seleccionar</ion-label>
+            <ion-checkbox></ion-checkbox>
+          </ion-item>
+          <img src="assets/img/aceite0.JPG">
+          <ion-card-content>
+            <ion-card-title>
+              Aceites Lubricantes
+              </ion-card-title>
+            <p>
+              Manteniendo una relación de trabajo y mejora continua de primer nivel, 
+              con una constante asesoría técnica.
+            </p>
+          </ion-card-content>          
+        </ion-card>   
 
-
-
+        <ion-card>
+          <ion-item>
+            <ion-label>Seleccionar</ion-label>
+            <ion-checkbox></ion-checkbox>
+          </ion-item>
+          <img src="assets/img/aceite1.JPG">
+          <ion-card-content>
+            <ion-card-title>
+              Aceites Lubricantes
+              </ion-card-title>
+            <p>
+              Manteniendo una relación de trabajo y mejora continua de primer nivel, 
+              con una constante asesoría técnica.
+            </p>
+          </ion-card-content>          
+        </ion-card>   
+        </ion-list>
 
     <ion-row>
       <ion-col col-6>

@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { MecanicoInicioPageRoutingModule } from './mecanico-inicio-routing.module';
-
 import { MecanicoInicioPage } from './mecanico-inicio.page';
+import { ModalPage } from '../modal/modal.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +14,12 @@ import { MecanicoInicioPage } from './mecanico-inicio.page';
     IonicModule,
     MecanicoInicioPageRoutingModule
   ],
-  declarations: [MecanicoInicioPage]
+  declarations: [
+    MecanicoInicioPage,
+    ModalPage
+  ],
+  entryComponents:[
+    ModalPage
+  ]
 })
 export class MecanicoInicioPageModule {}

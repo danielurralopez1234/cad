@@ -1,31 +1,45 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button> </ion-menu-button>  
     </ion-buttons>
     <ion-title>Pedidos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-item-sliding >
+    <ion-item-options>
+      <ion-button ion-button (click)="alert()"  round outline><ion-icon name="happy" style="zoom:1.5;"></ion-icon></ion-button>
+     <ion-button ion-button (click)="alert0()"  round outline><ion-icon name="locate" style="zoom:1.5;"></ion-icon></ion-button>
+     <ion-button ion-button (click)="alert1()"  round outline><ion-icon name="car" style="zoom:1.5;"></ion-icon></ion-button>
+    </ion-item-options>
     <ion-item>
-      <ion-label>Matencion 15.000 km</ion-label>
-     <a (click)="alert()"> <ion-icon name="happy" style="zoom:1.5;"></ion-icon></a>
-     <a (click)="alert0()"> <ion-icon name="locate" style="zoom:1.5;"></ion-icon></a>
-     <a (click)="alert1()"><ion-icon name="car" style="zoom:1.5;"></ion-icon></a>
+      <ion-label>
+        Mantencion 15.000 Km        
+      </ion-label>
+      <ion-input></ion-input>
       <br />
       <ion-toggle slot="end"></ion-toggle>
-    </ion-item>
+    </ion-item>   
+
+  </ion-item-sliding>
+  <ion-item-sliding >
+    <ion-item-options>
+      <ion-button ion-button (click)="alert()"  round outline><ion-icon name="happy" style="zoom:1.5;"></ion-icon></ion-button>
+     <ion-button ion-button (click)="alert0()"  round outline><ion-icon name="locate" style="zoom:1.5;"></ion-icon></ion-button>
+     <ion-button ion-button (click)="alert1()"  round outline><ion-icon name="car" style="zoom:1.5;"></ion-icon></ion-button>
+    </ion-item-options>
     <ion-item>
-      <ion-label>Matencion 15.000 km</ion-label>
-      <ion-icon name="happy"></ion-icon>
-      <ion-icon name="locate"></ion-icon>
-      <ion-icon name="car"></ion-icon>
-      <br />     
+      <ion-label>
+        Mantencion 15.000 Km        
+      </ion-label>
+      <ion-input></ion-input>
+      <br />
       <ion-toggle slot="end"></ion-toggle>
-    </ion-item>
-  </ion-list>
+    </ion-item>   
+
+  </ion-item-sliding>
 
 
 </ion-content>

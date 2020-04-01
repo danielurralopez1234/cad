@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button> </ion-menu-button>  
     </ion-buttons>
     <ion-title>Agenda Mantencion</ion-title>
   </ion-toolbar>
@@ -42,14 +42,7 @@
    </ion-select>
  </ion-item>
 
- <ion-item lines="full">
-   <ion-icon name="search-circle-outline"></ion-icon>
-   <ion-select interface="action-sheet" placeholder="Comuna">
-     <ion-select-option value="red">I</ion-select-option>
-     <ion-select-option value="purple">II</ion-select-option>
-     <ion-select-option value="yellow">III</ion-select-option>
-   </ion-select>
- </ion-item>
+ <ion-searchbar placeholder="Comuna"></ion-searchbar>
 
  <ion-item lines="full">
   <ion-label position="floating">Calle</ion-label>
