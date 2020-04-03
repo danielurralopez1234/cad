@@ -52,21 +52,18 @@ export class AuthenticationService {
 
   onLogin(user: User) {
       return new Promise(async (resolve, rejected) => {
-         await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(async res => {
+         await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(res => {
               console.log('1');
               const uid = res.user.uid;
-              await this.usersService.getUser(uid).subscribe(usr => {
-                  console.log('2');
-                  this.userRes = usr;
-                  this.usrData.id = this.userRes.id;
-                  this.usrData.nombre = this.userRes.nombre;
-                  this.usrData.rol = this.userRes.rol;
-                  this.storage.set('USER_DATA', this.usrData).then(async (response) => {
-                      this.authState.next(true);
-                  });
-                  console.log('3');
+              this.usersService.getUser(uid).subscribe(usr => {
+                  //this.userRes = usr;
+                  //this.usrData.id = this.userRes.id;
+                  //this.usrData.nombre = this.userRes.nombre;
+                  //this.usrData.rol = this.userRes.rol;
               });
-              console.log('4');
+              this.storage.set('USER_DATA', uid).then(async (response) => {
+                 this.authState.next(true);
+             });
               resolve(res);
 
               // let usuario: User = new User();
