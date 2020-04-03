@@ -11,12 +11,12 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: '../home/home.module#HomePageModule',
+        loadChildren: () => import('../home/home.module').then( m => m.HomePageModule),
         canActivate: [AuthGuardService]
       },
       {
         path: 'reservas',
-        loadChildren: '../reservas/reservas.module#ReservasPageModule',
+        loadChildren: () => import('../reservas/reservas.module').then( m => m.ReservasPageModule),
         canActivate: [AuthGuardService]
       },
       {
