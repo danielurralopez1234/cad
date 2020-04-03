@@ -20,7 +20,11 @@ export class LoginPage implements OnInit {
 
   async onLogin() {
     await this.authService.onLogin(this.user).then(async res => {
-      this.presentToast('Sesion iniciada.');
+      if (res === null) {
+        this.presentToast('Problemas al iniciar sesion');
+      } else {
+        this.presentToast('Sesion iniciada.');
+      }
     }).catch(err => this.presentToast('Los datos son incorrectos o no existe usuario.'));
   }
 

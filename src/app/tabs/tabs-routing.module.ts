@@ -21,17 +21,17 @@ const routes: Routes = [
       },
       {
         path: 'notificaciones',
-        loadChildren: '../notificaciones/notificaciones.module#NotificacionesPageModule',
+        loadChildren: () => import('../notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule),
         canActivate: [AuthGuardService]
       },
       {
         path: 'mantenedor',
-        loadChildren: '../mantenedores/mantenedor/mantenedor.module#MantenedorPageModule',
+        loadChildren: () => import('../mantenedores/mantenedor/mantenedor.module').then( m => m.MantenedorPageModule),
         canActivate: [AuthGuardService]
       },
       {
         path: 'estadisticas',
-        loadChildren: '../estadisticas/estadisticas.module#EstadisticasPageModule',
+        loadChildren: () => import('../estadisticas/estadisticas.module').then( m => m.EstadisticasPageModule),
         canActivate: [AuthGuardService]
       }
     ]

@@ -12,7 +12,7 @@ export class TabsPage implements OnInit {
 
   constructor(private authService: AuthenticationService) {
     this.authService.getSesionStorage().then((res) => {
-      console.log(res.rol);
+      console.log('rol: ' + res.rol);
       if (res.rol === 2) {
         this.mecanico = true;
       } else if (res.rol === 3) {

@@ -15,7 +15,7 @@ export class UsersService {
     this.afDB.database.ref('usuarios/' + user.id).set(user);
 
   }
-  getUser(id: string) {
+  async getUser(id: string) {
      return this.afDB.object('usuarios/' + id).valueChanges();
   }
 }

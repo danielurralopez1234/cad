@@ -52,20 +52,22 @@ export class AuthenticationService {
 
   onLogin(user: User) {
       return new Promise(async (resolve, rejected) => {
-         await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(res => {
-              console.log('1');
+         await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(async res => {
               const uid = res.user.uid;
-              this.usersService.getUser(uid).subscribe(usr => {
-                  //this.userRes = usr;
-                  //this.usrData.id = this.userRes.id;
-                  //this.usrData.nombre = this.userRes.nombre;
-                  //this.usrData.rol = this.userRes.rol;
+              let getUser: any = null;
+              (await this.usersService.getUser(uid)).subscribe(usr => {
+                  if (usr !== null) {
+                      getUser = 0;
+                      this.userRes = usr;
+                      this.usrData.id = this.userRes.id;
+                      this.usrData.nombre = this.userRes.nombre;
+                      this.usrData.rol = this.userRes.rol;
+                      this.storage.set('USER_DATA', this.usrData).then(async (response) => {
+                          this.authState.next(true);
+                      });
+                  }
+                  resolve(getUser);
               });
-              this.storage.set('USER_DATA', uid).then(async (response) => {
-                 this.authState.next(true);
-             });
-              resolve(res);
-
               // let usuario: User = new User();
               // this.userRes = this.usersService.getUser(uid);
               // console.log(usuario.nombre);
@@ -89,6 +91,15 @@ export class AuthenticationService {
               resolve(res);
           }).catch(err => rejected(err));
       });
+  }
+
+  async onRecovery(email: string) {
+      return new Promise((resolve, rejected) => {
+          this.afAuth.auth.sendPasswordResetEmail(email).then(res => {
+              resolve('ok');
+      }).catch(err => rejected(err));
+      });
+
   }
 
    async presentLoading() {
