@@ -26,8 +26,34 @@ const routes: Routes = [
       },
       {
         path: 'mantenedor',
-        loadChildren: () => import('../mantenedores/mantenedor/mantenedor.module').then( m => m.MantenedorPageModule),
-        canActivate: [AuthGuardService]
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../mantenedores/mantenedor/mantenedor.module').then( m => m.MantenedorPageModule),
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: 'mecanicos',
+            loadChildren: () => import('../mantenedores/mecanicos/mecanicos.module').then( m => m.MecanicosPageModule)
+          },
+          {
+            path: 'aceites',
+            loadChildren: () => import('../mantenedores/aceites/aceites.module').then( m => m.AceitesPageModule)
+          },
+          {
+            path: 'autos',
+            loadChildren: () => import('../mantenedores/autos/autos.module').then( m => m.AutosPageModule)
+          },
+          {
+            path: 'servicios',
+            loadChildren: () => import('../mantenedores/servicios/servicios.module').then( m => m.ServiciosPageModule)
+          },
+          {
+            path: 'forma-pago',
+            loadChildren: () => import('../mantenedores/forma-pago/forma-pago.module').then( m => m.FormaPagoPageModule)
+          }
+        ]
+
       },
       {
         path: 'estadisticas',

@@ -20,26 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./contacto/contacto.module').then( m => m.ContactoPageModule)
   },
   {
-    path: 'mecanicos',
-    loadChildren: () => import('./mantenedores/mecanicos/mecanicos.module').then( m => m.MecanicosPageModule)
-  },
-  {
-    path: 'autos',
-    loadChildren: () => import('./mantenedores/autos/autos.module').then( m => m.AutosPageModule)
-  },
-  {
-    path: 'aceites',
-    loadChildren: () => import('./mantenedores/aceites/aceites.module').then( m => m.AceitesPageModule)
-  },
-  {
-    path: 'servicios',
-    loadChildren: () => import('./mantenedores/servicios/servicios.module').then( m => m.ServiciosPageModule)
-  },
-  {
-    path: 'forma-pago',
-    loadChildren: () => import('./mantenedores/forma-pago/forma-pago.module').then( m => m.FormaPagoPageModule)
-  },
-  {
     path: 'perfil',
     loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
   },
