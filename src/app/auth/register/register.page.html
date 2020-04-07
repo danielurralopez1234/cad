@@ -1,0 +1,40 @@
+<ion-header class="ion-text-center">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Registrate</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding='true'>
+    <form #form="ngForm" (ngSubmit)="register()">
+        <ion-list>
+            <ion-item>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input [(ngModel)]="user.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Apellido</ion-label>
+                <ion-input [(ngModel)]="user.apellido" name="apellido" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Direccion</ion-label>
+                <ion-input [(ngModel)]="user.direccion" name="direccion" autocomplete="off" type="text" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Correo</ion-label>
+                <ion-input [(ngModel)]="user.email" name="correo" autocomplete="off" type="email" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Clave</ion-label>
+                <ion-input [(ngModel)]="user.password" name="clave" autocomplete="off" type="password" ngModel required></ion-input>
+            </ion-item>
+
+            <ion-item lines='none'>
+                tienes una cuenta? <a routerLink='/login'>Inicia sesion.</a>
+            </ion-item>
+        </ion-list>
+        <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Registrate</ion-button>
+    </form>
+</ion-content>

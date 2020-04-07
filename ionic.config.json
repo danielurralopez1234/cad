@@ -1,5 +1,7 @@
 {
   "name": "cad",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

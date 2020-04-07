@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button> </ion-menu-button>  
+    </ion-buttons>
+
+
+    <ion-item>
+      <ion-title>Mecanicos</ion-title>
+      <ion-input></ion-input>
+      <ion-icon name="people" style="zoom:2.0;"></ion-icon>
+    </ion-item>
+
+
+
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-icon name="person" style="zoom:2.0;"></ion-icon>
+      <ion-label>Marcelo Perez</ion-label>
+      <br />
+      <p class="clasificacion">
+        <input id="radio1" type="radio" name="estrellas" value="5">
+        <label for="radio1">★</label>
+        <input id="radio2" type="radio" name="estrellas" value="4">
+        <label for="radio2">★</label>
+        <input id="radio3" type="radio" name="estrellas" value="3">
+        <label for="radio3">★</label>
+        <input id="radio4" type="radio" name="estrellas" value="2">
+        <label for="radio4">★</label>
+        <input id="radio5" type="radio" name="estrellas" value="1">
+        <label for="radio5">★</label>
+      </p>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="person" style="zoom:2.0;"></ion-icon>
+      <ion-label>David Melo</ion-label>
+      <br />
+      <p class="clasificacion">
+        <input id="radio1" type="radio" name="estrellas" value="5">
+        <label for="radio1">★</label>
+        <input id="radio2" type="radio" name="estrellas" value="4"><label for="radio2">★</label>
+        <input id="radio3" type="radio" name="estrellas" value="3">
+        <label for="radio3">★</label>
+        <input id="radio4" type="radio" name="estrellas" value="2">
+        <label for="radio4">★</label>
+        <input id="radio5" type="radio" name="estrellas" value="1">
+        <label for="radio5">★</label>
+      </p>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/mantendor',1]">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+<ion-tab-bar slot="bottom">
+
+  <ion-tab-button [routerLink]="['/administrador-inicio']">
+    <ion-icon name="home"></ion-icon>
+    <ion-label>Inicio</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button [routerLink]="['/administrador-mecanicos']">
+    <ion-icon name="person"></ion-icon>
+    <ion-label>Mantenedor</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button>
+    <ion-icon name="map"></ion-icon>
+    <ion-label>Estadistica</ion-label>
+  </ion-tab-button>
+
+</ion-tab-bar>

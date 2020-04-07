@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Mantenedor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <form #form="ngForm" (ngSubmit)="registerMecanico()" *ngIf="mecanico">
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="person-add"></ion-icon>Nombre Mecanico</ion-label>
+        <ion-input [(ngModel)]="user.nombre" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="person-add"></ion-icon>Apellido Paterno</ion-label>
+        <ion-input [(ngModel)]="user.apellidopaterno" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="person-add"></ion-icon>Apellido Materno</ion-label>
+        <ion-input [(ngModel)]="user.apellidomaterno" type="text" required></ion-input>
+      </ion-item>
+  
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="grid"></ion-icon>Rut</ion-label>
+        <ion-input [(ngModel)]="user.rut" type="number" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="grid"></ion-icon>Dv</ion-label>
+        <ion-input [(ngModel)]="user.dv" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="trophy"></ion-icon>Fecha cumpleaños</ion-label>
+        <ion-input [(ngModel)]="user.fechanaciminto" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="trophy"></ion-icon>Telefono</ion-label>
+        <ion-input [(ngModel)]="user.telefono" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">      
+        <ion-label position="floating"><ion-icon name="trophy"></ion-icon>Email</ion-label>
+        <ion-input [(ngModel)]="user.email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-select ngModel  [(ngModelOptions)]="user.idregion"  interface="action-sheet" placeholder="Region">
+          <ion-select-option value=1>I</ion-select-option>
+          <ion-select-option value=2>II</ion-select-option>
+          <ion-select-option value=3>III</ion-select-option>
+          </ion-select>   
+        </ion-item>
+        <ion-item lines="full">
+          <ion-select ngModel  [(ngModelOptions)]="user.idcomuna" interface="action-sheet" placeholder="Comuna">
+            <ion-select-option value=1>Comuna A</ion-select-option>
+            <ion-select-option value=2>Comuna B</ion-select-option>
+            <ion-select-option value=3>Comuna C</ion-select-option>
+            </ion-select>   
+          </ion-item>
+            <ion-item lines="full">      
+              <ion-label position="floating"><ion-icon name="trophy"></ion-icon>Direccion</ion-label>
+              <ion-input  [(ngModel)]="user.direccion" type="text" required></ion-input>
+            </ion-item>    
+      
+            <ion-select ngModel  [(ngModelOptions)]="user.idrol" interface="action-sheet" placeholder="Rol">
+              <ion-select-option value=1>Cliente</ion-select-option>
+              <ion-select-option value=2>Mecanico</ion-select-option>
+              <ion-select-option value=3>Administrador</ion-select-option>
+              </ion-select>   
+  
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="danger" expand="block">Cancelar</ion-button>
+          <ion-button type="submit" color="primary" expand="block" [disabled]="form.invalid">Crear</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+
+  <!-- <div *ngIf="aceite">
+
+  </div>
+  <div *ngIf="automovil">
+
+  </div>
+  <div *ngIf="tiposervicio">
+
+  </div>
+  <div *ngIf="formapago">
+
+  </div> -->
+
+</ion-content>

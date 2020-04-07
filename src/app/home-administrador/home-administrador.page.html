@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">  
+      <ion-menu-button> </ion-menu-button>      
+    </ion-buttons>
+    <ion-title>Mantenedor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>  
+  <ion-button color="secondary" expand="full" [routerLink]="['/mecanicos']">    
+          Mecanicos
+          <ion-input></ion-input>
+          <ion-icon name="people" ></ion-icon>
+  </ion-button>
+  <ion-button color="secondary" expand="full" [routerLink]="['/administrador-aceites-lista']" >
+    Aceite
+    <ion-input></ion-input>
+    <ion-icon name="water"></ion-icon>
+  </ion-button>
+  <ion-button color="secondary" expand="full" [routerLink]="['/administrador-autos-lista']" >
+    Automóvil
+    <ion-input></ion-input>
+    <ion-icon name="car"></ion-icon>
+  </ion-button>
+  <ion-button color="secondary" expand="full" [routerLink]="['/administrador-servicios-lista']">
+    Tipo Servicio
+    <ion-input></ion-input>
+    <ion-icon name="server" ></ion-icon>
+  </ion-button>
+  <ion-button color="secondary" expand="full" [routerLink]="['/administrador-formadepago-lista']">
+    Forma de pago
+    <ion-input></ion-input>
+    <ion-icon name="cash" ></ion-icon>
+  </ion-button>
+
+</ion-content>
+
+  <!-- <ion-tab-bar slot="bottom" >
+
+    <ion-tab-button [routerLink]="['/home-administrador']">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button  [routerLink]="['/administradir-mecanicos']">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Mantenedor</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button >
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Estadistica</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar> -->
