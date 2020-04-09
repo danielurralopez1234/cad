@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Aceite</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="saveAceite()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Tipo de vehiculo</ion-label>
+        <ion-input [(ngModel)]="aceite.tipoCar" name="tipoCar" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input [(ngModel)]="aceite.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Descripcion</ion-label>
+        <ion-input [(ngModel)]="aceite.descripcion" name="descripcion" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Precio</ion-label>
+        <ion-input [(ngModel)]="aceite.valor" name="precio" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Foto</ion-label>
+        <ion-input [(ngModel)]="aceite.foto" name="foto" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+  </form>
+</ion-content>

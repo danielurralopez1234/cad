@@ -68,6 +68,7 @@ export class HomePage {
       pago: ['', Validators.compose([Validators.required])],
     });
   }
+
   async finalizaModal() {
     const modal = await this.modalController.create({
       component: FinalizacionPage

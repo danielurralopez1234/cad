@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AceitesPage
+  },
+  {
+    path: 'addedit-aceite',
+    loadChildren: () => import('./modals/addedit-aceite/addedit-aceite.module').then( m => m.AddeditAceitePageModule)
   }
 ];
 
