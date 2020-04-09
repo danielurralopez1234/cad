@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: FormaPagoPage
+  },  {
+    path: 'addedit-forma-pago',
+    loadChildren: () => import('./modals/addedit-forma-pago/addedit-forma-pago.module').then( m => m.AddeditFormaPagoPageModule)
   }
+
 ];
 
 @NgModule({
