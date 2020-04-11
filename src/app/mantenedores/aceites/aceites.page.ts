@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {AddeditAceitePage} from './modals/addedit-aceite/addedit-aceite.page';
 import {MantenedorService} from '../../services/mantenedor.service';
 import {Aceite} from '../../models/aceite';
@@ -10,12 +10,12 @@ import {Aceite} from '../../models/aceite';
   styleUrls: ['./aceites.page.scss'],
 })
 export class AceitesPage implements OnInit {
-  shell: boolean;
   Aceites: any;
+  auxAceites: any;
 
-  constructor(private modalController: ModalController, private mantService: MantenedorService) {
-    this.shell = true;
-  }
+  constructor(private modalController: ModalController,
+              private mantService: MantenedorService,
+              private toastController: ToastController) {  }
 
   ngOnInit() {
     const aceiteRes = this.mantService.getAllAceite();
@@ -25,12 +25,15 @@ export class AceitesPage implements OnInit {
         const a = item.payload.toJSON();
         a['$key'] = item.key;
         this.Aceites.push(a as Aceite);
+        this.auxAceites = this.Aceites;
       });
     });
   }
 
-  activando() {
-    console.log(this.shell);
+  async updateAceite(id: string, est: boolean) {
+    await this.mantService.updateAceite(id, est).then(res => {
+      this.presentToast('Actualizado.');
+    }).catch(err => this.presentToast('Problemas al guardar registro.'));
   }
 
   async addeditModal() {
@@ -38,6 +41,25 @@ export class AceitesPage implements OnInit {
       component: AddeditAceitePage
     });
     return await modal.present();
+  }
+
+  searchAceite(ev) {
+    const val = ev.target.value;
+    this.Aceites = this.auxAceites;
+    if (val.trim() !== '') {
+      this.Aceites = this.Aceites.filter((item) => {
+        console.log(item);
+        return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+      });
+    }
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

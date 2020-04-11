@@ -7,23 +7,27 @@ import {FormaPago} from '../models/formaPago';
   providedIn: 'root'
 })
 export class MantenedorService {
-  aceite: any;
+  aceiteBD: any;
   formaPago: any;
   aceiteListRef: AngularFireList<any>;
   formaPagoListRef: AngularFireList<any>;
 
   constructor(private afDB: AngularFireDatabase) {
-    this.aceite = afDB.database.ref('aceite');
+    this.aceiteBD = afDB.database.ref('aceite');
     this.formaPago = afDB.database.ref('formaPago');
   }
 
   async saveAceite(aceite: Aceite) {
-    this.aceite.push().set(aceite);
+    this.aceiteBD.push().set(aceite);
   }
 
   getAllAceite() {
     this.aceiteListRef = this.afDB.list('aceite');
     return this.aceiteListRef;
+  }
+
+  async updateAceite(id: string, est: boolean) {
+    this.afDB.database.ref('aceite/' + id).update({estado: est});
   }
 
   async saveFormaPago(formaPago: FormaPago) {

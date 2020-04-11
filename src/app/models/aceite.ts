@@ -4,5 +4,5 @@ export class Aceite {
     valor: number;
     foto: any;
     tipoCar: string;
-    estado: number;
+    estado: boolean;
 }

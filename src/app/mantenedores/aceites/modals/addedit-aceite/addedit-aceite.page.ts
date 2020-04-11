@@ -12,7 +12,7 @@ export class AddeditAceitePage implements OnInit {
   aceite: Aceite = new Aceite();
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
-              private toastController: ToastController) { }
+              private toastController: ToastController) {  }
 
   ngOnInit() {
   }
@@ -22,6 +22,9 @@ export class AddeditAceitePage implements OnInit {
   }
 
   async saveAceite() {
+    if (this.aceite.estado === undefined) {
+      this.aceite.estado = false;
+    }
     await this.mantService.saveAceite(this.aceite).then(res => {
       this.presentToast('Registro exitoso.');
       this.modalClose();
