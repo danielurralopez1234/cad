@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mecanicos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="saveMecanico()">
+    <ion-list>
+      
+      <ion-item>
+        <ion-label position="stacked">Rut</ion-label>
+        <ion-textarea [(ngModel)]="usuario.rut" name="rut" autocomplete="off" type="number" ngModel clearOnEdit="true">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Dv</ion-label>
+        <ion-input [(ngModel)]="usuario.dv" name="dv" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-textarea [(ngModel)]="usuario.nombre" name="nombre" autocomplete="off" type="text" ngModel
+          clearOnEdit="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Apellido Paterno</ion-label>
+        <ion-input [(ngModel)]="usuario.apellidoPaterno" name="apellidoPaterno" autocomplete="off" type="text" ngModel
+          required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Apellido Materno</ion-label>
+        <ion-textarea [(ngModel)]="usuario.apellidoMaterno" name="apellidoMaterno" autocomplete="off" type="text"
+          ngModel clearOnEdit="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Fecha Nacimiento</ion-label>
+        <ion-input [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" autocomplete="off" type="text" ngModel
+          required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-textarea [(ngModel)]="usuario.mail" name="mail" autocomplete="off" type="email" ngModel clearOnEdit="true">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input [(ngModel)]="usuario.contrasena" name="contrasena" autocomplete="off" type="text" ngModel required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Direccion</ion-label>
+        <ion-input [(ngModel)]="usuario.direccion" name="direccion" autocomplete="off" type="text" ngModel required>
+        </ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label position="stacked">Telefono</ion-label>
+        <ion-input [(ngModel)]="usuario.telefono" name="telefono" autocomplete="off" type="text" ngModel required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Region</ion-label>
+        <ion-select [(ngModel)]="usuario.region" name="region" placeholder="Seleccionar">
+          <ion-select-option *ngFor="let region of Region" value={{region.id}}>{{region.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-searchbar [(ngModel)]="usuario.comuna" name="comuna" (input)="searchComuna($event)" placeholder="Comuna">
+        </ion-searchbar>
+      </ion-item>
+      <ion-item>
+        <ion-radio-group value="comuna" *ngFor="let comuna of Comuna">
+          <ion-item>
+            <ion-label>{{comuna.nombre}}</ion-label>
+            <ion-radio slot="start" value={{comuna.id}}></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Area</ion-label>
+        <ion-textarea [(ngModel)]="usuario.area" name="area" autocomplete="off" type="text" ngModel clearOnEdit="true">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Foto</ion-label>
+        <ion-textarea [(ngModel)]="usuario.imagen" name="imagen" autocomplete="off" type="file" ngModel
+          clearOnEdit="true"></ion-textarea>
+      </ion-item>
+
+
+
+
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar
+    </ion-button>
+  </form>
+</ion-content>

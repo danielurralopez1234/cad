@@ -1,20 +1,257 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      Agenda
     </ion-title>
   </ion-toolbar>
+  <ion-segment [value]="valueDefault">
+    <ion-segment-button value="paso1" [disabled]="hidePaso1">
+      <ion-label class="text-size-seg">1. Agrega auto</ion-label>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="paso2" [disabled]="hidePaso2">
+      <ion-label class="text-size-seg">2. Servicio</ion-label>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="paso3" [disabled]="hidePaso3">
+      <ion-label class="text-size-seg">3. Lugar</ion-label>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="paso4" [disabled]="hidePaso4">
+      <ion-label class="text-size-seg">4. Mecanico</ion-label>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="paso5" [disabled]="hidePaso5">
+      <ion-label class="text-size-seg">5. Pago</ion-label>
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content [fullscreen]="true" id="c1" *ngIf="hideC1">
+  <form [formGroup]="carForm">
+    <ion-item>
+      <ion-label position="floating">Patente</ion-label>
+      <ion-input formControlName="patente" placeholder="MMBB00"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Marca</ion-label>
+      <ion-select formControlName="marca" placeholder="Selecciona..">
+        <ion-select-option value="f">Chevrolet</ion-select-option>
+        <ion-select-option value="m">Hyundai</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Modelo</ion-label>
+      <ion-select formControlName="modelo" placeholder="Selecciona..">
+        <ion-select-option value="f">Sonic</ion-select-option>
+        <ion-select-option value="m">Grand I-10</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Año</ion-label>
+      <ion-datetime placeholder="2000" formControlName="anio"
+                    displayFormat="YYYY"
+                    cancelText="Cancelar!!!"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Cilindrada</ion-label>
+      <ion-input formControlName="cilindrada" placeholder="1.2"></ion-input>
+    </ion-item>
+  </form>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="validaCarForm()">
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+<ion-content [fullscreen]="true" id="c2" *ngIf="hideC2">
+  <form [formGroup]="serviceForm">
+    <ion-item>
+      <ion-label>Tipo Mantencion</ion-label>
+      <ion-select formControlName="tipo" placeholder="Selecciona..">
+        <ion-select-option value="f">Kilometraje</ion-select-option>
+        <ion-select-option value="m">Otros</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Mantencion</ion-label>
+      <ion-select formControlName="mantencion" placeholder="Selecciona..">
+        <ion-select-option value="f">10.000km</ion-select-option>
+        <ion-select-option value="m">20.000km</ion-select-option>
+        <ion-select-option value="m">30.000km</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <h1>Slide 1</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 2</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 3</h1>
+      </ion-slide>
+    </ion-slides>
+  </form>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="validaServiceForm()">
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="serviceFormBack()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-content [fullscreen]="true" id="c3" *ngIf="hideC3">
+  <form [formGroup]="placeForm">
+    <ion-item>
+      <ion-label>Region</ion-label>
+      <ion-select formControlName="region" placeholder="Selecciona..">
+        <ion-select-option value="f">Metropolitana</ion-select-option>
+        <ion-select-option value="m">Otros</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Comuna</ion-label>
+      <ion-select formControlName="comuna"  placeholder="Selecciona..">
+        <ion-select-option value="f">Maipu</ion-select-option>
+        <ion-select-option value="m">Las Condes</ion-select-option>
+        <ion-select-option value="m">Santiago</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Calle</ion-label>
+      <ion-input formControlName="calle" ></ion-input>
+    </ion-item>
+
+    <ion-label>
+      aqui va ir el mapa
+    </ion-label>
+  </form>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="validaDireccionForm()">
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="direccionFormBack()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-content [fullscreen]="true" id="c4" *ngIf="hideC4">
+  <form [formGroup]="mecanicoForm">
+    <ion-item>
+      <ion-label>Mecanico</ion-label>
+      <ion-select formControlName="mecanico" placeholder="Selecciona..">
+        <ion-select-option value="f">Julio</ion-select-option>
+        <ion-select-option value="m">Juan</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Selecciona Fecha</ion-label>
+      <ion-datetime formControlName="fechaR" placeholder="Fecha"
+                    displayFormat="YYYY MMMM DD"
+                    cancelText="Cancelar!!!"
+                    [min]="fechaHoy.toISOString()"
+                    [ngModel]="fechaHoy.toISOString()"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            Martes 11, 2020
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            col 1
+          </ion-col>
+          <ion-col>
+            col 2
+          </ion-col>
+          <ion-col>
+            col 3
+          </ion-col>
+          <ion-col>
+            col 4
+          </ion-col>
+          <ion-col>
+            col 5
+          </ion-col>
+          <ion-col>
+            col 6
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </form>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="validaMecanicoForm()">
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="mecanicoFormBack()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-content [fullscreen]="true" id="c5" *ngIf="hideC5">
+  <form [formGroup]="pagoForm">
+    <ion-radio-group formControlName="pago">
+      <ion-list-header>
+        <ion-label>Forma de pago</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Transferencia Bancaria</ion-label>
+        <ion-radio slot="start" value="tb"></ion-radio>
+      </ion-item>
+      <!-- los datos pueden ser tambien popup-->
+      <ion-list *ngIf="hideC5">
+        <ion-item>
+          <ion-label>> Nombre:</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>> Rut:</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>> Banco: </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>> Tipo cuenta:</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>> N° cuenta: </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>> N° cuenta: </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-item>
+        <ion-label>Efectivo</ion-label>
+        <ion-radio slot="start" value="ef"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+    <ion-label class="ion-float-md-right">Total: $ 0</ion-label>
+
+    <ion-button (click)="finalizaModal()">Finalizar</ion-button>
+    <!-- Mensaje de finalizacion, y se limpian los campos y se vuelve a la pagina principal, deberia quedar registrado en la parte mis reservas -->
+  </form>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="pagoFormBack()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

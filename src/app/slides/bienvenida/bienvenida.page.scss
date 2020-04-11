@@ -1,0 +1,15 @@
+ion-slide {
+  display: block;
+}
+img {
+  height: 70% !important;
+  width: 70% !important;
+}
+.slide-img-padding {
+  padding: 40px;
+}
+
+ion-slides {
+  --bullet-background: grey;
+  --bullet-background-active: #8890B2;
+}

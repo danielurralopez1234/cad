@@ -1,0 +1,30 @@
+<ion-header class="ion-text-center">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inicia sesion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding="true">
+  <form #form="ngForm" (ngSubmit)="onLogin()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Correo</ion-label>
+        <ion-input [(ngModel)]="user.email" name="correo" autocomplete="off" type="email" placeholder="tu@email.com" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Clave</ion-label>
+        <ion-input [(ngModel)]="user.password" name="clave" autocomplete="off" type="password" placeholder="Clave" ngModel required></ion-input>
+      </ion-item>
+
+      <ion-item lines='none'>
+        <a routerLink='/forgot'>Olvidaste tu contraseña?</a>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Ingresar</ion-button>
+  </form>
+</ion-content>
+

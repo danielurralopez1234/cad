@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Autos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="saveAuto()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Añio</ion-label>
+        <ion-input [(ngModel)]="auto.anio" name="anio" autocomplete="off" type="number" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Marca</ion-label>
+        <ion-input [(ngModel)]="auto.marca" name="marca" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Modelo</ion-label>
+        <ion-input [(ngModel)]="auto.modelo" name="modelo" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Combustible</ion-label>
+        <ion-input [(ngModel)]="auto.combustible" name="combustible" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Patente</ion-label>
+        <ion-input [(ngModel)]="auto.patente" name="patente" autocomplete="off" type="text" ngModel required></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+  </form>
+</ion-content>
