@@ -88,6 +88,9 @@ export class MantenedorService {
   getAllcomuna() {
     return this.afDB.list('comuna');
   }
+  getAllarea() {
+    return this.afDB.list('sector');
+  }
   // fin combos
 
 }
