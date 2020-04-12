@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {AddeditAceitePage} from './modals/addedit-aceite/addedit-aceite.page';
 import {MantenedorService} from '../../services/mantenedor.service';
 import {Aceite} from '../../models/aceite';
@@ -12,8 +12,11 @@ import {Aceite} from '../../models/aceite';
 export class AceitesPage implements OnInit {
   shell: boolean;
   Aceites: any;
+  auxAceites: any;
 
-  constructor(private modalController: ModalController, private mantService: MantenedorService) {
+  constructor(private modalController: ModalController,
+              private mantService: MantenedorService,
+              private toastController: ToastController) {
     this.shell = true;
   }
 
@@ -25,6 +28,7 @@ export class AceitesPage implements OnInit {
         const a = item.payload.toJSON();
         a['$key'] = item.key;
         this.Aceites.push(a as Aceite);
+        this.auxAceites = this.Aceites;
       });
     });
   }
@@ -40,7 +44,6 @@ export class AceitesPage implements OnInit {
     this.Aceites = this.auxAceites;
     if (val.trim() !== '') {
       this.Aceites = this.Aceites.filter((item) => {
-        console.log(item);
         return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
       });
     }
