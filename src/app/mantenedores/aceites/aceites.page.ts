@@ -29,8 +29,29 @@ export class AceitesPage implements OnInit {
     });
   }
 
-  activando() {
-    console.log(this.shell);
+  async updateAceite(id: string, est: boolean) {
+    await this.mantService.updateAceite(id, est).then(res => {
+      this.presentToast('Actualizado.');
+    }).catch(err => this.presentToast('Problemas al guardar registro.'));
+  }
+
+  searchAceite(ev) {
+    const val = ev.target.value;
+    this.Aceites = this.auxAceites;
+    if (val.trim() !== '') {
+      this.Aceites = this.Aceites.filter((item) => {
+        console.log(item);
+        return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+      });
+    }
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
   async addeditModal() {

@@ -48,6 +48,10 @@ export class MantenedorService {
     return this.afDB.list('aceite');
   }
 
+  async updateAceite(id: string, est: boolean) {
+    this.afDB.database.ref('aceite/' + id).update({estado: est});
+  }
+
   async saveFormaPago(formaPago: FormaPago) {
     this.formaPago.push().set(formaPago);
   }
