@@ -5,6 +5,7 @@ import { Region } from '../../../../models/region';
 import { Comuna } from '../../../../models/comuna';
 import { Area } from '../../../../models/area';
 import { MantenedorService } from '../../../../services/mantenedor.service';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class AddeditMecanicosPage implements OnInit {
   r: any;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
-    private toastController: ToastController) { }
+              private toastController: ToastController, private base64: Base64) { }
 
   ngOnInit() {
     const regionRes = this.mantService.getAllregion();
@@ -50,11 +51,20 @@ export class AddeditMecanicosPage implements OnInit {
 
   async saveMecanico() {
     this.usuario.comuna = this.check;
-    console.log(this.usuario);
-    // await this.mantService.saveMecanico(this.usuario).then(res => {
-    //   this.presentToast('Registro exitoso.');
-    //   this.modalClose();
-    // }).catch(err => this.presentToast('Error al guardar registro'));
+    
+    const filePath: string = this.usuario.imagen;
+    this.base64.encodeFile(filePath).then((base64File: string) => {
+      debugger
+      console.log(base64File);
+      this.usuario.imagen = base64File;
+    }, (err) => {
+      console.log(err);
+    });
+
+    await this.mantService.saveMecanico(this.usuario).then(res => {
+      this.presentToast('Registro exitoso.');
+      this.modalClose();
+    }).catch(err => this.presentToast('Error al guardar registro'));
   }
 
   async presentToast(mensaje: string) {

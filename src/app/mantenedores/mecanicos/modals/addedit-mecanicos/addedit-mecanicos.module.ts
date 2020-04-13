@@ -8,6 +8,7 @@ import { AddeditMecanicosPageRoutingModule } from './addedit-mecanicos-routing.m
 
 import { AddeditMecanicosPage } from './addedit-mecanicos.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

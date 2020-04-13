@@ -18,6 +18,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +30,8 @@ import { environment } from '../environments/environment';
     SplashScreen,
     AuthGuardService,
     AuthenticationService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    Base64
   ],
   bootstrap: [AppComponent]
 })
