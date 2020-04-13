@@ -3,6 +3,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { Usuario } from '../../../../models/usuario';
 import { Region } from '../../../../models/region';
 import { Comuna } from '../../../../models/comuna';
+import { Area } from '../../../../models/area';
 import { MantenedorService } from '../../../../services/mantenedor.service';
 
 
@@ -16,11 +17,15 @@ export class AddeditMecanicosPage implements OnInit {
   usuario: Usuario = new Usuario();
   Region: any;
   Comuna: any;
+  Area: any;
   key = '$key';
   comunaBusca = '';
+  check: any;
+  r: any;
+  file: any;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
-              private toastController: ToastController) {}
+              private toastController: ToastController) { }
 
   ngOnInit() {
     const regionRes = this.mantService.getAllregion();
@@ -34,14 +39,18 @@ export class AddeditMecanicosPage implements OnInit {
         }
       });
     });
-  }
+}
 
   async modalClose() {
     await this.modalController.dismiss();
   }
 
   async saveMecanico() {
+    this.usuario.comuna = this.check;
+    this.usuario.imagen = this.usuario.rut.toString();
+
     await this.mantService.saveMecanico(this.usuario).then(res => {
+      this.mantService.upLoadImage(this.file, this.usuario.rut.toString());
       this.presentToast('Registro exitoso.');
       this.modalClose();
     }).catch(err => this.presentToast('Error al guardar registro'));
@@ -86,5 +95,34 @@ export class AddeditMecanicosPage implements OnInit {
       return value.toString().toLowerCase();
     }
   }
+  checkValue(value) {
+    this.check = value.detail.value;
+
+    const m = this.buscaComuna(this.check);
+    const areasRes = this.mantService.getAllarea();
+    areasRes.snapshotChanges().subscribe(res => {
+      this.Area = [];
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        const j = a as Area;
+        if (j.id === m.sector) {
+          this.Area.push(a as Area);
+        }
+      });
+    });
+  }
+
+  buscaComuna(val) {
+    for (const j of this.Comuna) {
+      if (j.id === parseInt(val)) {
+        return j;
+      }
+    }
+  }
+
+  uploadFile(value) {
+    this.file = value.target.files[0];
+  }
+
 
 }

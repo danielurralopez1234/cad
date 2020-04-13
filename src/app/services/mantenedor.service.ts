@@ -7,6 +7,7 @@ import { Auto } from '../models/auto';
 import { Usuario } from '../models/usuario';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 import { convertToParamMap } from '@angular/router';
+import { storage } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +39,13 @@ export class MantenedorService {
     this.auto = afDB.database.ref('auto');
     this.usuario = afDB.database.ref('usuario');
 
+
+
+
   }
 
   async saveAceite(aceite: Aceite) {
-      this.aceite.push().set(aceite);
+    this.aceite.push().set(aceite);
   }
 
   getAllAceite() {
@@ -85,13 +89,25 @@ export class MantenedorService {
     return this.afDB.list('usuario');
   }
 
-  // combos
   getAllregion() {
     return this.afDB.list('region');
   }
+
   getAllcomuna() {
     return this.afDB.list('comuna');
   }
-  // fin combos
+
+  getAllarea() {
+    return this.afDB.list('sector');
+  }
+
+  async upLoadImage(img: any, id: string) {
+    this.storageRef = storage().ref('img/' + id);
+    const task = this.storageRef.put(img);
+  }
+
+  getImageById(id: string) {
+    return storage().ref('img/' + id).getDownloadURL();
+  }
 
 }

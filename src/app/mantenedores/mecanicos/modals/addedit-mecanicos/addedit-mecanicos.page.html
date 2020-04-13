@@ -15,8 +15,8 @@
       
       <ion-item>
         <ion-label position="stacked">Rut</ion-label>
-        <ion-textarea [(ngModel)]="usuario.rut" name="rut" autocomplete="off" type="number" ngModel clearOnEdit="true">
-        </ion-textarea>
+        <ion-input [(ngModel)]="usuario.rut" name="rut" autocomplete="off" type="number" ngModel clearOnEdit="true">
+        </ion-input>
       </ion-item>
 
       <ion-item>
@@ -26,8 +26,8 @@
 
       <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-textarea [(ngModel)]="usuario.nombre" name="nombre" autocomplete="off" type="text" ngModel
-          clearOnEdit="true"></ion-textarea>
+        <ion-input [(ngModel)]="usuario.nombre" name="nombre" autocomplete="off" type="text" ngModel
+          clearOnEdit="true"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -38,8 +38,8 @@
 
       <ion-item>
         <ion-label position="stacked">Apellido Materno</ion-label>
-        <ion-textarea [(ngModel)]="usuario.apellidoMaterno" name="apellidoMaterno" autocomplete="off" type="text"
-          ngModel clearOnEdit="true"></ion-textarea>
+        <ion-input [(ngModel)]="usuario.apellidoMaterno" name="apellidoMaterno" autocomplete="off" type="text"
+          ngModel clearOnEdit="true"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -50,8 +50,8 @@
 
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-textarea [(ngModel)]="usuario.mail" name="mail" autocomplete="off" type="email" ngModel clearOnEdit="true">
-        </ion-textarea>
+        <ion-input [(ngModel)]="usuario.mail" name="mail" autocomplete="off" type="email" ngModel clearOnEdit="true">
+        </ion-input>
       </ion-item>
 
       <ion-item>
@@ -75,34 +75,37 @@
 
       <ion-item>
         <ion-label position="stacked">Region</ion-label>
-        <ion-select [(ngModel)]="usuario.region" name="region" placeholder="Seleccionar">
-          <ion-select-option *ngFor="let region of Region" value={{region.id}}>{{region.nombre}}</ion-select-option>
-        </ion-select>
+        <!-- <ion-select [(ngModel)]="usuario.region" name="region" placeholder="Seleccionar">
+          <ion-select-option *ngFor="let region of Region" selected value={{region.id}}>{{region.nombre}}</ion-select-option>
+        </ion-select> -->
+        <ion-input [(ngModel)]="usuario.region" name="region" autocomplete="off" type="text" value=7 ngModel required>Región Metropolitana de Santiago</ion-input>
       </ion-item>
 
       <ion-item>
         <ion-searchbar [(ngModel)]="usuario.comuna" name="comuna" (input)="searchComuna($event)" placeholder="Comuna">
         </ion-searchbar>
       </ion-item>
-      <ion-item>
-        <ion-radio-group value="comuna" *ngFor="let comuna of Comuna">
-          <ion-item>
-            <ion-label>{{comuna.nombre}}</ion-label>
-            <ion-radio slot="start" value={{comuna.id}}></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-item>
+
+        <ion-list >
+          <ion-radio-group (ionChange)="checkValue($event)">
+        <ion-item   *ngFor="let comuna of Comuna" >
+          <ion-label>{{comuna.nombre}}</ion-label>
+          <ion-radio value={{comuna.id}} ></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+      </ion-list>
 
       <ion-item>
         <ion-label position="stacked">Area</ion-label>
-        <ion-textarea [(ngModel)]="usuario.area" name="area" autocomplete="off" type="text" ngModel clearOnEdit="true">
-        </ion-textarea>
+        <ion-input [(ngModel)]="usuario.area" *ngFor="let area of Area" name="area" value={{area.id}} autocomplete="off" type="text" ngModel clearOnEdit="true">
+          {{area.nombre}}
+        </ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Foto</ion-label>
-        <ion-textarea [(ngModel)]="usuario.imagen" name="imagen" autocomplete="off" type="file" ngModel
-          clearOnEdit="true"></ion-textarea>
+        <!-- <ion-input [(ngModel)]="usuario.imagen" name="imagen" autocomplete="off" type="file" ngModel clearOnEdit="true"></ion-input> -->
+        <ion-input type="file" (change)="uploadFile($event)"></ion-input>
       </ion-item>
 
 
