@@ -56,6 +56,21 @@ export class MantenedorService {
     this.afDB.database.ref('aceite/' + id).update({estado: est});
   }
 
+  async updateAceitePop(id: string, aceite: Aceite) {
+    this.afDB.database.ref('aceite/' + id).update({
+      tipoCar: aceite.tipoCar,
+      nombre: aceite.nombre,
+      descripcion: aceite.descripcion,
+      foto: aceite.foto,
+      valor: aceite.valor,
+      estado: aceite.estado
+    });
+  }
+
+  async deleteAceite(id: string) {
+    this.afDB.object('aceite/' + id).remove();
+  }
+
   async saveFormaPago(formaPago: FormaPago) {
     this.formaPago.push().set(formaPago);
   }

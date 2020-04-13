@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, ToastController} from '@ionic/angular';
+import {ModalController, NavParams, ToastController} from '@ionic/angular';
 import {Aceite} from '../../../../models/aceite';
 import {MantenedorService} from '../../../../services/mantenedor.service';
 
@@ -10,9 +10,25 @@ import {MantenedorService} from '../../../../services/mantenedor.service';
 })
 export class AddeditAceitePage implements OnInit {
   aceite: Aceite = new Aceite();
+  auxParam: any = [];
+  id: string;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private navParams: NavParams) {
+    if (navParams.get('data') !== null) {
+      this.auxParam.push(navParams.get('data') as Aceite);
+      this.auxParam.forEach(item => {
+        this.aceite.tipoCar = item[0].tipoCar;
+        this.aceite.nombre = item[0].nombre;
+        this.aceite.descripcion = item[0].descripcion;
+        this.aceite.valor = item[0].valor;
+        this.aceite.foto = item[0].foto;
+        this.aceite.estado = item[0].estado;
+        this.id = item[0].$key;
+      });
+    }
+  }
 
   ngOnInit() {
   }
@@ -21,11 +37,18 @@ export class AddeditAceitePage implements OnInit {
     await this.modalController.dismiss();
   }
 
-  async saveAceite() {
-    await this.mantService.saveAceite(this.aceite).then(res => {
-      this.presentToast('Registro exitoso.');
-      this.modalClose();
-    }).catch(err => this.presentToast('Error al guardar registro'));
+  async saveUpdateAceite() {
+    if (this.auxParam.length === 0) {
+      await this.mantService.saveAceite(this.aceite).then(res => {
+        this.presentToast('Registro exitoso.');
+        this.modalClose();
+      }).catch(err => this.presentToast('Error al guardar registro'));
+    } else {
+      await this.mantService.updateAceitePop(this.id, this.aceite).then(res => {
+        this.presentToast('Actualizado.');
+      }).catch(err => this.presentToast('Problemas al guardar registro.'));
+    }
+    this.modalClose();
   }
 
   async presentToast(mensaje: string) {
