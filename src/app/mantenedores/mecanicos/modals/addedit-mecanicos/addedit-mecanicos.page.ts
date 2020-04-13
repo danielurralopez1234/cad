@@ -5,7 +5,6 @@ import { Region } from '../../../../models/region';
 import { Comuna } from '../../../../models/comuna';
 import { Area } from '../../../../models/area';
 import { MantenedorService } from '../../../../services/mantenedor.service';
-import { Base64 } from '@ionic-native/base64/ngx';
 
 
 @Component({
@@ -23,9 +22,10 @@ export class AddeditMecanicosPage implements OnInit {
   comunaBusca = '';
   check: any;
   r: any;
+  file: any;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
-              private toastController: ToastController, private base64: Base64) { }
+              private toastController: ToastController) { }
 
   ngOnInit() {
     const regionRes = this.mantService.getAllregion();
@@ -39,11 +39,7 @@ export class AddeditMecanicosPage implements OnInit {
         }
       });
     });
-
-
-
-
-  }
+}
 
   async modalClose() {
     await this.modalController.dismiss();
@@ -51,17 +47,10 @@ export class AddeditMecanicosPage implements OnInit {
 
   async saveMecanico() {
     this.usuario.comuna = this.check;
-    
-    const filePath: string = this.usuario.imagen;
-    this.base64.encodeFile(filePath).then((base64File: string) => {
-      debugger
-      console.log(base64File);
-      this.usuario.imagen = base64File;
-    }, (err) => {
-      console.log(err);
-    });
+    this.usuario.imagen = this.usuario.rut.toString();
 
     await this.mantService.saveMecanico(this.usuario).then(res => {
+      this.mantService.upLoadImage(this.file, this.usuario.rut.toString());
       this.presentToast('Registro exitoso.');
       this.modalClose();
     }).catch(err => this.presentToast('Error al guardar registro'));
@@ -130,5 +119,10 @@ export class AddeditMecanicosPage implements OnInit {
       }
     }
   }
+
+  uploadFile(value) {
+    this.file = value.target.files[0];
+  }
+
 
 }

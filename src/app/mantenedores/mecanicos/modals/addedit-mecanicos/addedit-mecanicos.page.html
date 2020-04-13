@@ -104,8 +104,8 @@
 
       <ion-item>
         <ion-label position="stacked">Foto</ion-label>
-        <ion-input [(ngModel)]="usuario.imagen" name="imagen" autocomplete="off" type="file" ngModel
-          clearOnEdit="true"></ion-input>
+        <!-- <ion-input [(ngModel)]="usuario.imagen" name="imagen" autocomplete="off" type="file" ngModel clearOnEdit="true"></ion-input> -->
+        <ion-input type="file" (change)="uploadFile($event)"></ion-input>
       </ion-item>
 
 
