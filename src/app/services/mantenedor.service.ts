@@ -8,6 +8,7 @@ import { Usuario } from '../models/usuario';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 import { convertToParamMap } from '@angular/router';
 import { storage } from 'firebase';
+import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,11 @@ export class MantenedorService {
   }
 
   async saveAceite(aceite: Aceite) {
-    this.aceite.push().set(aceite);
+    return new Promise((resolve, reject) => {
+      this.aceite.push(aceite).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
   }
 
   getAllAceite() {
@@ -56,14 +61,16 @@ export class MantenedorService {
     this.afDB.database.ref('aceite/' + id).update({estado: est});
   }
 
+  async updateAceiteFoto(id: string, img: string) {
+    this.afDB.database.ref('aceite/' + id).update({foto: img});
+  }
+
   async updateAceitePop(id: string, aceite: Aceite) {
     this.afDB.database.ref('aceite/' + id).update({
       tipoCar: aceite.tipoCar,
       nombre: aceite.nombre,
       descripcion: aceite.descripcion,
-      foto: aceite.foto,
-      valor: aceite.valor,
-      estado: aceite.estado
+      valor: aceite.valor
     });
   }
 
@@ -118,11 +125,13 @@ export class MantenedorService {
 
   async upLoadImage(img: any, id: string) {
     this.storageRef = storage().ref('img/' + id);
-    const task = this.storageRef.put(img);
-  }
-
-  getImageById(id: string) {
-    return storage().ref('img/' + id).getDownloadURL();
+    return new Promise((resolve, reject) => {
+      this.storageRef.put(img).then(res => {
+        res.ref.getDownloadURL().then(resp => {
+          resolve(resp);
+        });
+      }).catch(err => reject(err));
+    });
   }
 
 }

@@ -13,7 +13,7 @@
     <ion-item-sliding *ngFor="let aceite of Aceites">
       <ion-item>
         <ion-avatar slot="start">
-          <img src="../assets/shapes.svg">
+          <img [src]="aceite.foto">
         </ion-avatar>
         <ion-label>
           <h2>{{aceite.nombre}}</h2>

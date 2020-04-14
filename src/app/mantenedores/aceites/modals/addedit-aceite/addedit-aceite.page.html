@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Foto</ion-label>
-        <ion-input [(ngModel)]="aceite.foto" name="foto" autocomplete="off" type="file" accept="image/*" ngModel required></ion-input>
+        <ion-input [(ngModel)]="aceite.foto" (change)="uploadFile($event)" name="foto" autocomplete="off" type="file" accept="image/*" ngModel required></ion-input>
       </ion-item>
 
     </ion-list>

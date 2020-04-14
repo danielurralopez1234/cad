@@ -12,6 +12,7 @@ export class AddeditAceitePage implements OnInit {
   aceite: Aceite = new Aceite();
   auxParam: any = [];
   id: string;
+  file: any;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
               private toastController: ToastController,
@@ -39,16 +40,30 @@ export class AddeditAceitePage implements OnInit {
 
   async saveUpdateAceite() {
     if (this.auxParam.length === 0) {
-      await this.mantService.saveAceite(this.aceite).then(res => {
+      this.aceite.estado = false;
+      await this.mantService.saveAceite(this.aceite).then(async resId => {
+        console.log('id aceite: ' + resId);
+        await this.mantService.upLoadImage(this.file, resId.toString()).then(resPathImg => {
+          console.log('path img: ' + resPathImg);
+          this.mantService.updateAceiteFoto(resId.toString(), resPathImg.toString());
+        });
         this.presentToast('Registro exitoso.');
-        this.modalClose();
       }).catch(err => this.presentToast('Error al guardar registro'));
     } else {
-      await this.mantService.updateAceitePop(this.id, this.aceite).then(res => {
+      await this.mantService.updateAceitePop(this.id, this.aceite).then(async res => {
+        if (this.file !== undefined) {
+          await this.mantService.upLoadImage(this.file, this.id).then(resPathImg => {
+            console.log('path img update: ' + resPathImg);
+            this.mantService.updateAceiteFoto(this.id, resPathImg.toString());
+          });
+        }
         this.presentToast('Actualizado.');
       }).catch(err => this.presentToast('Problemas al guardar registro.'));
+
+
     }
     this.modalClose();
+
   }
 
   async presentToast(mensaje: string) {
@@ -57,6 +72,10 @@ export class AddeditAceitePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  uploadFile(value) {
+    this.file = value.target.files[0];
   }
 
 }
