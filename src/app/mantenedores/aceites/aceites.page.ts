@@ -10,7 +10,6 @@ import {Aceite} from '../../models/aceite';
   styleUrls: ['./aceites.page.scss'],
 })
 export class AceitesPage implements OnInit {
-  shell: boolean;
   Aceites: any;
   auxAceites: any;
 
@@ -18,7 +17,6 @@ export class AceitesPage implements OnInit {
               private mantService: MantenedorService,
               private toastController: ToastController,
               private alertController: AlertController) {
-    this.shell = true;
   }
 
   ngOnInit() {

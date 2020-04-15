@@ -9,6 +9,7 @@ import { convertActionBinding } from '@angular/compiler/src/compiler_util/expres
 import { convertToParamMap } from '@angular/router';
 import { storage } from 'firebase';
 import {log} from 'util';
+import {TipoCombustible} from '../models/tipoCombustible';
 
 @Injectable({
   providedIn: 'root'
@@ -132,6 +133,10 @@ export class MantenedorService {
         });
       }).catch(err => reject(err));
     });
+  }
+
+  saveTipoCombustible(tipo: TipoCombustible) {
+    this.afDB.database.ref('tipoCombustible').push(tipo);
   }
 
 }
