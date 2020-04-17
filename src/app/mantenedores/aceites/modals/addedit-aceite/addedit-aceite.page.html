@@ -10,30 +10,32 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="saveUpdateAceite()">
+  <form [formGroup]="aceiteForm" (ngSubmit)="saveUpdateAceite()">
     <ion-list>
       <ion-item>
-        <ion-label position="stacked">Tipo de vehiculo</ion-label>
-        <ion-input [(ngModel)]="aceite.tipoCar" name="tipoCar" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-label position="stacked">Tipo de Combustible</ion-label>
+        <ion-select placeholder="Selecciona..." [value]="aceite.tipoCom" formControlName="tipo" [(ngModel)]="aceite.tipoCom">
+          <ion-select-option *ngFor="let tipo of TipoCom" value="{{tipo.$key}}">{{tipo.nombre}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="aceite.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="aceite.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Descripcion</ion-label>
-        <ion-input [(ngModel)]="aceite.descripcion" name="descripcion" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="aceite.descripcion" name="descripcion" formControlName="descripcion" autocomplete="off" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Precio</ion-label>
-        <ion-input [(ngModel)]="aceite.valor" name="precio" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="aceite.valor" name="precio" formControlName="precio" autocomplete="off" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Foto</ion-label>
-        <ion-input [(ngModel)]="aceite.foto" (change)="uploadFile($event)" name="foto" autocomplete="off" type="file" accept="image/*" ngModel required></ion-input>
+        <ion-input [(ngModel)]="aceite.foto" (change)="uploadFile($event)" name="foto" formControlName="foto" autocomplete="off" type="file" accept="image/*"></ion-input>
       </ion-item>
 
     </ion-list>
-    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+    <ion-button expand="block" share="round" color="success" type="submit">Guardar</ion-button>
   </form>
 </ion-content>

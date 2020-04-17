@@ -33,6 +33,7 @@ export class AceitesPage implements OnInit {
   }
 
   async updateAceite(id: string, est: boolean) {
+    console.log('update');
     await this.mantService.updateAceite(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));

@@ -58,6 +58,10 @@ export class MantenedorService {
     return this.afDB.list('aceite');
   }
 
+  getAllTipoCombustible() {
+    return this.afDB.list('tipoCombustible');
+  }
+
   async updateAceite(id: string, est: boolean) {
     this.afDB.database.ref('aceite/' + id).update({estado: est});
   }
@@ -68,7 +72,7 @@ export class MantenedorService {
 
   async updateAceitePop(id: string, aceite: Aceite) {
     this.afDB.database.ref('aceite/' + id).update({
-      tipoCar: aceite.tipoCar,
+      tipoCom: aceite.tipoCom,
       nombre: aceite.nombre,
       descripcion: aceite.descripcion,
       valor: aceite.valor

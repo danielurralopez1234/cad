@@ -3,6 +3,6 @@ export class Aceite {
     descripcion: string;
     valor: number;
     foto: any;
-    tipoCar: string;
+    tipoCom: string;
     estado: boolean;
 }
