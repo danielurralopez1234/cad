@@ -3,6 +3,7 @@ export class Auto {
     marca: string;
     modelo: string;
     combustible: string;
-    estado: string;
+    combustibleNombre: string;
+    estado: boolean;
     patente: string;
 }

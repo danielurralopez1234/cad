@@ -10,18 +10,18 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="saveFormaPago()">
+  <form [formGroup]="formaPagoForm"  (ngSubmit)="saveUpdateFormaPago()">
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="formaPago.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="formaPago.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text" ngModel required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Comentario</ion-label>
-        <ion-textarea [(ngModel)]="formaPago.comentario" name="comentario" autocomplete="off" type="text" ngModel clearOnEdit="true"></ion-textarea>
+        <ion-textarea [(ngModel)]="formaPago.comentario" name="comentario" formControlName="comentario" autocomplete="off" type="text" ngModel required></ion-textarea>
       </ion-item>
      
     </ion-list>
-    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+    <ion-button expand="block" share="round" color="success" type="submit" >Guardar</ion-button>
   </form>
 </ion-content>

@@ -10,22 +10,22 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="saveServicio()">
+  <form [formGroup]="servicioForm" (ngSubmit)="saveUpdateServicio()">
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="servicio.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="servicio.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text" ngModel required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">valor</ion-label>
-        <ion-input [(ngModel)]="servicio.valor" name="valor" autocomplete="off" type="number" ngModel clearOnEdit="true"></ion-input>
+        <ion-input [(ngModel)]="servicio.valor" name="valor" formControlName="valor"  autocomplete="off" type="number" ngModel required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Descripcion</ion-label>
-        <ion-textarea [(ngModel)]="servicio.descripcion" name="descripcion" autocomplete="off" type="text" ngModel clearOnEdit="true"></ion-textarea>
+        <ion-textarea [(ngModel)]="servicio.descripcion" name="descripcion" formControlName="descripcion" autocomplete="off" type="text" ngModel required></ion-textarea>
       </ion-item>
      
     </ion-list>
-    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+    <ion-button expand="block" share="round" color="success" type="submit" >Guardar</ion-button>
   </form>
 </ion-content>

@@ -74,15 +74,15 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Region</ion-label>
+        <!-- <ion-label position="stacked">Region</ion-label> -->
         <!-- <ion-select [(ngModel)]="usuario.region" name="region" placeholder="Seleccionar">
           <ion-select-option *ngFor="let region of Region" selected value={{region.id}}>{{region.nombre}}</ion-select-option>
         </ion-select> -->
-        <ion-input [(ngModel)]="usuario.region" name="region" autocomplete="off" type="text" value=7 ngModel required>Región Metropolitana de Santiago</ion-input>
+        <ion-label [(ngModel)]="usuario.region" name="region" autocomplete="off" type="text" value=7  ngModel>Región Metropolitana de Santiago</ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-searchbar [(ngModel)]="usuario.comuna" name="comuna" (input)="searchComuna($event)" placeholder="Comuna">
+        <ion-searchbar expand="full" [(ngModel)]="usuario.comuna" name="comuna" (input)="searchComuna($event)" placeholder="Comuna">
         </ion-searchbar>
       </ion-item>
 

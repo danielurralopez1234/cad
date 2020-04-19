@@ -40,10 +40,6 @@ export class MantenedorService {
     this.servicio = afDB.database.ref('servicio');
     this.auto = afDB.database.ref('auto');
     this.usuario = afDB.database.ref('usuario');
-
-
-
-
   }
 
   async saveAceite(aceite: Aceite) {
@@ -65,7 +61,6 @@ export class MantenedorService {
   async updateAceite(id: string, est: boolean) {
     this.afDB.database.ref('aceite/' + id).update({estado: est});
   }
-
   async updateAceiteFoto(id: string, img: string) {
     this.afDB.database.ref('aceite/' + id).update({foto: img});
   }
@@ -78,15 +73,24 @@ export class MantenedorService {
       valor: aceite.valor
     });
   }
-
   async deleteAceite(id: string) {
     this.afDB.object('aceite/' + id).remove();
   }
-
   async saveFormaPago(formaPago: FormaPago) {
     this.formaPago.push().set(formaPago);
   }
-
+  async deleteFormaPago(id: string) {
+    this.afDB.object('formaPago/' + id).remove();
+  }
+  async updateFormaPago(id: string, est: boolean) {
+    this.afDB.database.ref('formaPago/' + id).update({estado: est});
+  }
+  async updateFormaPagoPop(id: string, formaPago: FormaPago) {
+    this.afDB.database.ref('formaPago/' + id).update({
+      nombre: formaPago.nombre,
+      comentario: formaPago.comentario
+    });
+  }
   getAllformaPago() {
     return this.afDB.list('formaPago');
   }
@@ -94,15 +98,45 @@ export class MantenedorService {
   async saveServicio(servicio: Servicio) {
     this.servicio.push().set(servicio);
   }
-
+  async updateServicio(id: string, est: boolean) {
+    this.afDB.database.ref('servicio/' + id).update({estado: est});
+  }
+  async deleteServicio(id: string) {
+    this.afDB.object('servicio/' + id).remove();
+  }
+  async updateServicioPop(id: string, servicio: Servicio) {
+    this.afDB.database.ref('servicio/' + id).update({
+      nombre: servicio.nombre,
+      descripcion: servicio.descripcion,
+      valor: servicio.valor
+    });
+  }
   getAllservicio() {
     return this.afDB.list('servicio');
   }
 
   async saveAuto(auto: Auto) {
-    this.auto.push().set(auto);
+    return new Promise((resolve, reject) => {
+      this.auto.push(auto).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
   }
-
+  async updateAuto(id: string, est: boolean) {
+    this.afDB.database.ref('auto/' + id).update({estado: est});
+  }
+  async deleteAuto(id: string) {
+    this.afDB.object('auto/' + id).remove();
+  }
+  async updateAutoPop(id: string, auto: Auto) {
+    this.afDB.database.ref('auto/' + id).update({
+      anio: auto.anio,
+      marca: auto.marca,
+      modelo: auto.modelo,
+      combustible: auto.combustible,
+      patente: auto.patente
+    });
+  }
   getAllauto() {
     return this.afDB.list('auto');
   }

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar></ion-searchbar>
+  <ion-searchbar (ionInput)="searchServicio($event)" placeholder="Buscar"></ion-searchbar>
   <ion-list>
     <ion-item-sliding *ngFor="let servicio of Servicio">
       <ion-item>
@@ -20,16 +20,16 @@
           <h2>{{servicio.descripcion}}</h2>
           <p>{{servicio.valor}}</p>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="shell" (click)="activando()"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="servicio.estado" (ionChange)="updateServicio(servicio.$key, servicio.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="danger">Eliminar</ion-item-option>
-        <ion-item-option color="success">Editar</ion-item-option>
+        <ion-item-option color="danger" (click)="deleteAlertConfirm(servicio.$key, servicio.nombre)">Eliminar</ion-item-option>
+        <ion-item-option color="success" (click)="addeditModal(servicio.$key)">Editar</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addeditModal()">
+    <ion-fab-button (click)="addeditModal(null)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

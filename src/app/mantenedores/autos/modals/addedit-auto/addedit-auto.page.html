@@ -10,30 +10,37 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="saveAuto()">
+  <form [formGroup]="autoForm" (ngSubmit)="saveUpdateAuto()">
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Añio</ion-label>
-        <ion-input [(ngModel)]="auto.anio" name="anio" autocomplete="off" type="number" ngModel required></ion-input>
+        <ion-input [(ngModel)]="auto.anio" name="anio" formControlName="anio" autocomplete="off" type="number" ngModel
+          required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Marca</ion-label>
-        <ion-input [(ngModel)]="auto.marca" name="marca" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="auto.marca" name="marca" formControlName="marca" autocomplete="off" type="text" ngModel
+          required></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Modelo</ion-label>
-        <ion-input [(ngModel)]="auto.modelo" name="modelo" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="auto.modelo" name="modelo" formControlName="modelo" autocomplete="off" type="text"
+          ngModel required></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Combustible</ion-label>
-        <ion-input [(ngModel)]="auto.combustible" name="combustible" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-label position="stacked">Tipo de Combustible</ion-label>
+        <ion-select placeholder="Selecciona..." [value]="auto.combustible" formControlName="tipo"
+          [(ngModel)]="auto.combustible">
+          <ion-select-option *ngFor="let tipo of TipoCom" value="{{tipo.$key}}">{{tipo.nombre}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Patente</ion-label>
-        <ion-input [(ngModel)]="auto.patente" name="patente" autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-input [(ngModel)]="auto.patente" name="patente" formControlName="patente" autocomplete="off" type="text"
+          ngModel required></ion-input>
       </ion-item>
 
     </ion-list>
-    <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Guardar</ion-button>
+    <ion-button expand="block" share="round" color="success" type="submit">Guardar</ion-button>
   </form>
 </ion-content>
