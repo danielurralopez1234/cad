@@ -8,8 +8,8 @@ import { Usuario } from '../models/usuario';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 import { convertToParamMap } from '@angular/router';
 import { storage } from 'firebase';
-import {log} from 'util';
-import {TipoCombustible} from '../models/tipoCombustible';
+import { log } from 'util';
+import { TipoCombustible } from '../models/tipoCombustible';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,6 @@ export class MantenedorService {
       }).catch(err => reject(err));
     });
   }
-
   getAllAceite() {
     return this.afDB.list('aceite');
   }
@@ -59,12 +58,11 @@ export class MantenedorService {
   }
 
   async updateAceite(id: string, est: boolean) {
-    this.afDB.database.ref('aceite/' + id).update({estado: est});
+    this.afDB.database.ref('aceite/' + id).update({ estado: est });
   }
   async updateAceiteFoto(id: string, img: string) {
-    this.afDB.database.ref('aceite/' + id).update({foto: img});
+    this.afDB.database.ref('aceite/' + id).update({ foto: img });
   }
-
   async updateAceitePop(id: string, aceite: Aceite) {
     this.afDB.database.ref('aceite/' + id).update({
       tipoCom: aceite.tipoCom,
@@ -83,7 +81,7 @@ export class MantenedorService {
     this.afDB.object('formaPago/' + id).remove();
   }
   async updateFormaPago(id: string, est: boolean) {
-    this.afDB.database.ref('formaPago/' + id).update({estado: est});
+    this.afDB.database.ref('formaPago/' + id).update({ estado: est });
   }
   async updateFormaPagoPop(id: string, formaPago: FormaPago) {
     this.afDB.database.ref('formaPago/' + id).update({
@@ -99,7 +97,7 @@ export class MantenedorService {
     this.servicio.push().set(servicio);
   }
   async updateServicio(id: string, est: boolean) {
-    this.afDB.database.ref('servicio/' + id).update({estado: est});
+    this.afDB.database.ref('servicio/' + id).update({ estado: est });
   }
   async deleteServicio(id: string) {
     this.afDB.object('servicio/' + id).remove();
@@ -123,7 +121,7 @@ export class MantenedorService {
     });
   }
   async updateAuto(id: string, est: boolean) {
-    this.afDB.database.ref('auto/' + id).update({estado: est});
+    this.afDB.database.ref('auto/' + id).update({ estado: est });
   }
   async deleteAuto(id: string) {
     this.afDB.object('auto/' + id).remove();
@@ -137,15 +135,47 @@ export class MantenedorService {
       patente: auto.patente
     });
   }
+  async updateUsuarioPop(id: string, usuario: Usuario) {
+    this.afDB.database.ref('usuario/' + id).update({
+      rut: usuario.rut,
+      dv: usuario.dv,
+      nombre: usuario.nombre,
+      apellidoPaterno: usuario.apellidoPaterno,
+      apellidoMaterno: usuario.apellidoMaterno,
+      fechaNacimiento: usuario.fechaNacimiento,
+      mail: usuario.mail,
+      contrasena: usuario.contrasena,
+      direccion: usuario.direccion,
+      telefono: usuario.telefono,
+      region: usuario.region,
+      comuna: usuario.comuna,
+      pais: usuario.pais,
+      area: usuario.area
+    });
+  }
   getAllauto() {
     return this.afDB.list('auto');
   }
-
   async saveMecanico(usuario: Usuario) {
     usuario.rol = 2;
     this.usuario.push().set(usuario);
   }
-
+  async saveUsuario(usuario: Usuario) {
+    return new Promise((resolve, reject) => {
+      this.usuario.push(usuario).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
+  }
+  async updateUsuarioFoto(id: string, img: string) {
+    this.afDB.database.ref('usuario/' + id).update({ foto: img });
+  }
+  async deleteUsuario(id: string) {
+    this.afDB.object('usuario/' + id).remove();
+  }
+  async updateUsuario(id: string, est: boolean) {
+    this.afDB.database.ref('usuario/' + id).update({ estado: est });
+  }
   getAllmecanico() {
     return this.afDB.list('usuario');
   }

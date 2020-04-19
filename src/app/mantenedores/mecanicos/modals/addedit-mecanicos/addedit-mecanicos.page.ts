@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
 import { Usuario } from '../../../../models/usuario';
 import { Region } from '../../../../models/region';
 import { Comuna } from '../../../../models/comuna';
 import { Area } from '../../../../models/area';
 import { MantenedorService } from '../../../../services/mantenedor.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { MantenedorService } from '../../../../services/mantenedor.service';
 export class AddeditMecanicosPage implements OnInit {
 
   usuario: Usuario = new Usuario();
+  auxParam: any = [];
+  id: string;
   Region: any;
   Comuna: any;
   Area: any;
@@ -23,9 +26,53 @@ export class AddeditMecanicosPage implements OnInit {
   check: any;
   r: any;
   file: any;
+  TipoCom: any;
+  mecanicoForm: FormGroup;
 
-  constructor(private modalController: ModalController, private mantService: MantenedorService,
-              private toastController: ToastController) { }
+  constructor(private modalController: ModalController,
+              private mantService: MantenedorService,
+              private toastController: ToastController,
+              private navParams: NavParams,
+              private formBuilder: FormBuilder,
+              private alertController: AlertController) {
+    if (navParams.get('data') !== null) {
+      this.auxParam.push(navParams.get('data') as Usuario);
+      this.auxParam.forEach(item => {
+        this.usuario.rut = item[0].rut;
+        this.usuario.dv = item[0].dv;
+        this.usuario.nombre = item[0].nombre;
+        this.usuario.apellidoPaterno = item[0].apellidoPaterno;
+        this.usuario.apellidoMaterno = item[0].apellidoMaterno;
+        this.usuario.fechaNacimiento = item[0].fechaNacimiento;
+        this.usuario.mail = item[0].mail;
+        this.usuario.contrasena = item[0].contrasena;
+        this.usuario.direccion = item[0].direccion;
+        this.usuario.telefono = item[0].telefono;
+        this.usuario.region = item[0].region;
+        this.usuario.comuna = item[0].comuna;
+        this.usuario.area = item[0].area;
+        this.usuario.foto = item[0].foto;
+        this.id = item[0].$key;
+      });
+    }
+    this.mecanicoForm = formBuilder.group({
+      rut: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
+      dv: ['', Validators.compose([Validators.maxLength(1), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      nombre: ['', Validators.compose([Validators.required])],
+      apellidoPaterno: ['', Validators.compose([Validators.required])],
+      apellidoMaterno: ['', Validators.compose([Validators.required])],
+      fechaNacimiento: ['', Validators.compose([Validators.required])],
+      mail: ['', Validators.compose([Validators.required])],
+      contrasena: ['', Validators.compose([Validators.required])],
+      direccion: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      telefono: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
+      region: ['', Validators.compose([Validators.required])],
+      comuna: ['', Validators.compose([Validators.required])],
+      area: ['', Validators.compose([Validators.required])],
+      foto: ['', Validators.compose([Validators.required])],
+
+    });
+  }
 
   ngOnInit() {
     const regionRes = this.mantService.getAllregion();
@@ -39,23 +86,40 @@ export class AddeditMecanicosPage implements OnInit {
         }
       });
     });
-}
-
-  async modalClose() {
-    await this.modalController.dismiss();
   }
 
-  async saveMecanico() {
-    this.usuario.comuna = this.check;
-    this.usuario.imagen = this.usuario.rut.toString();
+  async saveUpdateUsuario() {
+    if (this.mecanicoForm.valid) {
+      if (this.auxParam.length === 0) {
+        this.usuario.estado = false;
+        this.usuario.rol = 2;
+        await this.mantService.saveUsuario(this.usuario).then(async resId => {
+          console.log('id usuario: ' + resId);
+          await this.mantService.upLoadImage(this.file, resId.toString()).then(resPathImg => {
+            console.log('path img: ' + resPathImg);
+            this.mantService.updateUsuarioFoto(resId.toString(), resPathImg.toString());
+          });
+          this.presentToast('Registro exitoso.');
+        }).catch(err => this.presentToast('Error al guardar registro'));
+      } else {
+        await this.mantService.updateUsuarioPop(this.id, this.usuario).then(async res => {
+          if (this.file !== undefined) {
+            await this.mantService.upLoadImage(this.file, this.id).then(resPathImg => {
+              console.log('path img update: ' + resPathImg);
+              this.mantService.updateUsuarioFoto(this.id, resPathImg.toString());
+            });
+          }
+          this.presentToast('Actualizado.');
+        }).catch(err => this.presentToast('Problemas al guardar registro.'));
 
-    await this.mantService.saveMecanico(this.usuario).then(res => {
-      this.mantService.upLoadImage(this.file, this.usuario.rut.toString());
-      this.presentToast('Registro exitoso.');
+
+      }
       this.modalClose();
-    }).catch(err => this.presentToast('Error al guardar registro'));
-  }
+    } else {
+      this.presentAlert();
+    }
 
+  }
   async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
@@ -63,6 +127,25 @@ export class AddeditMecanicosPage implements OnInit {
     });
     toast.present();
   }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Formulario',
+      message: 'Faltan campos que llenar.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  uploadFile(value) {
+    this.file = value.target.files[0];
+  }
+
+  async modalClose() {
+    await this.modalController.dismiss();
+  }
+
 
   async searchComuna(comuna) {
     const val = [];
@@ -120,9 +203,6 @@ export class AddeditMecanicosPage implements OnInit {
     }
   }
 
-  uploadFile(value) {
-    this.file = value.target.files[0];
-  }
 
 
 }

@@ -14,5 +14,6 @@ export class Usuario {
     comuna: string;
     pais: string;
     area: string;
-    imagen: string;
+    estado: boolean;
+    foto: string;
 }

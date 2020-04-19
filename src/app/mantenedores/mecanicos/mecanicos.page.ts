@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {AlertController, ModalController, ToastController} from '@ionic/angular';
 import {AddeditMecanicosPage} from './modals/addedit-mecanicos/addedit-mecanicos.page';
 import {MantenedorService} from '../../services/mantenedor.service';
 import { Usuario } from '../../models/usuario';
@@ -12,8 +12,12 @@ import { Usuario } from '../../models/usuario';
 export class MecanicosPage implements OnInit {
   shell: boolean;
   Usuario: any;
+  auxUsuarios: any;
 
-  constructor(private modalController: ModalController, private mantService: MantenedorService) { this.shell = true; }
+  constructor(private modalController: ModalController,
+              private mantService: MantenedorService,
+              private toastController: ToastController,
+              private alertController: AlertController) {  }
 
   ngOnInit() {
     const formaPagoRes = this.mantService.getAllmecanico();
@@ -23,18 +27,74 @@ export class MecanicosPage implements OnInit {
         const u = item.payload.toJSON();
         u['$key'] = item.key;
         this.Usuario.push(u as Usuario);
+        this.auxUsuarios = this.Usuario;
       });
     });
   }
 
-  activando() {
-    console.log(this.shell);
+  async updateUsuario(id: string, est: boolean) {
+    console.log('update');
+    await this.mantService.updateUsuario(id, est).then(res => {
+      this.presentToast('Actualizado.');
+    }).catch(err => this.presentToast('Problemas al guardar registro.'));
+  }
+  searchUsuario(ev) {
+    const val = ev.target.value;
+    this.Usuario = this.auxUsuarios;
+    if (val.trim() !== '') {
+      this.Usuario = this.Usuario.filter((item) => {
+        return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+      });
+    }
+  }
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
-  async addeditModal() {
+  async addeditModal(id: string) {
+    let params;
+    if (id === null) {
+      params = id;
+    } else {
+      params = this.Usuario.filter((item) => {
+        return (item.$key.toLowerCase() === id.toString().toLocaleLowerCase());
+      });
+    }
     const modal = await this.modalController.create({
-      component: AddeditMecanicosPage
+      component: AddeditMecanicosPage,
+      componentProps: {
+        data: params
+      }
     });
     return await modal.present();
+  }
+  async deleteUsuario(id: string) {
+    await this.mantService.deleteUsuario(id).then(res => {
+      this.presentToast('Eliminado.');
+    }).catch(err => this.presentToast('Problemas al eliminar registro.'));
+  }
+  async deleteAlertConfirm(key: string, nombre: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmacion!',
+      message: 'Eliminar mecanico<strong> ' + nombre + ' </strong>!!! ???',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.deleteUsuario(key);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
