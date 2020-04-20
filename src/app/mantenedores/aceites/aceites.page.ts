@@ -19,9 +19,8 @@ export class AceitesPage implements OnInit {
               private alertController: AlertController) {
   }
 
-  ngOnInit() {
-    const aceiteRes = this.mantService.getAllAceite();
-    aceiteRes.snapshotChanges().subscribe(res => {
+  async ngOnInit() {
+    await this.mantService.getAllAceite().snapshotChanges().subscribe(res => {
       this.Aceites = [];
       res.forEach(item => {
         const a = item.payload.toJSON();
@@ -33,16 +32,17 @@ export class AceitesPage implements OnInit {
   }
 
   async updateAceite(id: string, est: boolean) {
-    console.log('update');
+    est = !est;
     await this.mantService.updateAceite(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));
+
   }
 
   searchAceite(ev) {
     const val = ev.target.value;
     this.Aceites = this.auxAceites;
-    if (val.trim() !== '') {
+    if (val.trim() !== '' && this.Aceites !== undefined) {
       this.Aceites = this.Aceites.filter((item) => {
         return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
       });
@@ -79,6 +79,8 @@ export class AceitesPage implements OnInit {
   async deleteAceite(id: string) {
     await this.mantService.deleteAceite(id).then(res => {
       this.presentToast('Eliminado.');
+      this.mantService.removeImage(id);
+      this.Aceites = [];
     }).catch(err => this.presentToast('Problemas al eliminar registro.'));
   }
 

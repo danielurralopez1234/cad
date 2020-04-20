@@ -68,15 +68,6 @@ export class AuthenticationService {
                   }
                   resolve(getUser);
               });
-              // let usuario: User = new User();
-              // this.userRes = this.usersService.getUser(uid);
-              // console.log(usuario.nombre);
-              /*
-              this.storage.set('USER_DATA', data).then((response) => {
-                  this.authState.next(true);
-              });
-
-               */
 
           }).catch(err => rejected(err));
       });

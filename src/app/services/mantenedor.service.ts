@@ -203,6 +203,10 @@ export class MantenedorService {
     });
   }
 
+  removeImage(id: string) {
+    storage().ref('img/' + id).delete();
+  }
+
   saveTipoCombustible(tipo: TipoCombustible) {
     this.afDB.database.ref('tipoCombustible').push(tipo);
   }

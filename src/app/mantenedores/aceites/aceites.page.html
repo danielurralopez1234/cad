@@ -20,7 +20,7 @@
           <h3>{{aceite.descripcion}}</h3>
           <p>{{aceite.valor}}</p>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="aceite.estado" (ionChange)="updateAceite(aceite.$key, aceite.estado)"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="aceite.estado" (click)="updateAceite(aceite.$key, aceite.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteAlertConfirm(aceite.$key, aceite.nombre)">Eliminar</ion-item-option>

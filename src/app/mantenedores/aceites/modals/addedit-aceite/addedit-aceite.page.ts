@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, ModalController, NavParams, ToastController} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavParams, ToastController} from '@ionic/angular';
 import {Aceite} from '../../../../models/aceite';
 import {MantenedorService} from '../../../../services/mantenedor.service';
 import {TipoCombustible} from '../../../../models/tipoCombustible';
@@ -15,26 +15,16 @@ export class AddeditAceitePage implements OnInit {
   auxParam: any = [];
   id: string;
   file: any;
-  TipoCom: any;
+  TipoCom: any = [];
   aceiteForm: FormGroup;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
-    if (navParams.get('data') !== null) {
-      this.auxParam.push(navParams.get('data') as Aceite);
-      this.auxParam.forEach(item => {
-        this.aceite.tipoCom = item[0].tipoCom;
-        this.aceite.nombre = item[0].nombre;
-        this.aceite.descripcion = item[0].descripcion;
-        this.aceite.valor = item[0].valor;
-        this.aceite.foto = item[0].foto;
-        this.aceite.estado = item[0].estado;
-        this.id = item[0].$key;
-      });
-    }
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
+
     this.aceiteForm = formBuilder.group({
       tipo: ['', Validators.compose([Validators.required])],
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
@@ -45,16 +35,38 @@ export class AddeditAceitePage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    const tipoComRes = this.mantService.getAllTipoCombustible();
-    tipoComRes.snapshotChanges().subscribe(res => {
-      this.TipoCom = [];
+  async ngOnInit() {
+    await this.mantService.getAllTipoCombustible().snapshotChanges().subscribe( res => {
       res.forEach(item => {
         const a = item.payload.toJSON();
         a['$key'] = item.key;
         this.TipoCom.push(a as TipoCombustible);
       });
     });
+
+    if (this.navParams.get('data') !== null) {
+      await this.presentLoading();
+      this.auxParam.push(this.navParams.get('data'));
+      this.auxParam.forEach(item => {
+        this.aceite.tipoCom = item[0].tipoCom;
+        this.aceite.nombre = item[0].nombre;
+        this.aceite.descripcion = item[0].descripcion;
+        this.aceite.valor = item[0].valor;
+        this.aceite.foto = item[0].foto;
+        this.aceite.estado = item[0].estado;
+        this.id = item[0].$key;
+      });
+    }
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1500
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   async modalClose() {
