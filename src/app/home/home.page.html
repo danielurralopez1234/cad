@@ -39,16 +39,14 @@
     </ion-item>
     <ion-item>
       <ion-label>Marca</ion-label>
-      <ion-select formControlName="marca" placeholder="Selecciona..">
-        <ion-select-option value="f">Chevrolet</ion-select-option>
-        <ion-select-option value="m">Hyundai</ion-select-option>
+      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)">
+        <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Modelo</ion-label>
-      <ion-select formControlName="modelo" placeholder="Selecciona..">
-        <ion-select-option value="f">Sonic</ion-select-option>
-        <ion-select-option value="m">Grand I-10</ion-select-option>
+      <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="modeloa.nombre">
+        <ion-select-option *ngFor="let modelo of Modelo" [value]="modelo.$key">{{modelo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>

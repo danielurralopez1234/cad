@@ -30,6 +30,7 @@ export class MantenedorService {
   usuarioListRef: AngularFireList<any>;
   comunaListRef: AngularFireList<any>;
   regionListRef: AngularFireList<any>;
+  modeloListRef: AngularFireList<any>;
 
 
   constructor(private afDB: AngularFireDatabase) {
@@ -92,7 +93,14 @@ export class MantenedorService {
   getAllformaPago() {
     return this.afDB.list('formaPago');
   }
+  getAllMarca() {
+    return this.afDB.list('marca');
+  }
+  getModeloByMarca(id: number) {
+    return this.afDB.database.ref('modelo').
+    orderByChild('marca').equalTo(id);
 
+  }
   async saveServicio(servicio: Servicio) {
     this.servicio.push().set(servicio);
   }

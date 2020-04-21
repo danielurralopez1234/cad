@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
-import {AlertController, ModalController} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController} from '@ionic/angular';
 import {AutosPage} from '../mantenedores/autos/autos.page';
 import {FinalizacionPage} from './modals/finalizacion/finalizacion.page';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MantenedorService} from '../services/mantenedor.service';
+import {Marca} from '../models/marca';
+import {Modelo} from '../models/modelo';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   items: any[] = [];
+  isModelo = true;
+  Marca: any;
+  Modelo: any;
+  modeloa: Modelo = new Modelo();
   patente: string;
-  modelo: string;
   marca: string;
   anio: number;
   cilindrada: string;
@@ -36,13 +42,16 @@ export class HomePage {
   valueDefault: string;
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   fechaHoy: Date = new Date();
+  prueba: any;
 
   slideOpts = {
     initialSlide: 1,
     speed: 400
   };
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
-              private alertController: AlertController) {
+              private alertController: AlertController,
+              private mantService: MantenedorService,
+              private loadingController: LoadingController) {
     this.valueDefault = 'paso1';
     this.carForm = formBuilder.group({
       patente: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
@@ -69,6 +78,32 @@ export class HomePage {
     });
   }
 
+  async ngOnInit() {
+    await this.mantService.getAllMarca().snapshotChanges().subscribe(res => {
+      this.Marca = [];
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        a['$key'] = item.key;
+        this.Marca.push(a as Marca);
+      });
+    });
+  }
+
+  async selectModel(evt) {
+    console.log(this.modeloa.nombre);
+    this.modeloa.nombre = '';
+    const modelo = await this.mantService.getModeloByMarca(Number(evt.target.value));
+    this.Modelo = [];
+    modelo.on('child_added', (snapshot) => {
+      const a = snapshot.val();
+      a['$key'] = snapshot.key;
+      this.Modelo.push(a as Modelo);
+    });
+    await this.presentLoading();
+    this.isModelo = false;
+
+  }
+
   async finalizaModal() {
     const modal = await this.modalController.create({
       component: FinalizacionPage
@@ -76,7 +111,6 @@ export class HomePage {
     // await this.router.navigateByUrl('home');
     return await modal.present();
   }
-
 
 
   habilita1() {
@@ -184,6 +218,14 @@ export class HomePage {
     });
 
     await alert.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1000
+    });
+    await loading.present();
   }
 
 }
