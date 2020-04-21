@@ -10,6 +10,7 @@ import {Marca} from '../models/marca';
 import {Modelo} from '../models/modelo';
 import {Reserva} from '../models/reserva';
 import {TipoServicio} from '../models/tipoServicio';
+import {Region} from '../models/region';
 
 @Component({
   selector: 'app-home',
@@ -20,14 +21,13 @@ export class HomePage implements OnInit {
   items: any[] = [];
   isModelo = true;
   isTipoServicio = true;
+  isRegion = true;
   Marca: any;
   Modelo: any;
   reserva: Reserva = new Reserva();
   TipoServicio: any;
-  patente: string;
-  marca: string;
-  anio: number;
-  cilindrada: string;
+  Region: any;
+
   carForm: FormGroup;
   serviceForm: FormGroup;
   placeForm: FormGroup;
@@ -46,7 +46,6 @@ export class HomePage implements OnInit {
   valueDefault: string;
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   fechaHoy: Date = new Date();
-  prueba: any;
 
   slideOpts = {
     initialSlide: 1,
@@ -108,6 +107,20 @@ export class HomePage implements OnInit {
       });
     });
 
+    await this.mantService.getAllregion().snapshotChanges().subscribe(res => {
+      this.Region = [];
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        this.Region.push(a as Region);
+      });
+      this.Region.forEach(item => {
+        if (item.id === 7) {
+          this.reserva.idRegion = item.id;
+          return;
+        }
+      });
+    });
+
   }
 
   async selectModel(evt) {
@@ -152,7 +165,6 @@ export class HomePage implements OnInit {
 
   validaCarForm() {
     if (this.carForm.valid) {
-      console.log(this.reserva);
       this.hideC1 = false;
       this.hidePaso2 = false;
       this.valueDefault = 'paso2';
