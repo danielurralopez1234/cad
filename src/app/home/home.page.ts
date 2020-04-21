@@ -9,6 +9,7 @@ import {MantenedorService} from '../services/mantenedor.service';
 import {Marca} from '../models/marca';
 import {Modelo} from '../models/modelo';
 import {Reserva} from '../models/reserva';
+import {TipoServicio} from '../models/tipoServicio';
 
 @Component({
   selector: 'app-home',
@@ -18,9 +19,11 @@ import {Reserva} from '../models/reserva';
 export class HomePage implements OnInit {
   items: any[] = [];
   isModelo = true;
+  isTipoServicio = true;
   Marca: any;
   Modelo: any;
   reserva: Reserva = new Reserva();
+  TipoServicio: any;
   patente: string;
   marca: string;
   anio: number;
@@ -88,6 +91,23 @@ export class HomePage implements OnInit {
         this.Marca.push(a as Marca);
       });
     });
+    await this.mantService.getAllTipoServicio().snapshotChanges().subscribe(res => {
+      this.TipoServicio = [];
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        if (a.estado) {
+          a['$key'] = item.key;
+          this.TipoServicio.push(a as TipoServicio);
+        }
+      });
+      this.TipoServicio.forEach(item => {
+        if (item.nombre.toUpperCase().indexOf('MANTENCION') > -1) {
+          this.reserva.idTipoServicio = item.$key;
+          return;
+        }
+      });
+    });
+
   }
 
   async selectModel(evt) {
@@ -232,6 +252,10 @@ export class HomePage implements OnInit {
   parseDate() {
     const anio = new Date(this.reserva.anioAuto);
     this.reserva.anioAuto = anio.getFullYear();
+  }
+
+  parseUpperCase() {
+    this.reserva.patente = this.reserva.patente.toUpperCase();
   }
 
 }

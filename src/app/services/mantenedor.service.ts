@@ -96,6 +96,9 @@ export class MantenedorService {
   getAllMarca() {
     return this.afDB.list('marca');
   }
+  getAllTipoServicio() {
+    return this.afDB.list('servicio');
+  }
   getModeloByMarca(id: number) {
     return this.afDB.database.ref('modelo').
     orderByChild('marca').equalTo(id);

@@ -35,7 +35,7 @@
   <form [formGroup]="carForm">
     <ion-item>
       <ion-label position="floating">Patente</ion-label>
-      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="reserva.patente"></ion-input>
+      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="reserva.patente" (ionChange)="parseUpperCase()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Marca</ion-label>
@@ -70,14 +70,13 @@
 <ion-content [fullscreen]="true" id="c2" *ngIf="hideC2">
   <form [formGroup]="serviceForm">
     <ion-item>
-      <ion-label>Tipo Mantencion</ion-label>
-      <ion-select formControlName="tipo" placeholder="Selecciona..">
-        <ion-select-option value="f">Kilometraje</ion-select-option>
-        <ion-select-option value="m">Otros</ion-select-option>
+      <ion-label>Tipo Servicio</ion-label>
+      <ion-select formControlName="tipo" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoServicio" [disabled]="isTipoServicio">
+        <ion-select-option *ngFor="let servicio of TipoServicio" [value]="servicio.$key">{{servicio.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Mantencion</ion-label>
+      <ion-label>Tipo Mantencion</ion-label>
       <ion-select formControlName="mantencion" placeholder="Selecciona..">
         <ion-select-option value="f">10.000km</ion-select-option>
         <ion-select-option value="m">20.000km</ion-select-option>
