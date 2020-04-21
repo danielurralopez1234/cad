@@ -8,6 +8,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MantenedorService} from '../services/mantenedor.service';
 import {Marca} from '../models/marca';
 import {Modelo} from '../models/modelo';
+import {Reserva} from '../models/reserva';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomePage implements OnInit {
   isModelo = true;
   Marca: any;
   Modelo: any;
-  modeloa: Modelo = new Modelo();
+  reserva: Reserva = new Reserva();
   patente: string;
   marca: string;
   anio: number;
@@ -90,8 +91,7 @@ export class HomePage implements OnInit {
   }
 
   async selectModel(evt) {
-    console.log(this.modeloa.nombre);
-    this.modeloa.nombre = '';
+    this.reserva.idModelo = '';
     const modelo = await this.mantService.getModeloByMarca(Number(evt.target.value));
     this.Modelo = [];
     modelo.on('child_added', (snapshot) => {
@@ -132,6 +132,7 @@ export class HomePage implements OnInit {
 
   validaCarForm() {
     if (this.carForm.valid) {
+      console.log(this.reserva);
       this.hideC1 = false;
       this.hidePaso2 = false;
       this.valueDefault = 'paso2';
@@ -226,6 +227,11 @@ export class HomePage implements OnInit {
       duration: 1000
     });
     await loading.present();
+  }
+
+  parseDate() {
+    const anio = new Date(this.reserva.anioAuto);
+    this.reserva.anioAuto = anio.getFullYear();
   }
 
 }

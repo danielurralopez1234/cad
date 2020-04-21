@@ -35,29 +35,30 @@
   <form [formGroup]="carForm">
     <ion-item>
       <ion-label position="floating">Patente</ion-label>
-      <ion-input formControlName="patente" placeholder="MMBB00"></ion-input>
+      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="reserva.patente"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Marca</ion-label>
-      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)">
+      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="reserva.idMarca">
         <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Modelo</ion-label>
-      <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="modeloa.nombre">
+      <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="reserva.idModelo">
         <ion-select-option *ngFor="let modelo of Modelo" [value]="modelo.$key">{{modelo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Año</ion-label>
-      <ion-datetime placeholder="2000" formControlName="anio"
+      <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="reserva.anioAuto" (ionChange)="parseDate()"
                     displayFormat="YYYY"
+                    doneText="Ok"
                     cancelText="Cancelar!!!"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Cilindrada</ion-label>
-      <ion-input formControlName="cilindrada" placeholder="1.2"></ion-input>
+      <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="reserva.cilindrada"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
