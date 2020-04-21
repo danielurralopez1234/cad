@@ -94,13 +94,11 @@ export class HomePage implements OnInit {
       this.TipoServicio = [];
       res.forEach(item => {
         const a = item.payload.toJSON();
-        if (a.estado) {
-          a['$key'] = item.key;
-          this.TipoServicio.push(a as TipoServicio);
-        }
+        a['$key'] = item.key;
+        this.TipoServicio.push(a as TipoServicio);
       });
       this.TipoServicio.forEach(item => {
-        if (item.nombre.toUpperCase().indexOf('MANTENCION') > -1) {
+        if (item.nombre.toUpperCase().indexOf('MANTENCION') > -1 && item.estado) {
           this.reserva.idTipoServicio = item.$key;
           return;
         }
