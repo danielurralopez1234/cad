@@ -6,10 +6,10 @@ import {LoadingController, Platform} from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EnvService} from './env.service';
 import {tap} from 'rxjs/operators';
-import {User} from '../models/user';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {UsersService} from './users.service';
 import {UserStorage} from '../models/userStorage';
+import {Usuario} from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +50,9 @@ export class AuthenticationService {
   }
 
 
-  onLogin(user: User) {
+  onLogin(email: string, password: string) {
       return new Promise(async (resolve, rejected) => {
-         await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(async res => {
+         await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(async res => {
               const uid = res.user.uid;
               let getUser: any = null;
               (await this.usersService.getUser(uid)).subscribe(usr => {
@@ -73,11 +73,18 @@ export class AuthenticationService {
       });
   }
 
-  async onRegister(user: User) {
+  async onRegister(user: Usuario) {
       return new Promise(async (resolve, rejected) => {
           await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(async res => {
               user.id = res.user.uid;
               user.rol = 1;
+              user.password = '';
+              user.comuna = '';
+              user.estado = true;
+              user.fechaNacimiento = '';
+              user.foto = '';
+              user.idAuto = '';
+              user.region = '';
               await this.usersService.saveUsers(user);
               resolve(res);
           }).catch(err => rejected(err));

@@ -21,26 +21,14 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Dv</ion-label>
-        <ion-input [(ngModel)]="usuario.dv" name="dv" formControlName="dv" autocomplete="off" type="text" ngModel
-          required></ion-input>
-      </ion-item>
-
-      <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
         <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"
           ngModel required></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Apellido Paterno</ion-label>
-        <ion-input [(ngModel)]="usuario.apellidoPaterno" name="apellidoPaterno" formControlName="apellidoPaterno"
-          autocomplete="off" type="text" ngModel required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Apellido Materno</ion-label>
-        <ion-input [(ngModel)]="usuario.apellidoMaterno" name="apellidoMaterno" formControlName="apellidoMaterno"
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input [(ngModel)]="usuario.apellido" name="apellidoPaterno" formControlName="apellidoPaterno"
           autocomplete="off" type="text" ngModel required></ion-input>
       </ion-item>
 
@@ -52,25 +40,10 @@
 
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input [(ngModel)]="usuario.mail" name="mail" formControlName="mail" autocomplete="off" type="email" ngModel
+        <ion-input [(ngModel)]="usuario.email" name="mail" formControlName="mail" autocomplete="off" type="email" ngModel
           required>
         </ion-input>
       </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Contraseña</ion-label>
-        <ion-input [(ngModel)]="usuario.contrasena" name="contrasena" formControlName="contrasena" autocomplete="off"
-          type="password" ngModel required>
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Direccion</ion-label>
-        <ion-input [(ngModel)]="usuario.direccion" name="direccion" formControlName="direccion" autocomplete="off"
-          type="text" ngModel required>
-        </ion-input>
-      </ion-item>
-
 
       <ion-item>
         <ion-label position="stacked">Telefono</ion-label>
@@ -101,7 +74,7 @@
 
       <ion-item>
         <ion-label position="stacked">Area</ion-label>
-        <ion-input [(ngModel)]="usuario.area" *ngFor="let area of Area" name="area" formControlName="area"
+        <ion-input *ngFor="let area of Area" name="area" formControlName="area"
           value={{area.id}} autocomplete="off" type="text" ngModel required>
           {{area.nombre}}
         </ion-input>

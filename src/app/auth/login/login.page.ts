@@ -10,7 +10,8 @@ import {LoadingController, ToastController} from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  user: User = new User();
+  email: string;
+  pass: string;
   constructor(private authService: AuthenticationService,
               private router: Router,
               private toastController: ToastController) { }
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
   }
 
   async onLogin() {
-    await this.authService.onLogin(this.user).then(async res => {
+    await this.authService.onLogin(this.email, this.pass).then(async res => {
       if (res === null) {
         this.presentToast('Problemas al iniciar sesion');
       } else {

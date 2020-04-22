@@ -39,18 +39,13 @@ export class AddeditMecanicosPage implements OnInit {
       this.auxParam.push(navParams.get('data') as Usuario);
       this.auxParam.forEach(item => {
         this.usuario.rut = item[0].rut;
-        this.usuario.dv = item[0].dv;
         this.usuario.nombre = item[0].nombre;
-        this.usuario.apellidoPaterno = item[0].apellidoPaterno;
-        this.usuario.apellidoMaterno = item[0].apellidoMaterno;
+        this.usuario.apellido = item[0].apellido;
         this.usuario.fechaNacimiento = item[0].fechaNacimiento;
-        this.usuario.mail = item[0].mail;
-        this.usuario.contrasena = item[0].contrasena;
-        this.usuario.direccion = item[0].direccion;
+        this.usuario.email = item[0].email;
         this.usuario.telefono = item[0].telefono;
         this.usuario.region = item[0].region;
         this.usuario.comuna = item[0].comuna;
-        this.usuario.area = item[0].area;
         this.usuario.foto = item[0].foto;
         this.id = item[0].$key;
       });

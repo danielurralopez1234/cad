@@ -154,19 +154,13 @@ export class MantenedorService {
   async updateUsuarioPop(id: string, usuario: Usuario) {
     this.afDB.database.ref('usuario/' + id).update({
       rut: usuario.rut,
-      dv: usuario.dv,
       nombre: usuario.nombre,
-      apellidoPaterno: usuario.apellidoPaterno,
-      apellidoMaterno: usuario.apellidoMaterno,
+      apellido: usuario.apellido,
       fechaNacimiento: usuario.fechaNacimiento,
-      mail: usuario.mail,
-      contrasena: usuario.contrasena,
-      direccion: usuario.direccion,
+      email: usuario.email,
       telefono: usuario.telefono,
       region: usuario.region,
-      comuna: usuario.comuna,
-      pais: usuario.pais,
-      area: usuario.area
+      comuna: usuario.comuna
     });
   }
   getAllauto() {

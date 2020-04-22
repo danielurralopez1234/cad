@@ -8,33 +8,45 @@
 </ion-header>
 
 <ion-content padding='true'>
-    <form #form="ngForm" (ngSubmit)="register()">
+    <form [formGroup]="registroForm" (ngSubmit)="register()">
         <ion-list>
             <ion-item>
+                <ion-label position="stacked">Rut</ion-label>
+                <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" type="text" placeholder="11111111-1"></ion-input>
+            </ion-item>
+            <ion-item>
                 <ion-label position="stacked">Nombre</ion-label>
-                <ion-input [(ngModel)]="user.nombre" name="nombre" autocomplete="off" type="text" ngModel required></ion-input>
+                <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Apellido</ion-label>
-                <ion-input [(ngModel)]="user.apellido" name="apellido" autocomplete="off" type="text" ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Direccion</ion-label>
-                <ion-input [(ngModel)]="user.direccion" name="direccion" autocomplete="off" type="text" ngModel required></ion-input>
+                <ion-input [(ngModel)]="usuario.apellido" name="apellido" formControlName="apellido" autocomplete="off" type="text"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Correo</ion-label>
-                <ion-input [(ngModel)]="user.email" name="correo" autocomplete="off" type="email" ngModel required></ion-input>
+                <ion-input [(ngModel)]="usuario.email" name="correo" formControlName="correo" autocomplete="off" type="email"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Clave</ion-label>
-                <ion-input [(ngModel)]="user.password" name="clave" autocomplete="off" type="password" ngModel required></ion-input>
+                <ion-label position="stacked">Celular</ion-label>
+                <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off" type="tel"></ion-input>
             </ion-item>
-
+            <ion-item>
+                <ion-label position="stacked">Contraseña</ion-label>
+                <ion-input [(ngModel)]="usuario.password" name="clave" formControlName="clave" autocomplete="off" type="password"></ion-input>
+                <ion-text>contraseña debe ser de largo 6</ion-text>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Confirmar Contraseña</ion-label>
+                <ion-input [(ngModel)]="confirmaPass" name="confirmaClave" formControlName="confirmaClave" autocomplete="off" type="password"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-toggle></ion-toggle>
+                <ion-label>He leído y aceptado los términos y condiciones y soy mayor de 18 años</ion-label>
+            </ion-item>
             <ion-item lines='none'>
                 tienes una cuenta? <a routerLink='/login'>Inicia sesion.</a>
             </ion-item>
         </ion-list>
-        <ion-button expand="block" share="round" color="success" type="submit" [disabled]="form.invalid">Registrate</ion-button>
+        <ion-button expand="block" share="round" color="success" type="submit" [disabled]="registroForm.invalid">Registrate</ion-button>
     </form>
 </ion-content>

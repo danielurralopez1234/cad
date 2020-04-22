@@ -1,19 +1,16 @@
 export class Usuario {
-    rol: number;
-    rut: number;
-    dv: string;
+    id: string;
+    rut: string;
+    idAuto: string;
     nombre: string;
-    apellidoPaterno: string;
-    apellidoMaterno: string;
+    apellido: string;
     fechaNacimiento: string;
-    mail: string;
-    contrasena: string;
-    direccion: string;
+    email: string;
+    password: string;
     telefono: number;
     region: string;
     comuna: string;
-    pais: string;
-    area: string;
+    rol: number;
     estado: boolean;
     foto: string;
 }
