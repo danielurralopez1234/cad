@@ -117,20 +117,14 @@
     </ion-item>
     <ion-item>
       <ion-label>Comuna</ion-label>
-      <ion-select formControlName="comuna"  placeholder="Selecciona..">
-        <ion-select-option value="f">Maipu</ion-select-option>
-        <ion-select-option value="m">Las Condes</ion-select-option>
-        <ion-select-option value="m">Santiago</ion-select-option>
+      <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna">
+        <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Calle</ion-label>
       <ion-input formControlName="calle" ></ion-input>
     </ion-item>
-
-    <ion-label>
-      aqui va ir el mapa
-    </ion-label>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="validaDireccionForm()">

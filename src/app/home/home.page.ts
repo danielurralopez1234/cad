@@ -11,6 +11,7 @@ import {Modelo} from '../models/modelo';
 import {Reserva} from '../models/reserva';
 import {TipoServicio} from '../models/tipoServicio';
 import {Region} from '../models/region';
+import {Comuna} from '../models/comuna';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomePage implements OnInit {
   isRegion = true;
   Marca: any;
   Modelo: any;
+  Comuna: any;
   reserva: Reserva = new Reserva();
   TipoServicio: any;
   Region: any;
@@ -104,7 +106,6 @@ export class HomePage implements OnInit {
         }
       });
     });
-
     await this.mantService.getAllregion().snapshotChanges().subscribe(res => {
       this.Region = [];
       res.forEach(item => {
@@ -114,6 +115,7 @@ export class HomePage implements OnInit {
       this.Region.forEach(item => {
         if (item.id === 7) {
           this.reserva.idRegion = item.id;
+          this.selectComuna(item.id);
           return;
         }
       });
@@ -266,6 +268,16 @@ export class HomePage implements OnInit {
 
   parseUpperCase() {
     this.reserva.patente = this.reserva.patente.toUpperCase();
+  }
+
+  async selectComuna(id: number) {
+    this.reserva.idComuna = '';
+    const comuna = await this.mantService.getComunaByRegion(id);
+    this.Comuna = [];
+    comuna.on('child_added', (snapshot) => {
+      const a = snapshot.val();
+      this.Comuna.push(a as Comuna);
+    });
   }
 
 }

@@ -104,6 +104,11 @@ export class MantenedorService {
     orderByChild('marca').equalTo(id);
 
   }
+  getComunaByRegion(id: number) {
+    return this.afDB.database.ref('comuna').
+    orderByChild('region').equalTo(id);
+
+  }
   async saveServicio(servicio: Servicio) {
     this.servicio.push().set(servicio);
   }
