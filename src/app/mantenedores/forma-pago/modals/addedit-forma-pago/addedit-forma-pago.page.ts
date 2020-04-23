@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavParams, ToastController} from '@ionic/angular';
 import { FormaPago } from '../../../../models/formaPago';
 import { MantenedorService } from '../../../../services/mantenedor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,22 +20,34 @@ export class AddeditFormaPagoPage implements OnInit {
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
-    if (navParams.get('data') !== null) {
-      this.auxParam.push(navParams.get('data') as FormaPago);
-      this.auxParam.forEach(item => {
-        this.formaPago.comentario = item[0].comentario;
-        this.formaPago.nombre = item[0].nombre;
-        this.id = item[0].$key;
-      });
-    }
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
     this.formaPagoForm = formBuilder.group({
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
       comentario: ['', Validators.compose([Validators.maxLength(300), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    if (this.navParams.get('data') !== null) {
+      await this.presentLoading();
+      this.auxParam.push(this.navParams.get('data') as FormaPago);
+      this.auxParam.forEach(item => {
+        this.formaPago.comentario = item[0].comentario;
+        this.formaPago.nombre = item[0].nombre;
+        this.id = item[0].$key;
+      });
+    }
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1500
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
   async modalClose() {
     await this.modalController.dismiss();

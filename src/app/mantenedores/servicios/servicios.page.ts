@@ -32,7 +32,7 @@ export class ServiciosPage implements OnInit {
     });
   }
   async updateServicio(id: string, est: boolean) {
-    console.log('update');
+    est = !est;
     await this.mantService.updateServicio(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));

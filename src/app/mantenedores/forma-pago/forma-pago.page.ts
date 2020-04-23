@@ -32,7 +32,7 @@ export class FormaPagoPage implements OnInit {
     });
   }
   async updateFormaPago(id: string, est: boolean) {
-    console.log('update');
+    est = !est;
     await this.mantService.updateFormaPago(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));

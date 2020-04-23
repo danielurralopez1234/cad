@@ -20,7 +20,7 @@
           <h2>{{auto.modelo}}</h2>
           <p>{{auto.patente}}</p>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="auto.estado" (ionChange)="updateAuto(auto.$key, auto.estado)"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="auto.estado" (click)="updateAuto(auto.$key, auto.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteAlertConfirm(auto.$key, auto.nombre)">Eliminar</ion-item-option>

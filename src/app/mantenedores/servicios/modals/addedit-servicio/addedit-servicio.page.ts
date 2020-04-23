@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavParams, ToastController} from '@ionic/angular';
 import { Servicio } from '../../../../models/servicio';
 import { MantenedorService } from '../../../../services/mantenedor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,16 +20,8 @@ export class AddeditServicioPage implements OnInit {
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
-    if (navParams.get('data') !== null) {
-      this.auxParam.push(navParams.get('data') as Servicio);
-      this.auxParam.forEach(item => {
-        this.servicio.nombre = item[0].nombre;
-        this.servicio.valor = item[0].valor;
-        this.servicio.descripcion = item[0].descripcion;
-        this.id = item[0].$key;
-      });
-    }
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
     this.servicioForm = formBuilder.group({
       valor: ['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9]*'), Validators.required])],
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
@@ -37,7 +29,28 @@ export class AddeditServicioPage implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    if (this.navParams.get('data') !== null) {
+      await this.presentLoading();
+      this.auxParam.push(this.navParams.get('data') as Servicio);
+      this.auxParam.forEach(item => {
+        this.servicio.nombre = item[0].nombre;
+        this.servicio.valor = item[0].valor;
+        this.servicio.descripcion = item[0].descripcion;
+        this.id = item[0].$key;
+      });
+    }
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1500
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
 
   async modalClose() {
     await this.modalController.dismiss();

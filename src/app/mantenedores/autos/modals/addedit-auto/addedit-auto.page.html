@@ -29,9 +29,9 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Tipo de Combustible</ion-label>
-        <ion-select placeholder="Selecciona..." [value]="auto.combustible" formControlName="tipo"
+        <ion-select [(ngModel)]="auto.combustible" placeholder="Selecciona..." [value]="auto.combustible" formControlName="tipo"
           [(ngModel)]="auto.combustible">
-          <ion-select-option *ngFor="let tipo of TipoCom" value="{{tipo.$key}}">{{tipo.nombre}}</ion-select-option>
+          <ion-select-option *ngFor="let tipo of TipoCom" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>

@@ -19,7 +19,7 @@
           <h2>{{usuario.nombre}}</h2>
           <h3>{{usuario.direccion}}</h3>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="usuario.estado" (ionChange)="updateUsuario(usuario.$key, usuario.estado)"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="usuario.estado" (click)="updateUsuario(usuario.$key, usuario.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteAlertConfirm(usuario.$key, usuario.nombre)">Eliminar</ion-item-option>

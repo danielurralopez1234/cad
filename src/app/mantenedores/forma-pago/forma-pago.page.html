@@ -19,7 +19,7 @@
           <h2>{{formaPago.nombre}}</h2>
           <h3>{{formaPago.comentario}}</h3>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="formaPago.estado" (ionChange)="updateFormaPago(formaPago.$key, formaPago.estado)"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="formaPago.estado" (click)="updateFormaPago(formaPago.$key, formaPago.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteAlertConfirm(formaPago.$key, formaPago.nombre)">Eliminar</ion-item-option>

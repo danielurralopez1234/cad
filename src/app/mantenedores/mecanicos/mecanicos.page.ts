@@ -26,14 +26,18 @@ export class MecanicosPage implements OnInit {
       res.forEach(item => {
         const u = item.payload.toJSON();
         u['$key'] = item.key;
+        const j = u as Usuario;
+
+        if(j.rol === 2) {
         this.Usuario.push(u as Usuario);
+        }
         this.auxUsuarios = this.Usuario;
       });
     });
   }
 
   async updateUsuario(id: string, est: boolean) {
-    console.log('update');
+    est = !est;
     await this.mantService.updateUsuario(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));

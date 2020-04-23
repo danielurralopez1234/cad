@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavParams, ToastController} from '@ionic/angular';
 import { Usuario } from '../../../../models/usuario';
 import { Region } from '../../../../models/region';
 import { Comuna } from '../../../../models/comuna';
@@ -34,22 +34,8 @@ export class AddeditMecanicosPage implements OnInit {
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
-    if (navParams.get('data') !== null) {
-      this.auxParam.push(navParams.get('data') as Usuario);
-      this.auxParam.forEach(item => {
-        this.usuario.rut = item[0].rut;
-        this.usuario.nombre = item[0].nombre;
-        this.usuario.apellido = item[0].apellido;
-        this.usuario.fechaNacimiento = item[0].fechaNacimiento;
-        this.usuario.email = item[0].email;
-        this.usuario.telefono = item[0].telefono;
-        this.usuario.region = item[0].region;
-        this.usuario.comuna = item[0].comuna;
-        this.usuario.foto = item[0].foto;
-        this.id = item[0].$key;
-      });
-    }
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
     this.mecanicoForm = formBuilder.group({
       rut: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
       dv: ['', Validators.compose([Validators.maxLength(1), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
@@ -69,7 +55,7 @@ export class AddeditMecanicosPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const regionRes = this.mantService.getAllregion();
     regionRes.snapshotChanges().subscribe(res => {
       this.Region = [];
@@ -81,8 +67,37 @@ export class AddeditMecanicosPage implements OnInit {
         }
       });
     });
+    if (this.navParams.get('data') !== null) {
+      await this.presentLoading();
+      this.auxParam.push(this.navParams.get('data') as Usuario);
+      this.auxParam.forEach(item => {
+        this.usuario.rut = item[0].rut;
+        this.usuario.nombre = item[0].nombre;
+        this.usuario.apellido = item[0].apellido;
+        this.usuario.fechaNacimiento = item[0].fechaNacimiento;
+        this.usuario.email = item[0].email;
+        this.usuario.telefono = item[0].telefono;
+        this.usuario.region = item[0].region;
+        this.usuario.comuna = item[0].comuna;
+        this.usuario.foto = item[0].foto;
+        this.id = item[0].$key;
+      });
+    }
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1500
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
+  async modalClose() {
+    await this.modalController.dismiss();
+  }
   async saveUpdateUsuario() {
     if (this.mecanicoForm.valid) {
       if (this.auxParam.length === 0) {
@@ -136,13 +151,7 @@ export class AddeditMecanicosPage implements OnInit {
   uploadFile(value) {
     this.file = value.target.files[0];
   }
-
-  async modalClose() {
-    await this.modalController.dismiss();
-  }
-
-
-  async searchComuna(comuna) {
+ async searchComuna(comuna) {
     const val = [];
     val.push(comuna.data);
 

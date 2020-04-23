@@ -33,7 +33,7 @@ export class AutosPage implements OnInit {
   }
 
   async updateAuto(id: string, est: boolean) {
-    console.log('update');
+    est = !est;
     await this.mantService.updateAuto(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));

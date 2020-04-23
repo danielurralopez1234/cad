@@ -20,7 +20,7 @@
           <h2>{{servicio.descripcion}}</h2>
           <p>{{servicio.valor}}</p>
         </ion-label>
-        <ion-toggle slot="end" color="success" [(ngModel)]="servicio.estado" (ionChange)="updateServicio(servicio.$key, servicio.estado)"></ion-toggle>
+        <ion-toggle slot="end" color="success" [(ngModel)]="servicio.estado" (click)="updateServicio(servicio.$key, servicio.estado)"></ion-toggle>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteAlertConfirm(servicio.$key, servicio.nombre)">Eliminar</ion-item-option>

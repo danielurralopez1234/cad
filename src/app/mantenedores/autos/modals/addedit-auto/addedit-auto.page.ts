@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavParams, ToastController } from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavParams, ToastController} from '@ionic/angular';
 import { Auto } from '../../../../models/auto';
 import { TipoCombustible } from '../../../../models/tipoCombustible';
 import { MantenedorService } from '../../../../services/mantenedor.service';
@@ -21,9 +21,30 @@ export class AddeditAutoPage implements OnInit {
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
-    if (navParams.get('data') !== null) {
-      this.auxParam.push(navParams.get('data') as Auto);
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
+    this.autoForm = formBuilder.group({
+      marca: ['', Validators.compose([Validators.required])],
+      modelo: ['', Validators.compose([Validators.required])],
+      tipo: ['', Validators.compose([Validators.required])],
+      patente: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      anio: ['', Validators.compose([Validators.maxLength(4), Validators.pattern('[0-9]*'), Validators.required])],
+    });
+  }
+
+  async ngOnInit() {
+    const tipoComRes = this.mantService.getAllTipoCombustible();
+    tipoComRes.snapshotChanges().subscribe(res => {
+      this.TipoCom = [];
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        a['$key'] = item.key;
+        this.TipoCom.push(a as TipoCombustible);
+      });
+    });
+    if (this.navParams.get('data') !== null) {
+      await this.presentLoading();
+      this.auxParam.push(this.navParams.get('data') as Auto);
       this.auxParam.forEach(item => {
         this.auto.anio = item[0].anio;
         this.auto.marca = item[0].marca;
@@ -34,27 +55,17 @@ export class AddeditAutoPage implements OnInit {
         this.id = item[0].$key;
       });
     }
-    this.autoForm = formBuilder.group({
-      marca: ['', Validators.compose([Validators.required])],
-      modelo: ['', Validators.compose([Validators.required])],
-      tipo: ['', Validators.compose([Validators.required])],
-      patente: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
-      anio: ['', Validators.compose([Validators.maxLength(4), Validators.pattern('[0-9]*'), Validators.required])],
-    });
   }
-
-  ngOnInit() { 
-    const tipoComRes = this.mantService.getAllTipoCombustible();
-    tipoComRes.snapshotChanges().subscribe(res => {
-      this.TipoCom = [];
-      res.forEach(item => {
-        const a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.TipoCom.push(a as TipoCombustible);
-      });
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+      duration: 1500
     });
-  }
+    await loading.present();
 
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
   async modalClose() {
     await this.modalController.dismiss();
   }
