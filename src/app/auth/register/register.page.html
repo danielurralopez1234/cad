@@ -12,7 +12,7 @@
         <ion-list>
             <ion-item>
                 <ion-label position="stacked">Rut</ion-label>
-                <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" type="text" placeholder="11111111-1"></ion-input>
+                <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" type="text" (ionBlur)="formatRut()"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Nombre</ion-label>
@@ -29,22 +29,24 @@
             <ion-item>
                 <ion-label position="stacked">Celular</ion-label>
                 <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off" type="tel"></ion-input>
+                <ion-note slot="start">
+                    +569
+                </ion-note>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Contraseña</ion-label>
                 <ion-input [(ngModel)]="usuario.password" name="clave" formControlName="clave" autocomplete="off" type="password"></ion-input>
-                <ion-text>contraseña debe ser de largo 6</ion-text>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Confirmar Contraseña</ion-label>
                 <ion-input [(ngModel)]="confirmaPass" name="confirmaClave" formControlName="confirmaClave" autocomplete="off" type="password"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-toggle></ion-toggle>
-                <ion-label>He leído y aceptado los términos y condiciones y soy mayor de 18 años</ion-label>
+                <ion-toggle [(ngModel)]="condicion" formControlName="condicion" color="secondary"></ion-toggle>
+                <ion-label>He leído y aceptado los <a routerLink='/terminos-y-condiciones'>términos y condiciones</a> y soy mayor de 18 años</ion-label>
             </ion-item>
             <ion-item lines='none'>
-                tienes una cuenta? <a routerLink='/login'>Inicia sesion.</a>
+                <p>tienes una cuenta? <a routerLink='/login'>Inicia sesion.</a></p>
             </ion-item>
         </ion-list>
         <ion-button expand="block" share="round" color="success" type="submit" [disabled]="registroForm.invalid">Registrate</ion-button>
