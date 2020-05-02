@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AlertController, ModalController, ToastController} from '@ionic/angular';
 import {AddeditAutoPage} from './modals/addedit-auto/addedit-auto.page';
 import {MantenedorService} from '../../services/mantenedor.service';
-import {Auto} from '../../models/auto';
+import {Marca} from '../../models/marca';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-autos',
@@ -20,13 +21,13 @@ export class AutosPage implements OnInit {
               private alertController: AlertController) {}
 
   ngOnInit() {
-    const autoeRes = this.mantService.getAllauto();
+    const autoeRes = this.mantService.getAllMarca();
     autoeRes.snapshotChanges().subscribe(res => {
       this.Auto = [];
       res.forEach(item => {
         const a = item.payload.toJSON();
         a['$key'] = item.key;
-        this.Auto.push(a as Auto);
+        this.Auto.push(a as Marca);
         this.auxAutos = this.Auto;
       });
     });
@@ -43,7 +44,7 @@ export class AutosPage implements OnInit {
     this.Auto = this.auxAutos;
     if (val.trim() !== '') {
       this.Auto = this.auxAutos.filter((item) => {
-        return (item.marca.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+        return (item.nombre.toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
       });
     }
   }
@@ -97,4 +98,5 @@ export class AutosPage implements OnInit {
     });
     toast.present();
   }
+
 }

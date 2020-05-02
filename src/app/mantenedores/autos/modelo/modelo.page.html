@@ -3,18 +3,17 @@
     <ion-buttons slot="start">
       <ion-back-button text="" icon="chevron-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>Autos</ion-title>
+    <ion-title>Modelo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="searchAuto($event)" placeholder="Buscar"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let auto of Auto">
-      <ion-item [routerLink]="['modelo', auto.$key]">
-        <ion-icon name="car"></ion-icon>
+    <ion-item-sliding *ngFor="let modelo of Modelo">
+      <ion-item>
+        <ion-icon name="checkmark" color="primary"></ion-icon>
         <ion-label class="ion-margin-start">
-          <h2>{{auto.nombre}}</h2>
+          <h2>{{modelo.nombre}}</h2>
         </ion-label>
         <ion-toggle slot="end" color="success" checked="true"></ion-toggle>
       </ion-item>
