@@ -1,9 +1,44 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>perfil</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+    <ion-label slot="end" class="ion-padding-end">{{usuario.rut}}</ion-label>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="miperfilForm" (ngSubmit)="updatePerfil()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
+        <ion-icon name="create-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="usuario.apellido" name="apellido" formControlName="apellido" autocomplete="off" type="text"></ion-input>
+        <ion-icon name="create-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Telefono</ion-label>
+        <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off" type="tel"></ion-input>
+        <ion-icon name="create-outline" slot="end"></ion-icon>
+      </ion-item>
+      <!--
+      <ion-item>
+        <ion-label class="ion-text-wrap">
+          <ion-text color="primary">
+            <h3>H3 Primary Title</h3>
+          </ion-text>
+          <p>Paragraph line 1</p>
+          <ion-text color="secondary">
+            <p>Paragraph line 2 secondary</p>
+          </ion-text>
+        </ion-label>
+      </ion-item> -->
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit">Guardar</ion-button>
+  </form>
 </ion-content>

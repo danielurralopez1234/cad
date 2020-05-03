@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
+  {
+    path: 'misautos',
+    loadChildren: () => import('./misautos/misautos.module').then( m => m.MisautosPageModule)
+  },
 ];
 
 @NgModule({
