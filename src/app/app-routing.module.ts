@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuardService} from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'bienvenida', pathMatch: 'full' },
@@ -13,15 +14,18 @@ const routes: Routes = [
   },
   {
     path: 'terminos-y-condiciones',
-    loadChildren: () => import('./terminos-y-condiciones/terminos-y-condiciones.module').then( m => m.TerminosYCondicionesPageModule)
+    loadChildren: () => import('./terminos-y-condiciones/terminos-y-condiciones.module').then( m => m.TerminosYCondicionesPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'contacto',
-    loadChildren: () => import('./contacto/contacto.module').then( m => m.ContactoPageModule)
+    loadChildren: () => import('./contacto/contacto.module').then( m => m.ContactoPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'finalizacion',
@@ -37,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'misautos',
-    loadChildren: () => import('./misautos/misautos.module').then( m => m.MisautosPageModule)
+    loadChildren: () => import('./misautos/misautos.module').then( m => m.MisautosPageModule),
+    canActivate: [AuthGuardService]
   },
 ];
 
