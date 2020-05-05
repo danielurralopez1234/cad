@@ -31,7 +31,7 @@
   </ion-segment>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="c1" *ngIf="hideC1">
+<ion-content [fullscreen]="true" id="c1" *ngIf="hideC4">
   <form [formGroup]="carForm">
     <ion-item>
       <ion-label position="floating">Patente</ion-label>
@@ -136,7 +136,7 @@
   </ion-fab>
 </ion-content>
 
-<ion-content [fullscreen]="true" id="c4" *ngIf="hideC4">
+<ion-content [fullscreen]="true" id="c4" *ngIf="true">
   <form [formGroup]="mecanicoForm">
     <ion-item>
       <ion-label>Mecanico</ion-label>
@@ -148,16 +148,20 @@
     <ion-item>
       <ion-label>Selecciona Fecha</ion-label>
       <ion-datetime formControlName="fechaR" placeholder="Fecha"
-                    displayFormat="YYYY MMMM DD"
+                    displayFormat="DD MMM YYYY"
                     cancelText="Cancelar!!!"
+                    done-text="Ok"
+                    [dayShortNames]="nombreDias"
+                    [monthShortNames]="nombreMeses"
+                    (ionChange)="fehcaMantencion($event)"
                     [min]="fechaHoy.toISOString()"
-                    [ngModel]="fechaHoy.toISOString()"></ion-datetime>
+                    [(ngModel)]="fechaSelect"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-grid>
         <ion-row class="ion-text-center">
           <ion-col>
-            Martes 11, 2020
+            {{diaSelect}} {{numDiaSelect}} {{mesSelect}}
           </ion-col>
         </ion-row>
         <ion-row>

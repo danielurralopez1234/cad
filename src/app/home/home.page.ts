@@ -46,8 +46,13 @@ export class HomePage implements OnInit {
   hideC4 = false;
   hideC5 = false;
   valueDefault: string;
-  customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
+  nombreDias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+  nombreMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   fechaHoy: Date = new Date();
+  fechaSelect: any;
+  diaSelect: string;
+  numDiaSelect: string;
+  mesSelect: string;
 
   slideOpts = {
     initialSlide: 1,
@@ -290,6 +295,15 @@ export class HomePage implements OnInit {
       a['$key'] = snapshot.key;
       this.TipoMantencion.push(a as TipoMantencion);
     });
+  }
+
+  fehcaMantencion(evt: any) {
+    const newDate = new Date(evt.target.value);
+
+    this.diaSelect = evt.target.dayShortNames[newDate.getDay()];
+    this.numDiaSelect = newDate.toLocaleDateString().substring(0, 2);
+    this.mesSelect = 'de ' + evt.target.monthShortNames[newDate.getMonth()];
+
   }
 
 }
