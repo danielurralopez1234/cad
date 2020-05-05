@@ -5,40 +5,25 @@ import { FormaPago } from '../models/formaPago';
 import { Servicio } from '../models/servicio';
 import { Auto } from '../models/auto';
 import { Usuario } from '../models/usuario';
-import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
-import { convertToParamMap } from '@angular/router';
 import { storage } from 'firebase';
-import { log } from 'util';
 import { TipoCombustible } from '../models/tipoCombustible';
+import {TipoMantencion} from '../models/tipoMantencion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MantenedorService {
   storageRef: any;
-
   aceite: any;
   formaPago: any;
   servicio: any;
   auto: any;
   usuario: any;
 
-  aceiteListRef: AngularFireList<any>;
-  formaPagoListRef: AngularFireList<any>;
-  servicioListRef: AngularFireList<any>;
-  autoListRef: AngularFireList<any>;
-  usuarioListRef: AngularFireList<any>;
-  comunaListRef: AngularFireList<any>;
-  regionListRef: AngularFireList<any>;
-  modeloListRef: AngularFireList<any>;
-
 
   constructor(private afDB: AngularFireDatabase) {
     this.storageRef = afDB.database.ref();
-
     this.aceite = afDB.database.ref('aceite');
-    this.formaPago = afDB.database.ref('formaPago');
-    this.servicio = afDB.database.ref('servicio');
     this.auto = afDB.database.ref('auto');
     this.usuario = afDB.database.ref('usuario');
   }
@@ -76,7 +61,7 @@ export class MantenedorService {
     this.afDB.object('aceite/' + id).remove();
   }
   async saveFormaPago(formaPago: FormaPago) {
-    this.formaPago.push().set(formaPago);
+    this.afDB.database.ref('formaPago').push().set(formaPago);
   }
   async deleteFormaPago(id: string) {
     this.afDB.object('formaPago/' + id).remove();
@@ -109,8 +94,16 @@ export class MantenedorService {
     orderByChild('region').equalTo(id);
 
   }
+  getMantencionByServicio(id: string) {
+    return this.afDB.database.ref('tipoMantencion').
+    orderByChild('tipoServicio').equalTo(id);
+
+  }
   async saveServicio(servicio: Servicio) {
-    this.servicio.push().set(servicio);
+    this.afDB.database.ref('servicio/').push().set(servicio);
+  }
+  async saveTipoMantencion(mantencion: TipoMantencion) {
+    this.afDB.database.ref('tipoMantencion/').push().set(mantencion);
   }
   async updateServicio(id: string, est: boolean) {
     this.afDB.database.ref('servicio/' + id).update({ estado: est });

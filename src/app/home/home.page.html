@@ -77,10 +77,8 @@
     </ion-item>
     <ion-item>
       <ion-label>Tipo Mantencion</ion-label>
-      <ion-select formControlName="mantencion" placeholder="Selecciona..">
-        <ion-select-option value="f">10.000km</ion-select-option>
-        <ion-select-option value="m">20.000km</ion-select-option>
-        <ion-select-option value="m">30.000km</ion-select-option>
+      <ion-select formControlName="mantencion" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoMantencion">
+        <ion-select-option *ngFor="let tipo of TipoMantencion" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-slides pager="true" [options]="slideOpts">

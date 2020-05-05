@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../services/authentication.service';
 import {AlertController, LoadingController, ModalController} from '@ionic/angular';
-import {AutosPage} from '../mantenedores/autos/autos.page';
 import {FinalizacionPage} from './modals/finalizacion/finalizacion.page';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -12,6 +10,7 @@ import {Reserva} from '../models/reserva';
 import {TipoServicio} from '../models/tipoServicio';
 import {Region} from '../models/region';
 import {Comuna} from '../models/comuna';
+import {TipoMantencion} from '../models/tipoMantencion';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +27,7 @@ export class HomePage implements OnInit {
   Comuna: any;
   reserva: Reserva = new Reserva();
   TipoServicio: any;
+  TipoMantencion: any;
   Region: any;
 
   carForm: FormGroup;
@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
       this.TipoServicio.forEach(item => {
         if (item.nombre.toUpperCase().indexOf('MANTENCION') > -1 && item.estado) {
           this.reserva.idTipoServicio = item.$key;
+          this.selectTipoMantencion(this.reserva.idTipoServicio);
           return;
         }
       });
@@ -277,6 +278,17 @@ export class HomePage implements OnInit {
     comuna.on('child_added', (snapshot) => {
       const a = snapshot.val();
       this.Comuna.push(a as Comuna);
+    });
+  }
+
+  async selectTipoMantencion(id: string) {
+    this.reserva.idTipoMantencion = '';
+    const tipo = await this.mantService.getMantencionByServicio(id);
+    this.TipoMantencion = [];
+    tipo.on('child_added', (snapshot) => {
+      const a = snapshot.val();
+      a['$key'] = snapshot.key;
+      this.TipoMantencion.push(a as TipoMantencion);
     });
   }
 

@@ -15,6 +15,7 @@ import {Router} from '@angular/router';
 export class AppComponent {
   navigate: any;
   nombre: string;
+
   constructor(
     private router: Router,
     private platform: Platform,
