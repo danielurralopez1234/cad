@@ -31,38 +31,38 @@
   </ion-segment>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="c1" *ngIf="hideC4">
+<ion-content [fullscreen]="true" id="c1" *ngIf="hideC1">
   <form [formGroup]="carForm">
     <ion-item>
-      <ion-label position="floating">Patente</ion-label>
+      <ion-label position="floating" color="primary">Patente</ion-label>
       <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="reserva.patente" (ionChange)="parseUpperCase()"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Marca</ion-label>
+      <ion-label color="primary">Marca</ion-label>
       <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="reserva.idMarca">
         <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Modelo</ion-label>
+      <ion-label color="primary">Modelo</ion-label>
       <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="reserva.idModelo">
         <ion-select-option *ngFor="let modelo of Modelo" [value]="modelo.$key">{{modelo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Año</ion-label>
+      <ion-label position="floating" color="primary">Año</ion-label>
       <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="reserva.anioAuto" (ionChange)="parseDate()"
                     displayFormat="YYYY"
                     doneText="Ok"
                     cancelText="Cancelar!!!"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Cilindrada</ion-label>
+      <ion-label position="floating" color="primary">Cilindrada</ion-label>
       <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="reserva.cilindrada"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="validaCarForm()">
+    <ion-fab-button (click)="validaCarForm()" color="tertiary">
       <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -70,36 +70,25 @@
 <ion-content [fullscreen]="true" id="c2" *ngIf="hideC2">
   <form [formGroup]="serviceForm">
     <ion-item>
-      <ion-label>Tipo Servicio</ion-label>
+      <ion-label color="primary">Tipo Servicio</ion-label>
       <ion-select formControlName="tipo" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoServicio" [disabled]="isTipoServicio">
         <ion-select-option *ngFor="let servicio of TipoServicio" [value]="servicio.$key">{{servicio.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Tipo Mantencion</ion-label>
+      <ion-label color="primary">Tipo Mantencion</ion-label>
       <ion-select formControlName="mantencion" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoMantencion">
         <ion-select-option *ngFor="let tipo of TipoMantencion" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide>
-        <h1>Slide 1</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 2</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 3</h1>
-      </ion-slide>
-    </ion-slides>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="validaServiceForm()">
+    <ion-fab-button (click)="validaServiceForm()" color="tertiary">
       <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="serviceFormBack()">
+    <ion-fab-button (click)="serviceFormBack()" color="tertiary">
       <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -108,45 +97,45 @@
 <ion-content [fullscreen]="true" id="c3" *ngIf="hideC3">
   <form [formGroup]="placeForm">
     <ion-item>
-      <ion-label>Region</ion-label>
+      <ion-label color="primary">Region</ion-label>
       <ion-select formControlName="region" placeholder="Selecciona.." [(ngModel)]="reserva.idRegion" [disabled]="isRegion">
         <ion-select-option *ngFor="let region of Region" [value]="region.id">{{region.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Comuna</ion-label>
+      <ion-label color="primary">Comuna</ion-label>
       <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna">
         <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Calle</ion-label>
+      <ion-label position="floating" color="primary">Calle</ion-label>
       <ion-input formControlName="calle" ></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="validaDireccionForm()">
+    <ion-fab-button (click)="validaDireccionForm()" color="tertiary">
       <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="direccionFormBack()">
+    <ion-fab-button (click)="direccionFormBack()" color="tertiary">
       <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
 
-<ion-content [fullscreen]="true" id="c4" *ngIf="true">
+<ion-content [fullscreen]="true" id="c4" *ngIf="hideC4">
   <form [formGroup]="mecanicoForm">
     <ion-item>
-      <ion-label>Mecanico</ion-label>
+      <ion-label color="primary">Mecanico</ion-label>
       <ion-select formControlName="mecanico" placeholder="Selecciona..">
         <ion-select-option value="f">Julio</ion-select-option>
         <ion-select-option value="m">Juan</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Selecciona Fecha</ion-label>
+      <ion-label color="primary">Selecciona Fecha</ion-label>
       <ion-datetime formControlName="fechaR" placeholder="Fecha"
                     displayFormat="DD MMM YYYY"
                     cancelText="Cancelar!!!"
@@ -158,42 +147,54 @@
                     [(ngModel)]="fechaSelect"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-grid>
+      <ion-grid *ngIf="isPrecarga">
         <ion-row class="ion-text-center">
           <ion-col>
             {{diaSelect}} {{numDiaSelect}} {{mesSelect}}
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row offset="2" class="ion-text-center">
           <ion-col>
-            col 1
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">09:00</ion-label>
+            </ion-chip>
           </ion-col>
           <ion-col>
-            col 2
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">11:00</ion-label>
+            </ion-chip>
           </ion-col>
           <ion-col>
-            col 3
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">13:00</ion-label>
+            </ion-chip>
           </ion-col>
           <ion-col>
-            col 4
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">15:00</ion-label>
+            </ion-chip>
           </ion-col>
           <ion-col>
-            col 5
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">17:00</ion-label>
+            </ion-chip>
           </ion-col>
           <ion-col>
-            col 6
+            <ion-chip color="primary" class="ion-text-sm-center">
+              <ion-label color="secondary">19:00</ion-label>
+            </ion-chip>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="validaMecanicoForm()">
+    <ion-fab-button (click)="validaMecanicoForm()" color="tertiary">
       <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="mecanicoFormBack()">
+    <ion-fab-button (click)="mecanicoFormBack()" color="tertiary">
       <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -203,10 +204,10 @@
   <form [formGroup]="pagoForm">
     <ion-radio-group formControlName="pago">
       <ion-list-header>
-        <ion-label>Forma de pago</ion-label>
+        <ion-label color="primary">Forma de pago</ion-label>
       </ion-list-header>
       <ion-item>
-        <ion-label>Transferencia Bancaria</ion-label>
+        <ion-label color="primary">Transferencia Bancaria</ion-label>
         <ion-radio slot="start" value="tb"></ion-radio>
       </ion-item>
       <!-- los datos pueden ser tambien popup-->
@@ -231,7 +232,7 @@
         </ion-item>
       </ion-list>
       <ion-item>
-        <ion-label>Efectivo</ion-label>
+        <ion-label color="primary">Efectivo</ion-label>
         <ion-radio slot="start" value="ef"></ion-radio>
       </ion-item>
 
@@ -242,7 +243,7 @@
     <!-- Mensaje de finalizacion, y se limpian los campos y se vuelve a la pagina principal, deberia quedar registrado en la parte mis reservas -->
   </form>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="pagoFormBack()">
+    <ion-fab-button (click)="pagoFormBack()" color="tertiary">
       <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>

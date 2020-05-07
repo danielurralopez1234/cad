@@ -14,8 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'terminos-y-condiciones',
-    loadChildren: () => import('./terminos-y-condiciones/terminos-y-condiciones.module').then( m => m.TerminosYCondicionesPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./terminos-y-condiciones/terminos-y-condiciones.module').then( m => m.TerminosYCondicionesPageModule)
   },
   {
     path: 'contacto',

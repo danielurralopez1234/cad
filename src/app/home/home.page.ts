@@ -53,6 +53,7 @@ export class HomePage implements OnInit {
   diaSelect: string;
   numDiaSelect: string;
   mesSelect: string;
+  isPrecarga = false;
 
   slideOpts = {
     initialSlide: 1,
@@ -297,13 +298,14 @@ export class HomePage implements OnInit {
     });
   }
 
-  fehcaMantencion(evt: any) {
+  async fehcaMantencion(evt: any) {
     const newDate = new Date(evt.target.value);
-
+    await this.presentLoading();
     this.diaSelect = evt.target.dayShortNames[newDate.getDay()];
     this.numDiaSelect = newDate.toLocaleDateString().substring(0, 2);
     this.mesSelect = 'de ' + evt.target.monthShortNames[newDate.getMonth()];
-
+    this.isPrecarga = true;
   }
+
 
 }
