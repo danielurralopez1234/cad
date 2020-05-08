@@ -9,8 +9,8 @@ export class UsersService {
 
   constructor(private afDB: AngularFireDatabase) { }
 
-  async saveUsers(user: Usuario) {
-    this.afDB.database.ref('usuario/' + user.id).set(user);
+  async saveUsers(user: Usuario, uid: string) {
+    this.afDB.database.ref('usuario/' + uid).set(user);
 
   }
   async getUser(id: string) {

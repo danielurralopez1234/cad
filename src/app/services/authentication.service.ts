@@ -73,19 +73,18 @@ export class AuthenticationService {
       });
   }
 
-  async onRegister(user: Usuario) {
+  async onRegister(user: Usuario, pass: string) {
       return new Promise(async (resolve, rejected) => {
-          await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(async res => {
-              user.id = res.user.uid;
+          await this.afAuth.auth.createUserWithEmailAndPassword(user.email, pass).then(async res => {
               user.rol = 1;
-              user.password = '';
               user.comuna = '';
               user.estado = true;
               user.fechaNacimiento = '';
               user.foto = '';
               user.idAuto = '';
               user.region = '';
-              await this.usersService.saveUsers(user);
+              user.sector = 0;
+              await this.usersService.saveUsers(user, res.user.uid);
               resolve(res);
           }).catch(err => rejected(err));
       });

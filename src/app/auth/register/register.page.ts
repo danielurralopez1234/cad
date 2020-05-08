@@ -12,6 +12,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class RegisterPage implements OnInit {
   usuario: Usuario = new Usuario();
+  password: string;
   confirmaPass: string;
   registroForm: FormGroup;
   condicion = false;
@@ -37,10 +38,10 @@ export class RegisterPage implements OnInit {
   async register() {
     console.log(this.condicion);
     if (this.registroForm.valid) {
-      if (this.confirmaPass === this.usuario.password) {
+      if (this.confirmaPass === this.password) {
         if (this.condicion) {
           this.usuario.rut = this.clean(this.usuario.rut);
-          await this.authService.onRegister(this.usuario).then(res => {
+          await this.authService.onRegister(this.usuario, this.password).then(res => {
             this.presentToast('Registro exitoso.');
             this.router.navigate(['/login']);
           }).catch(err => {
@@ -87,9 +88,9 @@ export class RegisterPage implements OnInit {
     let rut = this.registroForm.get('rut').value;
 
     if (rut.length > 0) {
-      rut = this.clean(rut)
+      rut = this.clean(rut);
 
-      let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1)
+      let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
       for (let i = 4; i < rut.length; i += 3) {
         result = rut.slice(-3 - i, -i) + '.' + result;
       }

@@ -11,6 +11,7 @@ import {TipoServicio} from '../models/tipoServicio';
 import {Region} from '../models/region';
 import {Comuna} from '../models/comuna';
 import {TipoMantencion} from '../models/tipoMantencion';
+import {Mecanico} from '../models/mecanico';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomePage implements OnInit {
   Marca: any;
   Modelo: any;
   Comuna: any;
+  Mecanicos: any;
   reserva: Reserva = new Reserva();
   TipoServicio: any;
   TipoMantencion: any;
@@ -127,7 +129,6 @@ export class HomePage implements OnInit {
         }
       });
     });
-
   }
 
   async selectModel(evt) {
@@ -298,7 +299,24 @@ export class HomePage implements OnInit {
     });
   }
 
-  async fehcaMantencion(evt: any) {
+  async selectMecanico() {
+    // agregar el sector una vez se pueda agregar mecanicos
+    let sec;
+    this.Comuna.forEach(r => {
+      if (r.id === this.reserva.idComuna) {
+        sec = r.sector;
+      }
+    });
+    this.reserva.idMecanico = '';
+    await this.mantService.getMecanicoByRolSector(2, sec).on('child_added', (snapshot) => {
+      this.Mecanicos = [];
+      const a = snapshot.val();
+      a['$key'] = snapshot.key;
+      this.Mecanicos.push(a as Mecanico);
+    });
+  }
+
+  async fechaMantencion(evt: any) {
     const newDate = new Date(evt.target.value);
     await this.presentLoading();
     this.diaSelect = evt.target.dayShortNames[newDate.getDay()];

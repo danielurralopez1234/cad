@@ -104,7 +104,7 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">Comuna</ion-label>
-      <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna">
+      <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna" (ionChange)="selectMecanico(0)">
         <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -129,9 +129,8 @@
   <form [formGroup]="mecanicoForm">
     <ion-item>
       <ion-label color="primary">Mecanico</ion-label>
-      <ion-select formControlName="mecanico" placeholder="Selecciona..">
-        <ion-select-option value="f">Julio</ion-select-option>
-        <ion-select-option value="m">Juan</ion-select-option>
+      <ion-select formControlName="mecanico" placeholder="Selecciona.." [(ngModel)]="reserva.idMecanico">
+        <ion-select-option *ngFor="let mecanico of Mecanicos" [value]="mecanico.$key">{{mecanico.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -142,7 +141,7 @@
                     done-text="Ok"
                     [dayShortNames]="nombreDias"
                     [monthShortNames]="nombreMeses"
-                    (ionChange)="fehcaMantencion($event)"
+                    (ionChange)="fechaMantencion($event)"
                     [min]="fechaHoy.toISOString()"
                     [(ngModel)]="fechaSelect"></ion-datetime>
     </ion-item>

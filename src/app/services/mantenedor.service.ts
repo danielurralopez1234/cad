@@ -99,6 +99,11 @@ export class MantenedorService {
     orderByChild('tipoServicio').equalTo(id);
 
   }
+  getMecanicoByRolSector(id: number, sector: number) {
+    return this.afDB.database.ref('usuario').
+    orderByChild('rol').equalTo(id);
+
+  }
   async saveServicio(servicio: Servicio) {
     this.afDB.database.ref('servicio/').push().set(servicio);
   }
