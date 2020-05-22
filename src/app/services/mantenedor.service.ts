@@ -8,6 +8,8 @@ import { Usuario } from '../models/usuario';
 import { storage } from 'firebase';
 import { TipoCombustible } from '../models/tipoCombustible';
 import {TipoMantencion} from '../models/tipoMantencion';
+import {MisAutos} from '../models/misAutos';
+import {AgendaMecanico} from '../models/agendaMecanico';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class MantenedorService {
   servicio: any;
   auto: any;
   usuario: any;
+  misAutos: any;
+  agenda: any;
 
 
   constructor(private afDB: AngularFireDatabase) {
@@ -26,6 +30,8 @@ export class MantenedorService {
     this.aceite = afDB.database.ref('aceite');
     this.auto = afDB.database.ref('auto');
     this.usuario = afDB.database.ref('usuario');
+    this.misAutos = afDB.database.ref('misAutos');
+    this.agenda = afDB.database.ref('agendaMecanico');
   }
 
   async saveAceite(aceite: Aceite) {
@@ -198,6 +204,22 @@ export class MantenedorService {
 
   getAllarea() {
     return this.afDB.list('sector');
+  }
+
+  async saveMisAutos(autos: MisAutos) {
+    return new Promise((resolve, reject) => {
+      this.misAutos.push(autos).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
+  }
+
+  saveAgenda(agenda: AgendaMecanico) {
+    return new Promise((resolve, reject) => {
+      this.agenda.push(agenda).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
   }
 
   async upLoadImage(img: any, id: string) {

@@ -12,6 +12,9 @@ import {Region} from '../models/region';
 import {Comuna} from '../models/comuna';
 import {TipoMantencion} from '../models/tipoMantencion';
 import {Mecanico} from '../models/mecanico';
+import {MisAutos} from '../models/misAutos';
+import {AuthenticationService} from '../services/authentication.service';
+import {AgendaMecanico} from '../models/agendaMecanico';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +31,8 @@ export class HomePage implements OnInit {
   Comuna: any;
   Mecanicos: any;
   reserva: Reserva = new Reserva();
+  misAutos: MisAutos = new MisAutos();
+  agenda: AgendaMecanico = new AgendaMecanico();
   TipoServicio: any;
   TipoMantencion: any;
   Region: any;
@@ -64,7 +69,8 @@ export class HomePage implements OnInit {
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
               private alertController: AlertController,
               private mantService: MantenedorService,
-              private loadingController: LoadingController) {
+              private loadingController: LoadingController,
+              private authService: AuthenticationService) {
     this.valueDefault = 'paso1';
     this.carForm = formBuilder.group({
       patente: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(6), Validators.pattern('[a-zA-Z0-9]*'), Validators.required])],
@@ -132,7 +138,7 @@ export class HomePage implements OnInit {
   }
 
   async selectModel(evt) {
-    this.reserva.idModelo = '';
+    this.misAutos.modelo = '';
     const modelo = await this.mantService.getModeloByMarca(Number(evt.target.value));
     this.Modelo = [];
     modelo.on('child_added', (snapshot) => {
@@ -171,7 +177,7 @@ export class HomePage implements OnInit {
   }
 
 
-  validaCarForm() {
+  async validaCarForm() {
     if (this.carForm.valid) {
       this.hideC1 = false;
       this.hidePaso2 = false;
@@ -218,7 +224,7 @@ export class HomePage implements OnInit {
     this.valueDefault = 'paso2';
   }
 
-  validaMecanicoForm() {
+  async validaMecanicoForm() {
     if (this.mecanicoForm.valid) {
       this.hideC4 = false;
       this.hidePaso5 = false;
@@ -270,12 +276,14 @@ export class HomePage implements OnInit {
   }
 
   parseDate() {
-    const anio = new Date(this.reserva.anioAuto);
-    this.reserva.anioAuto = anio.getFullYear();
+    const anio = new Date(this.misAutos.anio);
+    console.log(anio);
+    this.misAutos.anio = anio.getFullYear();
+    console.log(this.misAutos.anio);
   }
 
   parseUpperCase() {
-    this.reserva.patente = this.reserva.patente.toUpperCase();
+    this.misAutos.patente = this.misAutos.patente.toUpperCase();
   }
 
   async selectComuna(id: number) {
@@ -307,7 +315,7 @@ export class HomePage implements OnInit {
         sec = r.sector;
       }
     });
-    this.reserva.idMecanico = '';
+    this.agenda.idMecanico = '';
     await this.mantService.getMecanicoByRolSector(2, sec).on('child_added', (snapshot) => {
       this.Mecanicos = [];
       const a = snapshot.val();
@@ -318,11 +326,72 @@ export class HomePage implements OnInit {
 
   async fechaMantencion(evt: any) {
     const newDate = new Date(evt.target.value);
-    await this.presentLoading();
+    // await this.presentLoading();
     this.diaSelect = evt.target.dayShortNames[newDate.getDay()];
     this.numDiaSelect = newDate.toLocaleDateString().substring(0, 2);
     this.mesSelect = 'de ' + evt.target.monthShortNames[newDate.getMonth()];
     this.isPrecarga = true;
+  }
+
+  selectedHora(evt: any) {
+    const idbtn = evt.target.id;
+    if (idbtn !== null && idbtn.length > 0) {
+      const btn = document.getElementById(idbtn);
+      btn.className += ' color-activated';
+      if (idbtn !== 'btn-9') {
+        document.getElementById('btn-9').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-9') {
+        this.agenda.hora = '09:00';
+      }
+      if (idbtn !== 'btn-11') {
+        document.getElementById('btn-11').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-11') {
+        this.agenda.hora = '11:00';
+      }
+      if (idbtn !== 'btn-13') {
+        document.getElementById('btn-13').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-13') {
+        this.agenda.hora = '13:00';
+      }
+      if (idbtn !== 'btn-15') {
+        document.getElementById('btn-15').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-15') {
+        this.agenda.hora = '15:00';
+      }
+      if (idbtn !== 'btn-17') {
+        document.getElementById('btn-17').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-17') {
+        this.agenda.hora = '17:00';
+      }
+      if (idbtn !== 'btn-19') {
+        document.getElementById('btn-19').classList.remove('color-activated');
+      }
+      if (idbtn === 'btn-19') {
+        this.agenda.hora = '19:00';
+      }
+    }
+  }
+
+  async finalizaReserva() {
+    await this.authService.getSesionStorage().then(resp => {
+      if (resp !== undefined) {
+        this.misAutos.idUsuario = resp.id;
+      }
+    });
+    this.misAutos.estado = true;
+    await this.mantService.saveMisAutos(this.misAutos).then(resId => {
+      this.reserva.idAuto = resId.toString();
+    }).catch(err => console.log('error al guardar ' + err));
+
+    this.agenda.estado = true;
+    await this.mantService.saveAgenda(this.agenda).then(respId => {
+      this.reserva.idAgenda = respId.toString();
+    }).catch(err => console.log('error al guardar ' + err));
   }
 
 

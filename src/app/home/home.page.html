@@ -35,30 +35,30 @@
   <form [formGroup]="carForm">
     <ion-item>
       <ion-label position="floating" color="primary">Patente</ion-label>
-      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="reserva.patente" (ionChange)="parseUpperCase()"></ion-input>
+      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="misAutos.patente" (ionChange)="parseUpperCase()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Marca</ion-label>
-      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="reserva.idMarca">
+      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="misAutos.marca">
         <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Modelo</ion-label>
-      <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="reserva.idModelo">
+      <ion-select formControlName="modelo" placeholder="Seleccione..." [disabled]="isModelo" [(ngModel)]="misAutos.modelo">
         <ion-select-option *ngFor="let modelo of Modelo" [value]="modelo.$key">{{modelo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Año</ion-label>
-      <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="reserva.anioAuto" (ionChange)="parseDate()"
+      <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="misAutos.anio" (ionChange)="parseDate()"
                     displayFormat="YYYY"
                     doneText="Ok"
                     cancelText="Cancelar!!!"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Cilindrada</ion-label>
-      <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="reserva.cilindrada"></ion-input>
+      <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="misAutos.cilindrada"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -104,13 +104,13 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">Comuna</ion-label>
-      <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna" (ionChange)="selectMecanico(0)">
+      <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="reserva.idComuna" (ionChange)="selectMecanico()">
         <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating" color="primary">Calle</ion-label>
-      <ion-input formControlName="calle" ></ion-input>
+      <ion-label position="floating" color="primary">Direccion</ion-label>
+      <ion-input formControlName="calle" [(ngModel)]="reserva.direccion"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -129,7 +129,7 @@
   <form [formGroup]="mecanicoForm">
     <ion-item>
       <ion-label color="primary">Mecanico</ion-label>
-      <ion-select formControlName="mecanico" placeholder="Selecciona.." [(ngModel)]="reserva.idMecanico">
+      <ion-select formControlName="mecanico" placeholder="Selecciona.." [(ngModel)]="agenda.idMecanico">
         <ion-select-option *ngFor="let mecanico of Mecanicos" [value]="mecanico.$key">{{mecanico.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -143,43 +143,43 @@
                     [monthShortNames]="nombreMeses"
                     (ionChange)="fechaMantencion($event)"
                     [min]="fechaHoy.toISOString()"
-                    [(ngModel)]="fechaSelect"></ion-datetime>
+                    [(ngModel)]="agenda.fecha"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-grid *ngIf="isPrecarga">
-        <ion-row class="ion-text-center">
+        <ion-row class="ion-text-center ion-margin-top">
           <ion-col>
-            {{diaSelect}} {{numDiaSelect}} {{mesSelect}}
+            <label class="ion-margin-bottom color-title"><h2>{{diaSelect}} {{numDiaSelect}} {{mesSelect}}</h2></label>
           </ion-col>
         </ion-row>
-        <ion-row offset="2" class="ion-text-center">
+        <ion-row offset="2" class="ion-text-center ion-margin-top">
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-9" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">09:00</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-11" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">11:00</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-13" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">13:00</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-15" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">15:00</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-17" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">17:00</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col>
-            <ion-chip color="primary" class="ion-text-sm-center">
+            <ion-chip id="btn-19" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
               <ion-label color="secondary">19:00</ion-label>
             </ion-chip>
           </ion-col>
