@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>Estimado/a: Juanito Lopez</ion-text>
-  <ion-text>codigo reserva: 8899655</ion-text>
-  <ion-text>tu servicio de mantencion 10.000km fue agendado para el dia Martes 25 de Febrero, 2020</ion-text>
-  <ion-text>en la direccion Perico los palotes 452 Maipu - Santiago</ion-text>
+  <ion-label>Estimado/a: {{data.nombre}}</ion-label>
+  <ion-label>codigo reserva: {{data.idReserva}}</ion-label>
+  <ion-label>tu servicio de mantencion {{data.mantencion}} fue agendado para el dia {{data.fecha}}</ion-label>
+  <ion-label>en la dirección {{data.direccion}}</ion-label>
 
 </ion-content>

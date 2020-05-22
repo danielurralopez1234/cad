@@ -15,6 +15,7 @@ import {Mecanico} from '../models/mecanico';
 import {MisAutos} from '../models/misAutos';
 import {AuthenticationService} from '../services/authentication.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
+import {Finaliza} from '../models/finaliza';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class HomePage implements OnInit {
   reserva: Reserva = new Reserva();
   misAutos: MisAutos = new MisAutos();
   agenda: AgendaMecanico = new AgendaMecanico();
+  finaliza: Finaliza = new Finaliza();
   TipoServicio: any;
   TipoMantencion: any;
   Region: any;
@@ -56,7 +58,6 @@ export class HomePage implements OnInit {
   nombreDias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
   nombreMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   fechaHoy: Date = new Date();
-  fechaSelect: any;
   diaSelect: string;
   numDiaSelect: string;
   mesSelect: string;
@@ -151,11 +152,13 @@ export class HomePage implements OnInit {
 
   }
 
-  async finalizaModal() {
+  async finalizaModal(params: any) {
     const modal = await this.modalController.create({
-      component: FinalizacionPage
+      component: FinalizacionPage,
+      componentProps: {
+        data: params
+      }
     });
-    // await this.router.navigateByUrl('home');
     return await modal.present();
   }
 
@@ -194,6 +197,13 @@ export class HomePage implements OnInit {
       this.hidePaso3 = false;
       this.hideC3 = true;
       this.valueDefault = 'paso3';
+
+      this.TipoMantencion.forEach(t => {
+        if (t.$key === this.reserva.idTipoMantencion) {
+          this.finaliza.mantencion = t.nombre;
+        }
+      });
+
     } else {
       this.presentAlert();
     }
@@ -206,12 +216,25 @@ export class HomePage implements OnInit {
     this.valueDefault = 'paso1';
   }
 
-  validaDireccionForm() {
+  async validaDireccionForm() {
     if (this.placeForm.valid) {
       this.hideC3 = false;
       this.hidePaso4 = false;
       this.hideC4 = true;
       this.valueDefault = 'paso4';
+      this.finaliza.direccion = this.reserva.direccion + ' ';
+      await this.Comuna.forEach(c => {
+        if (c.$key === this.reserva.idComuna) {
+          console.log(c.nombre);
+          this.finaliza.direccion += c.nombre + ' - ';
+        }
+      });
+      await this.Region.forEach(r => {
+        if (r.$key === this.reserva.idRegion) {
+          console.log(r.nombre);
+          this.finaliza.direccion += r.nombre + ' ';
+        }
+      });
     } else {
       this.presentAlert();
     }
@@ -242,9 +265,13 @@ export class HomePage implements OnInit {
     this.valueDefault = 'paso3';
   }
 
-  validaPagoForm() {
+  async validaPagoForm() {
     if (this.pagoForm.valid) {
-
+      this.reserva.idPago = this.pagoForm.value.pago;
+      this.reserva.fecha = new Date().toLocaleDateString();
+      // this.finaliza.direccion = 'aalp 56';
+      // this.finalizaModal(this.finaliza);
+      this.finalizaReserva();
     } else {
       this.presentAlert();
     }
@@ -330,6 +357,7 @@ export class HomePage implements OnInit {
     this.diaSelect = evt.target.dayShortNames[newDate.getDay()];
     this.numDiaSelect = newDate.toLocaleDateString().substring(0, 2);
     this.mesSelect = 'de ' + evt.target.monthShortNames[newDate.getMonth()];
+    this.finaliza.fecha = this.diaSelect + ' ' + this.numDiaSelect + ' ' + this.mesSelect + ', ' + newDate.getFullYear();
     this.isPrecarga = true;
   }
 
@@ -381,6 +409,8 @@ export class HomePage implements OnInit {
     await this.authService.getSesionStorage().then(resp => {
       if (resp !== undefined) {
         this.misAutos.idUsuario = resp.id;
+        this.reserva.idUsuario = resp.id;
+        this.finaliza.nombre = resp.nombre;
       }
     });
     this.misAutos.estado = true;
@@ -392,6 +422,15 @@ export class HomePage implements OnInit {
     await this.mantService.saveAgenda(this.agenda).then(respId => {
       this.reserva.idAgenda = respId.toString();
     }).catch(err => console.log('error al guardar ' + err));
+
+    await this.mantService.saveReserva(this.reserva).then(respId => {
+      console.log('guardado ok: ' + respId);
+      this.finaliza.idReserva = respId.toString();
+      this.finalizaModal(this.finaliza);
+      // limpiar variables agregar aqui
+      this.router.navigateByUrl('home');
+    }).catch(err => console.log('Error al guardar ' + err));
+
   }
 
 

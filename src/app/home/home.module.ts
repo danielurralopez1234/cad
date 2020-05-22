@@ -20,7 +20,7 @@ import {FinalizacionPage} from './modals/finalizacion/finalizacion.page';
     ]),
     ReactiveFormsModule
   ],
-  declarations: [HomePage] // FinalizacionPage
-  // entryComponents: [FinalizacionPage]
+  declarations: [HomePage, FinalizacionPage],
+  entryComponents: [FinalizacionPage]
 })
 export class HomePageModule {}

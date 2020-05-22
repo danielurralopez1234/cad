@@ -10,6 +10,7 @@ import { TipoCombustible } from '../models/tipoCombustible';
 import {TipoMantencion} from '../models/tipoMantencion';
 import {MisAutos} from '../models/misAutos';
 import {AgendaMecanico} from '../models/agendaMecanico';
+import {Reserva} from '../models/reserva';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class MantenedorService {
   usuario: any;
   misAutos: any;
   agenda: any;
+  reserva: any;
 
 
   constructor(private afDB: AngularFireDatabase) {
@@ -32,6 +34,7 @@ export class MantenedorService {
     this.usuario = afDB.database.ref('usuario');
     this.misAutos = afDB.database.ref('misAutos');
     this.agenda = afDB.database.ref('agendaMecanico');
+    this.reserva = afDB.database.ref('reserva');
   }
 
   async saveAceite(aceite: Aceite) {
@@ -217,6 +220,14 @@ export class MantenedorService {
   saveAgenda(agenda: AgendaMecanico) {
     return new Promise((resolve, reject) => {
       this.agenda.push(agenda).then(res => {
+        resolve(res.getKey());
+      }).catch(err => reject(err));
+    });
+  }
+
+  saveReserva(reserva: Reserva) {
+    return new Promise((resolve, reject) => {
+      this.reserva.push(reserva).then(res => {
         resolve(res.getKey());
       }).catch(err => reject(err));
     });
