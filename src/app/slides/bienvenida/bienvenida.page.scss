@@ -13,3 +13,18 @@ ion-slides {
   --bullet-background: grey;
   --bullet-background-active: #8890B2;
 }
+
+ion-content.imgPortada{
+  --background: url("/assets/img/portadaSoloLogo.svg") 0 0/100% 100% no-repeat;
+}
+
+.imgPostadaFooter{
+  background: url("/assets/img/soloFooter2.svg") 0 0/100% 100% no-repeat;
+}
+a.button-native{
+  background-color: #2B4FC5 !important;
+}
+.button-solid {
+  --background: #2B4FC5;
+  --color: #ffffff;
+}
