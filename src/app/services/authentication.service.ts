@@ -83,7 +83,8 @@ export class AuthenticationService {
               user.foto = '';
               user.idAuto = '';
               user.region = '';
-              user.sector = 0;
+              user.sector = 0;   
+              user.password = pass;           
               await this.usersService.saveUsers(user, res.user.uid);
               resolve(res);
           }).catch(err => rejected(err));
