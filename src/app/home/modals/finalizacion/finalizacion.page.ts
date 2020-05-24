@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalController, NavController, NavParams} from '@ionic/angular';
 import {Finaliza} from '../../../models/finaliza';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-finalizacion',
@@ -17,14 +18,6 @@ export class FinalizacionPage implements OnInit {
       this.auxParam.push(this.navParams.get('data') as Finaliza);
       this.auxParam.forEach(item => {
         console.log(item);
-        /*
-        this.data.idReserva = item[0].idReserva;
-        this.data.nombre = item[0].nombre;
-        this.data.mantencion = item[0].mantencion;
-        this.data.direccion = item[0].direccion;
-        this.data.fecha = item[0].fecha;
-
-         */
       });
     }
   }
@@ -33,7 +26,7 @@ export class FinalizacionPage implements OnInit {
   }
 
   async modalClose() {
-    await this.modalController.dismiss();
+    await this.modalController.dismiss(window.location.reload());
   }
 
 }

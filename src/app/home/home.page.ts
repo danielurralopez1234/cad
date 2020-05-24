@@ -23,7 +23,6 @@ import {Finaliza} from '../models/finaliza';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  items: any[] = [];
   isModelo = true;
   isTipoServicio = true;
   isRegion = true;
@@ -162,24 +161,6 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-
-  habilita1() {
-    this.hidePaso1 = true;
-  }
-  habilita2() {
-    this.hidePaso1 = true;
-  }
-  habilita3() {
-    this.hidePaso1 = true;
-  }
-  habilita4() {
-    this.hidePaso1 = true;
-  }
-  habilita5() {
-    this.hidePaso1 = true;
-  }
-
-
   async validaCarForm() {
     if (this.carForm.valid) {
       this.hideC1 = false;
@@ -269,8 +250,6 @@ export class HomePage implements OnInit {
     if (this.pagoForm.valid) {
       this.reserva.idPago = this.pagoForm.value.pago;
       this.reserva.fecha = new Date().toLocaleDateString();
-      // this.finaliza.direccion = 'aalp 56';
-      // this.finalizaModal(this.finaliza);
       this.finalizaReserva();
     } else {
       this.presentAlert();
@@ -427,11 +406,8 @@ export class HomePage implements OnInit {
       console.log('guardado ok: ' + respId);
       this.finaliza.idReserva = respId.toString();
       this.finalizaModal(this.finaliza);
-      // limpiar variables agregar aqui
-      this.router.navigateByUrl('home');
     }).catch(err => console.log('Error al guardar ' + err));
 
   }
-
 
 }
