@@ -96,22 +96,22 @@ export class MantenedorService {
   getModeloByMarca(id: number) {
     return this.afDB.database.ref('modelo').
     orderByChild('marca').equalTo(id);
-
   }
   getComunaByRegion(id: number) {
     return this.afDB.database.ref('comuna').
     orderByChild('region').equalTo(id);
-
   }
   getMantencionByServicio(id: string) {
     return this.afDB.database.ref('tipoMantencion').
     orderByChild('tipoServicio').equalTo(id);
-
   }
   getMecanicoByRolSector(id: number, sector: number) {
     return this.afDB.database.ref('usuario').
     orderByChild('rol').equalTo(id);
-
+  }
+  getReservaByUid(uid: string) {
+    return this.afDB.database.ref('reserva').
+    orderByChild('idUsuario').equalTo(uid);
   }
   async saveServicio(servicio: Servicio) {
     this.afDB.database.ref('servicio/').push().set(servicio);
@@ -134,6 +134,12 @@ export class MantenedorService {
   }
   getAllservicio() {
     return this.afDB.list('servicio');
+  }
+  getServicioByUid(uid: string) {
+    return this.afDB.list('servicio/' + uid);
+  }
+  getAgendaById(uid: string) {
+    return this.afDB.database.ref('agendaMecanico/' + uid);
   }
 
   async saveAuto(auto: Auto) {

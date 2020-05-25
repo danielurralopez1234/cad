@@ -6,8 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { FinalizacionPageRoutingModule } from './finalizacion-routing.module';
 
-import { FinalizacionPage } from './finalizacion.page';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +13,5 @@ import { FinalizacionPage } from './finalizacion.page';
     IonicModule,
     FinalizacionPageRoutingModule
   ],
-  declarations: [FinalizacionPage]
 })
 export class FinalizacionPageModule {}

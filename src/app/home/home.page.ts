@@ -178,10 +178,15 @@ export class HomePage implements OnInit {
       this.hidePaso3 = false;
       this.hideC3 = true;
       this.valueDefault = 'paso3';
-
+      this.TipoServicio.forEach(s => {
+        if (s.$key === this.reserva.idTipoServicio) {
+          this.agenda.servicio = s.nombre;
+        }
+      });
       this.TipoMantencion.forEach(t => {
         if (t.$key === this.reserva.idTipoMantencion) {
           this.finaliza.mantencion = t.nombre;
+          this.agenda.mantencion = t.nombre;
         }
       });
 
