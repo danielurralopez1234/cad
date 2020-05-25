@@ -37,6 +37,7 @@ export class HomePage implements OnInit {
   TipoServicio: any;
   TipoMantencion: any;
   Region: any;
+  anio: any;
 
   carForm: FormGroup;
   serviceForm: FormGroup;
@@ -287,10 +288,8 @@ export class HomePage implements OnInit {
   }
 
   parseDate() {
-    const anio = new Date(this.misAutos.anio);
-    console.log(anio);
-    this.misAutos.anio = anio.getFullYear();
-    console.log(this.misAutos.anio);
+    const anio = new Date(this.anio);
+    this.misAutos.anio = anio.getUTCFullYear();
   }
 
   parseUpperCase() {
