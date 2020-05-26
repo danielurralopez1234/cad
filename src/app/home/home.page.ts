@@ -401,7 +401,7 @@ export class HomePage implements OnInit {
       this.reserva.idAuto = resId.toString();
     }).catch(err => console.log('error al guardar ' + err));
 
-    this.agenda.estado = true;
+    this.agenda.estado = 1;
     await this.mantService.saveAgenda(this.agenda).then(respId => {
       this.reserva.idAgenda = respId.toString();
     }).catch(err => console.log('error al guardar ' + err));

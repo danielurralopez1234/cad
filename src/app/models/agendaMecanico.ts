@@ -4,5 +4,5 @@ export class AgendaMecanico {
     hora: string;
     servicio: string;
     mantencion: string;
-    estado: boolean;
+    estado: number;
 }

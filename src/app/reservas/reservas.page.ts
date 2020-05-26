@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
 import {MantenedorService} from '../services/mantenedor.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-reservas',
@@ -13,7 +14,8 @@ export class ReservasPage implements OnInit {
   nombreMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   constructor(private authService: AuthenticationService,
-              private mantService: MantenedorService) {
+              private mantService: MantenedorService,
+              private loadingController: LoadingController) {
   }
 
   async ngOnInit() {
@@ -33,12 +35,36 @@ export class ReservasPage implements OnInit {
                 a.hora = a.hora + ' AM';
               }
               a.fecha = this.nombreMeses[newDate.getMonth()] + ' ' + newDate.toLocaleDateString().substring(0, 2);
+              if (a.estado === 1) {
+                a['color'] = 'warning';
+              } else if (a.estado === 2) {
+                a['color'] = 'success';
+              } else {
+                a['color'] = 'danger';
+              }
               this.Agenda.push(a as AgendaMecanico);
             });
           });
         });
       }
     });
+    this.presentLoading();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 200
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+  }
+
+  doRefrescar(event: any) {
+    this.ngOnInit();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1500);
   }
 
 }
