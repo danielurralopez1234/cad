@@ -27,7 +27,6 @@ export class ReservasPage implements OnInit {
           snapshot.forEach(val => {
             this.Agenda = [];
             this.mantService.getAgendaById(val.val().idAgenda).once('value').then(ag => {
-              console.log(ag.val());
               const a = ag.val();
               a['$key'] = ag.key;
               const newDate = new Date(a.fecha);

@@ -101,6 +101,10 @@ export class MantenedorService {
     return this.afDB.database.ref('comuna').
     orderByChild('region').equalTo(id);
   }
+  getComunaById(id: number) {
+    return this.afDB.database.ref('comuna').
+    orderByChild('id').equalTo(id).once('child_added');
+  }
   getMantencionByServicio(id: string) {
     return this.afDB.database.ref('tipoMantencion').
     orderByChild('tipoServicio').equalTo(id);
@@ -112,6 +116,10 @@ export class MantenedorService {
   getReservaByUid(uid: string) {
     return this.afDB.database.ref('reserva').
     orderByChild('idUsuario').equalTo(uid);
+  }
+  getReservaByIdAgenda(id: string) {
+    return this.afDB.database.ref('reserva').
+    orderByChild('idAgenda').equalTo(id);
   }
   async saveServicio(servicio: Servicio) {
     this.afDB.database.ref('servicio/').push().set(servicio);
@@ -140,6 +148,10 @@ export class MantenedorService {
   }
   getAgendaById(uid: string) {
     return this.afDB.database.ref('agendaMecanico/' + uid);
+  }
+  getAgendaByIdMecanico(id: string) {
+    return this.afDB.database.ref('agendaMecanico').
+    orderByChild('idMecanico').equalTo(id);;
   }
   async updateAgenda(id: string, est: number) {
     this.afDB.database.ref('agendaMecanico/' + id).update({ estado: est });
