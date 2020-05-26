@@ -141,7 +141,9 @@ export class MantenedorService {
   getAgendaById(uid: string) {
     return this.afDB.database.ref('agendaMecanico/' + uid);
   }
-
+  async updateAgenda(id: string, est: number) {
+    this.afDB.database.ref('agendaMecanico/' + id).update({ estado: est });
+  }
   async saveAuto(auto: Auto) {
     return new Promise((resolve, reject) => {
       this.auto.push(auto).then(res => {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
 import {MantenedorService} from '../services/mantenedor.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
-import {LoadingController} from '@ionic/angular';
+import {AlertController, LoadingController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-reservas',
@@ -15,7 +15,9 @@ export class ReservasPage implements OnInit {
 
   constructor(private authService: AuthenticationService,
               private mantService: MantenedorService,
-              private loadingController: LoadingController) {
+              private loadingController: LoadingController,
+              private alertController: AlertController,
+              private toastController: ToastController) {
   }
 
   async ngOnInit() {
@@ -65,6 +67,46 @@ export class ReservasPage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 1500);
+  }
+
+  async cancelAlertConfirm(key: string, nombre: string, estado: number) {
+    if (estado === 1) {
+      const alert = await this.alertController.create({
+        header: 'Confirmacion!',
+        message: 'Cancelar reserva<strong> ' + nombre + ' </strong>!!! ???',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary'
+          }, {
+            text: 'Si',
+            handler: () => {
+              this.cancelarReserva(key, 0);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    } else {
+      this.presentToast('Ya no puedes cambiar estado a esta reserva.');
+    }
+  }
+
+  async cancelarReserva(id: string, estado: number) {
+    await this.mantService.updateAgenda(id, estado).then(res => {
+      this.presentToast('Actualizado.');
+      this.ngOnInit();
+    }).catch(err => this.presentToast('Problemas al guardar registro.'));
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
