@@ -59,7 +59,7 @@ export class AuthenticationService {
                   if (usr !== null) {
                       getUser = 0;
                       this.userRes = usr;
-                      this.usrData.id = this.userRes.id;
+                      this.usrData.id = uid;
                       this.usrData.nombre = this.userRes.nombre;
                       this.usrData.rol = this.userRes.rol;
                       this.storage.set('USER_DATA', this.usrData).then(async (response) => {
@@ -83,8 +83,7 @@ export class AuthenticationService {
               user.foto = '';
               user.idAuto = '';
               user.region = '';
-              user.sector = 0;   
-              user.password = pass;           
+              user.sector = 0;
               await this.usersService.saveUsers(user, res.user.uid);
               resolve(res);
           }).catch(err => rejected(err));

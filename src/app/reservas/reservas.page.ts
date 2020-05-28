@@ -22,7 +22,7 @@ export class ReservasPage implements OnInit {
 
   async ngOnInit() {
     await this.authService.getSesionStorage().then(async data => {
-      if (data !== undefined) {
+      if (data !== undefined && data.id !== undefined) {
         await this.mantService.getReservaByUid(data.id).on('value', async (snapshot) => {
           snapshot.forEach(val => {
             this.Agenda = [];

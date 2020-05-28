@@ -12,5 +12,4 @@ export class Usuario {
     estado: boolean;
     foto: string;
     sector: number;
-    password: string;
 }
