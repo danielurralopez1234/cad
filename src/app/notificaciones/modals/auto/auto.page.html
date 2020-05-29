@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Auto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-group>
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>Marca: {{marcaRes.nombre}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>Modelo: {{modeloRes.nombre}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>Año: {{autoRes.anio}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>Cilindrada: {{autoRes.cilindrada}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+</ion-content>

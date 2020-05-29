@@ -48,6 +48,13 @@ export class AuthenticationService {
   getSesionStorage() {
       return this.storage.get('USER_DATA');
   }
+  getSesionStorageByUid() {
+        return new Promise((resolve, reject) => {
+            this.storage.get('USER_DATA').then(data => {
+                resolve(data.id);
+            }).catch(err => reject(err));
+        });
+  }
 
 
   onLogin(email: string, password: string) {

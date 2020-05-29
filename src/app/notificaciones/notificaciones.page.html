@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefrescar($event)">
+    <ion-refresher-content refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let agenda of Agenda">
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
@@ -27,17 +31,17 @@
     </ion-card-content>
     <ion-row class="ion-text-center">
       <ion-col>
-        <ion-button color="primary" size="small">
+        <ion-button color="primary" size="small" (click)="getClient(agenda.idUsuario)">
           <ion-icon name='person-outline'></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="primary" size="small">
+        <ion-button color="primary" size="small" (click)="getMap(agenda.direccion)">
           <ion-icon name='navigate-outline'></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="primary" size="small">
+        <ion-button color="primary" size="small" (click)="getCar(agenda.idAuto)">
           <ion-icon name='car-outline'></ion-icon>
         </ion-button>
       </ion-col>

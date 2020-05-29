@@ -235,7 +235,8 @@ export class HomePage implements OnInit {
   }
 
   async validaMecanicoForm() {
-    if (this.mecanicoForm.valid) {
+    console.log(this.agenda.hora);
+    if (this.mecanicoForm.valid && this.agenda.hora !== undefined) {
       this.hideC4 = false;
       this.hidePaso5 = false;
       this.hideC5 = true;

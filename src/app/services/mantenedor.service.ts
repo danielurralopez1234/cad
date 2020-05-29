@@ -105,6 +105,10 @@ export class MantenedorService {
     return this.afDB.database.ref('comuna').
     orderByChild('id').equalTo(id).once('child_added');
   }
+  getRegionById(id: number) {
+    return this.afDB.database.ref('region').
+    orderByChild('id').equalTo(id).once('child_added');
+  }
   getMantencionByServicio(id: string) {
     return this.afDB.database.ref('tipoMantencion').
     orderByChild('tipoServicio').equalTo(id);
@@ -151,7 +155,7 @@ export class MantenedorService {
   }
   getAgendaByIdMecanico(id: string) {
     return this.afDB.database.ref('agendaMecanico').
-    orderByChild('idMecanico').equalTo(id);;
+    orderByChild('idMecanico').equalTo(id);
   }
   async updateAgenda(id: string, est: number) {
     this.afDB.database.ref('agendaMecanico/' + id).update({ estado: est });
@@ -235,6 +239,16 @@ export class MantenedorService {
         resolve(res.getKey());
       }).catch(err => reject(err));
     });
+  }
+
+  getMisautosById(id: string) {
+    return this.afDB.object('misAutos/' + id).valueChanges();
+  }
+  getModeloById(id: string) {
+    return this.afDB.object('modelo/' + id).valueChanges();
+  }
+  getMarcaById(id: string) {
+    return this.afDB.object('marca/' + id).valueChanges();
   }
 
   saveAgenda(agenda: AgendaMecanico) {
