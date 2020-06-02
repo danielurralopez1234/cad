@@ -46,7 +46,10 @@ export class NotificacionesPage implements OnInit {
           } else {
             a['color'] = 'danger';
           }
-          a['direccion'] = rba.val().direccion + ' - ' + nomComuna + ' - ' + nomRegion;
+          a['direccion'] = rba.val().calle + ' ' + rba.val().calleNum + ' - ' + nomComuna + ' - ' + nomRegion;
+          a['calle'] = rba.val().calle;
+          a['calleNum'] = rba.val().calleNum;
+          a['nomRegion'] = nomRegion;
           a['idUsuario'] = rba.val().idUsuario;
           a['idAuto'] = rba.val().idAuto;
           this.Agenda.push(a as AgendaMecanico);
@@ -54,7 +57,9 @@ export class NotificacionesPage implements OnInit {
       });
     });
     await this.presentLoading();
-    this.Agenda = this.Agenda.slice().reverse();
+    if (this.Agenda !== undefined) {
+      this.Agenda = this.Agenda.slice().reverse();
+    }
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -79,11 +84,12 @@ export class NotificacionesPage implements OnInit {
     });
     return await modal.present();
   }
-  async getMap(direccion: any) {
+  async getMap(calle: string, numero: number, region: string) {
     const modal = await this.modalController.create({
       component: UbicacionPage,
       componentProps: {
-        DIRE: direccion
+        DIRE: calle + '+' + numero,
+        REGION: region
       }
     });
     return await modal.present();

@@ -7,7 +7,8 @@ export class Reserva {
     idAceite: string;
     idRegion: string;
     idComuna: string;
-    direccion: string;
+    calle: string;
+    calleNum: number;
     idAgenda: string;
     idPago: string;
     estado: string;

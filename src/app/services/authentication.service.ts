@@ -21,6 +21,7 @@ export class AuthenticationService {
   token: any;
   userRes: any = [];
   usrData: UserStorage = new UserStorage();
+  currentUser: BehaviorSubject<UserStorage> = new BehaviorSubject<UserStorage>(null);
 
   constructor(
       private router: Router,
@@ -69,6 +70,7 @@ export class AuthenticationService {
                       this.usrData.id = uid;
                       this.usrData.nombre = this.userRes.nombre;
                       this.usrData.rol = this.userRes.rol;
+                      this.currentUser.next(this.userRes);
                       this.storage.set('USER_DATA', this.usrData).then(async (response) => {
                           this.authState.next(true);
                       });
@@ -114,6 +116,10 @@ export class AuthenticationService {
        await loading.present();
        const { role, data } = await loading.onDidDismiss();
        console.log('Loading dismissed!');
+  }
+
+  getUserSubject() {
+      return this.currentUser.asObservable();
   }
 
   login2(email: string, password: string) {

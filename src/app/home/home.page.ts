@@ -87,7 +87,8 @@ export class HomePage implements OnInit {
     this.placeForm = formBuilder.group({
       region: ['', Validators.compose([Validators.required])],
       comuna: ['', Validators.compose([Validators.required])],
-      calle: ['', Validators.compose([Validators.required])],
+      calle: ['', Validators.compose([Validators.pattern('[a-zA-Z]*'), Validators.required])],
+      calleNum: ['', Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
     });
     this.mecanicoForm = formBuilder.group({
       mecanico: ['', Validators.compose([Validators.required])],
@@ -209,7 +210,7 @@ export class HomePage implements OnInit {
       this.hidePaso4 = false;
       this.hideC4 = true;
       this.valueDefault = 'paso4';
-      this.finaliza.direccion = this.reserva.direccion + ' ';
+      this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum;
       await this.Comuna.forEach(c => {
         if (c.$key === this.reserva.idComuna) {
           console.log(c.nombre);

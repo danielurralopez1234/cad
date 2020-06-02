@@ -36,7 +36,6 @@ export class AppComponent {
       this.authenticationService.authState.subscribe(state => {
         if (state) {
           this.authenticationService.getSesionStorage().then((res) => {
-            console.log('nombre: ' + res.nombre);
             this.nombre = res.nombre.toUpperCase();
           });
           this.router.navigate(['app']);
@@ -76,6 +75,7 @@ export class AppComponent {
 
   logoutUser() {
     this.menuCtrl.close();
+    this.nombre = '';
     this.authenticationService.logout();
   }
 }

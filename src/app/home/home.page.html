@@ -109,8 +109,12 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating" color="primary">Direccion</ion-label>
-      <ion-input formControlName="calle" [(ngModel)]="reserva.direccion"></ion-input>
+      <ion-label position="floating" color="primary">Calle</ion-label>
+      <ion-input formControlName="calle" [(ngModel)]="reserva.calle"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Numero</ion-label>
+      <ion-input formControlName="calleNum" [(ngModel)]="reserva.calleNum"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
