@@ -15,7 +15,8 @@ export class UbicacionPage implements OnInit {
 
   ngOnInit() {
     const dire = this.navParams.get('DIRE');
-    const region = this.navParams.get('REGION')
+    const comuna = this.navParams.get('COMUNA');
+    const region = this.navParams.get('REGION');
     console.log(dire);
     console.log(region);
 

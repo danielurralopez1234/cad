@@ -49,6 +49,7 @@ export class NotificacionesPage implements OnInit {
           a['direccion'] = rba.val().calle + ' ' + rba.val().calleNum + ' - ' + nomComuna + ' - ' + nomRegion;
           a['calle'] = rba.val().calle;
           a['calleNum'] = rba.val().calleNum;
+          a['nomComuna'] = nomComuna;
           a['nomRegion'] = nomRegion;
           a['idUsuario'] = rba.val().idUsuario;
           a['idAuto'] = rba.val().idAuto;
@@ -84,12 +85,13 @@ export class NotificacionesPage implements OnInit {
     });
     return await modal.present();
   }
-  async getMap(calle: string, numero: number, region: string) {
+  async getMap(calle: string, numero: number, comuna: string, region: string) {
     const modal = await this.modalController.create({
       component: UbicacionPage,
       componentProps: {
         DIRE: calle + '+' + numero,
-        REGION: region
+        REGION: region,
+        COMUNA: comuna
       }
     });
     return await modal.present();

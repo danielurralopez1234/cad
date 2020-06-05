@@ -35,11 +35,11 @@
   <form [formGroup]="carForm">
     <ion-item>
       <ion-label position="floating" color="primary">Patente</ion-label>
-      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="misAutos.patente" (ionChange)="parseUpperCase()"></ion-input>
+      <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="misAutos.patente" (ionChange)="parseUpperCase()" (ionBlur)="buscarMisAutos()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Marca</ion-label>
-      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="misAutos.marca">
+      <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event, misAutos.modelo)" [(ngModel)]="misAutos.marca" [disabled]="isMarca">
         <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -54,11 +54,11 @@
       <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="anio" (ionChange)="parseDate()"
                     displayFormat="YYYY"
                     doneText="Ok"
-                    cancelText="Cancelar!!!"></ion-datetime>
+                    cancelText="Cancelar!!!" [disabled]="isAnio"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Cilindrada</ion-label>
-      <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="misAutos.cilindrada"></ion-input>
+      <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="misAutos.cilindrada" [disabled]="isCilindrada"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

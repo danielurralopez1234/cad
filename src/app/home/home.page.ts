@@ -24,6 +24,9 @@ import {Finaliza} from '../models/finaliza';
 })
 export class HomePage implements OnInit {
   isModelo = true;
+  isCilindrada = false;
+  isMarca = false;
+  isAnio = false;
   isTipoServicio = true;
   isRegion = true;
   Marca: any;
@@ -87,7 +90,7 @@ export class HomePage implements OnInit {
     this.placeForm = formBuilder.group({
       region: ['', Validators.compose([Validators.required])],
       comuna: ['', Validators.compose([Validators.required])],
-      calle: ['', Validators.compose([Validators.pattern('[a-zA-Z]*'), Validators.required])],
+      calle: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       calleNum: ['', Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
     });
     this.mecanicoForm = formBuilder.group({
@@ -139,7 +142,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  async selectModel(evt) {
+  async selectModel(evt, idModelo?: string) {
     this.misAutos.modelo = '';
     const modelo = await this.mantService.getModeloByMarca(Number(evt.target.value));
     this.Modelo = [];
@@ -149,8 +152,11 @@ export class HomePage implements OnInit {
       this.Modelo.push(a as Modelo);
     });
     await this.presentLoading();
-    this.isModelo = false;
-
+    if (idModelo !== undefined) {
+      this.misAutos.modelo = idModelo;
+    } else {
+      this.isModelo = false;
+    }
   }
 
   async finalizaModal(params: any) {
@@ -414,6 +420,44 @@ export class HomePage implements OnInit {
       this.finalizaModal(this.finaliza);
     }).catch(err => console.log('Error al guardar ' + err));
 
+  }
+
+  async buscarMisAutos() {
+    this.isCilindrada = false;
+    this.isMarca = false;
+    this.isAnio = false;
+    this.misAutos.anio = 0;
+    this.anio = '';
+    this.misAutos.cilindrada = '';
+    this.misAutos.modelo = '';
+    this.misAutos.marca = '';
+    let uid = '';
+    await this.authService.getSesionStorage().then(data => {
+      uid = data.id;
+    });
+    await this.mantService.getMisautosByPatente(this.misAutos.patente).then(resp => {
+      this.isCilindrada = true;
+      this.isMarca = true;
+      this.isAnio = true;
+      if (resp.val().idUsuario === uid) {
+        this.misAutos.anio = resp.val().anio;
+        this.anio = resp.val().anio + 1;
+        this.misAutos.cilindrada = resp.val().cilindrada;
+        this.misAutos.modelo = resp.val().modelo;
+        this.misAutos.marca = resp.val().marca;
+      } else {
+        this.presentAlertBuscar();
+      }
+    });
+  }
+  async presentAlertBuscar() {
+    const alert = await this.alertController.create({
+      header: 'Formulario',
+      message: 'Patente registrada a otro cliente.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

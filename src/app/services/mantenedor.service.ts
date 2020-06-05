@@ -244,6 +244,10 @@ export class MantenedorService {
   getMisautosById(id: string) {
     return this.afDB.object('misAutos/' + id).valueChanges();
   }
+  getMisautosByPatente(patente: string) {
+    return this.afDB.database.ref('misAutos').
+    orderByChild('patente').equalTo(patente).once('child_added');
+  }
   getModeloById(id: string) {
     return this.afDB.object('modelo/' + id).valueChanges();
   }
