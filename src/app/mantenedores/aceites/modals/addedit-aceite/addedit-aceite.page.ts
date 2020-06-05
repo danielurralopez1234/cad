@@ -27,8 +27,8 @@ export class AddeditAceitePage implements OnInit {
 
     this.aceiteForm = formBuilder.group({
       tipo: ['', Validators.compose([Validators.required])],
-      nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
-      descripcion: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9- ]*$'), Validators.required])],
+      descripcion: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9- ]*$'), Validators.required])],
       precio: ['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9]*'), Validators.required])],
       foto: ['', Validators.compose([Validators.required])],
 
