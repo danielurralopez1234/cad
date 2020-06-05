@@ -17,10 +17,8 @@ export class UbicacionPage implements OnInit {
     const dire = this.navParams.get('DIRE');
     const comuna = this.navParams.get('COMUNA');
     const region = this.navParams.get('REGION');
-    console.log(dire);
-    console.log(region);
 
-    this.imgStatic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + dire + ',' + region + ',CL&zoom=15&size=600x600&maptype=roadmap&markers=color:blue%7Clabel:S%7C' + dire + '&key=' + environment.API_KEY_GOOGLE;
+    this.imgStatic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + dire + ',' + comuna + ',' + region + ',CL&zoom=15&size=600x600&maptype=roadmap&markers=color:blue%7Clabel:S%7C' + dire + '&key=' + environment.API_KEY_GOOGLE;
 
 /*
 `https://maps.googleapis.com/maps/api/staticmap?center=Chiloe+4911,Region+Metropolitana,CL&zoom=15&size=600x600&maptype=roadmap
