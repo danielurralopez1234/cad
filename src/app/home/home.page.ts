@@ -24,9 +24,9 @@ import {Finaliza} from '../models/finaliza';
 })
 export class HomePage implements OnInit {
   isModelo = true;
-  isCilindrada = false;
-  isMarca = false;
-  isAnio = false;
+  isCilindrada = true;
+  isMarca = true;
+  isAnio = true;
   isTipoServicio = true;
   isRegion = true;
   Marca: any;
@@ -152,10 +152,12 @@ export class HomePage implements OnInit {
       this.Modelo.push(a as Modelo);
     });
     await this.presentLoading();
-    if (idModelo !== undefined) {
+    if (idModelo !== undefined && idModelo.length > 0) {
       this.misAutos.modelo = idModelo;
     } else {
-      this.isModelo = false;
+      if (evt.target.value !== '') {
+        this.isModelo = false;
+      }
     }
   }
 
@@ -302,6 +304,10 @@ export class HomePage implements OnInit {
 
   parseUpperCase() {
     this.misAutos.patente = this.misAutos.patente.toUpperCase();
+    this.isMarca = true;
+    this.isModelo = true;
+    this.isAnio = true;
+    this.isCilindrada = true;
   }
 
   async selectComuna(id: number) {
@@ -423,32 +429,35 @@ export class HomePage implements OnInit {
   }
 
   async buscarMisAutos() {
-    this.isCilindrada = false;
-    this.isMarca = false;
-    this.isAnio = false;
-    this.misAutos.anio = 0;
-    this.anio = '';
-    this.misAutos.cilindrada = '';
-    this.misAutos.modelo = '';
-    this.misAutos.marca = '';
-    let uid = '';
-    await this.authService.getSesionStorage().then(data => {
-      uid = data.id;
-    });
-    await this.mantService.getMisautosByPatente(this.misAutos.patente).then(resp => {
-      this.isCilindrada = true;
-      this.isMarca = true;
-      this.isAnio = true;
-      if (resp.val().idUsuario === uid) {
-        this.misAutos.anio = resp.val().anio;
-        this.anio = resp.val().anio + 1;
-        this.misAutos.cilindrada = resp.val().cilindrada;
-        this.misAutos.modelo = resp.val().modelo;
-        this.misAutos.marca = resp.val().marca;
-      } else {
-        this.presentAlertBuscar();
-      }
-    });
+    if (this.misAutos.patente !== undefined) {
+      this.isCilindrada = false;
+      this.isMarca = false;
+      this.isAnio = false;
+      this.misAutos.anio = 0;
+      this.anio = '';
+      this.misAutos.cilindrada = '';
+      this.misAutos.modelo = '';
+      this.misAutos.marca = '';
+      let uid = '';
+      await this.authService.getSesionStorage().then(data => {
+        uid = data.id;
+      });
+      await this.mantService.getMisautosByPatente(this.misAutos.patente).then(async resp => {
+        this.isCilindrada = true;
+        this.isMarca = true;
+        this.isAnio = true;
+        if (resp.val().idUsuario === uid) {
+          this.misAutos.anio = resp.val().anio;
+          this.anio = resp.val().anio + 1;
+          this.misAutos.cilindrada = resp.val().cilindrada;
+          this.misAutos.modelo = resp.val().modelo;
+          this.misAutos.marca = resp.val().marca;
+        } else {
+          this.isModelo = true;
+          await this.presentAlertBuscar();
+        }
+      });
+    }
   }
   async presentAlertBuscar() {
     const alert = await this.alertController.create({
