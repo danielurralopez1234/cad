@@ -1,10 +1,10 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
+    <ion-tab-button tab="home" *ngIf="cliente">
       <ion-icon name="home"></ion-icon>
       <ion-label>Agenda</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="reservas">
+    <ion-tab-button tab="reservas" *ngIf="cliente">
       <ion-icon name="reader"></ion-icon>
       <ion-label>Mis Reservas</ion-label>
     </ion-tab-button>

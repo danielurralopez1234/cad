@@ -33,12 +33,18 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      this.authenticationService.authState.subscribe(state => {
+      this.authenticationService.authState.subscribe(async state => {
         if (state) {
-          this.authenticationService.getSesionStorage().then((res) => {
+          await this.authenticationService.getSesionStorage().then((res) => {
             this.nombre = res.nombre.toUpperCase();
+            if (res.rol === 2) {
+              this.router.navigate(['app/tabs/notificaciones']);
+            } else if (res.rol === 3) {
+              this.router.navigate(['app/tabs/mantenedor']);
+            } else if (res.rol === 1) {
+              this.router.navigate(['app']);
+            }
           });
-          this.router.navigate(['app']);
         } else {
           this.router.navigate(['bienvenida']);
         }

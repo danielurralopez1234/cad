@@ -9,6 +9,7 @@ import {AuthenticationService} from '../services/authentication.service';
 export class TabsPage implements OnInit {
   admin: boolean;
   mecanico: boolean;
+  cliente: boolean;
 
   constructor(private authService: AuthenticationService) {  }
 
@@ -18,20 +19,28 @@ export class TabsPage implements OnInit {
         if (resp.rol === 2) {
           this.mecanico = true;
           this.admin = false;
+          this.cliente = false;
         } else if (resp.rol === 3) {
           this.admin = true;
           this.mecanico = false;
+          this.cliente = false;
+        } else if (resp.rol === 1) {
+          this.cliente = true;
+          this.mecanico = false;
+          this.admin = false;
         } else {
           this.admin = false;
           this.mecanico = false;
+          this.cliente = false;
         }
       } else {
         this.authService.getSesionStorage().then((res) => {
-          console.log('rol: ' + res.rol);
           if (res.rol === 2) {
             this.mecanico = true;
           } else if (res.rol === 3) {
             this.admin = true;
+          } else if (res.rol === 1) {
+            this.cliente = true;
           }
         });
       }
