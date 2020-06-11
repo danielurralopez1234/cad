@@ -11,6 +11,7 @@ import {TipoMantencion} from '../models/tipoMantencion';
 import {MisAutos} from '../models/misAutos';
 import {AgendaMecanico} from '../models/agendaMecanico';
 import {Reserva} from '../models/reserva';
+import {Horario} from '../models/horario';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +93,9 @@ export class MantenedorService {
   }
   getAllTipoServicio() {
     return this.afDB.list('servicio');
+  }
+  getAllHorario() {
+    return this.afDB.list('horario');
   }
   getModeloByMarca(id: number) {
     return this.afDB.database.ref('modelo').
@@ -288,6 +292,9 @@ export class MantenedorService {
 
   saveTipoCombustible(tipo: TipoCombustible) {
     this.afDB.database.ref('tipoCombustible').push(tipo);
+  }
+  saveHorario(horario: Horario) {
+    this.afDB.database.ref('horario').push(horario);
   }
 
 }

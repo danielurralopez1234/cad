@@ -16,6 +16,7 @@ import {MisAutos} from '../models/misAutos';
 import {AuthenticationService} from '../services/authentication.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
 import {Finaliza} from '../models/finaliza';
+import {Horario} from '../models/horario';
 
 @Component({
   selector: 'app-home',
@@ -65,11 +66,11 @@ export class HomePage implements OnInit {
   numDiaSelect: string;
   mesSelect: string;
   isPrecarga = false;
+  Horarios: any;
+  preId: any;
+  horaAg = [];
+  isFechaR = true;
 
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400
-  };
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
               private alertController: AlertController,
               private mantService: MantenedorService,
@@ -350,56 +351,60 @@ export class HomePage implements OnInit {
 
   async fechaMantencion(evt: any) {
     const newDate = new Date(evt.target.value);
+    this.horaAg = [];
     // await this.presentLoading();
     this.diaSelect = evt.target.dayShortNames[newDate.getDay()];
     this.numDiaSelect = newDate.toLocaleDateString().substring(0, 2);
     this.mesSelect = 'de ' + evt.target.monthShortNames[newDate.getMonth()];
     this.finaliza.fecha = this.diaSelect + ' ' + this.numDiaSelect + ' ' + this.mesSelect + ', ' + newDate.getFullYear();
+    await this.mantService.getAgendaByIdMecanico(this.agenda.idMecanico).once('value', snap => {
+      snap.forEach(val => {
+        if (val.val().estado === 1) {
+          const fecAg = new Date(val.val().fecha);
+          if (newDate.toLocaleDateString() === fecAg.toLocaleDateString()) {
+            this.horaAg.push(val.val().hora);
+          }
+        }
+      });
+    });
+    await this.mantService.getAllHorario().snapshotChanges().subscribe(resp => {
+      this.Horarios = [];
+      resp.forEach(item => {
+        const a = item.payload.toJSON();
+        a['$key'] = item.key;
+        if (this.horaAg.length > 0) {
+          this.horaAg.forEach(hr => {
+            if (hr === item.payload.val()['hora']) {
+              a['bloquear'] = true;
+              a['icono'] = 'close-circle';
+            } else {
+              a['bloquear'] = false;
+              a['icono'] = 'checkmark-circle';
+            }
+          });
+        }
+        this.Horarios.push(a as Horario);
+      });
+    });
     this.isPrecarga = true;
   }
 
-  selectedHora(evt: any) {
-    const idbtn = evt.target.id;
-    if (idbtn !== null && idbtn.length > 0) {
-      const btn = document.getElementById(idbtn);
-      btn.className += ' color-activated';
-      if (idbtn !== 'btn-9') {
-        document.getElementById('btn-9').classList.remove('color-activated');
+  selectedHora(evt: any, hora: any) {
+    const idbtn = evt;
+    console.log(idbtn);
+    console.log(this.preId);
+    if (this.preId !== undefined) {
+      if (this.preId !== idbtn) {
+        document.getElementById(this.preId).classList.remove('color-activated');
       }
-      if (idbtn === 'btn-9') {
-        this.agenda.hora = '09:00';
-      }
-      if (idbtn !== 'btn-11') {
-        document.getElementById('btn-11').classList.remove('color-activated');
-      }
-      if (idbtn === 'btn-11') {
-        this.agenda.hora = '11:00';
-      }
-      if (idbtn !== 'btn-13') {
-        document.getElementById('btn-13').classList.remove('color-activated');
-      }
-      if (idbtn === 'btn-13') {
-        this.agenda.hora = '13:00';
-      }
-      if (idbtn !== 'btn-15') {
-        document.getElementById('btn-15').classList.remove('color-activated');
-      }
-      if (idbtn === 'btn-15') {
-        this.agenda.hora = '15:00';
-      }
-      if (idbtn !== 'btn-17') {
-        document.getElementById('btn-17').classList.remove('color-activated');
-      }
-      if (idbtn === 'btn-17') {
-        this.agenda.hora = '17:00';
-      }
-      if (idbtn !== 'btn-19') {
-        document.getElementById('btn-19').classList.remove('color-activated');
-      }
-      if (idbtn === 'btn-19') {
-        this.agenda.hora = '19:00';
-      }
+      this.preId = idbtn;
+    } else {
+      this.preId = idbtn;
     }
+    const btn = document.getElementById(idbtn);
+    btn.className += ' color-activated';
+    this.agenda.hora = hora;
+
   }
 
   async finalizaReserva() {
@@ -467,6 +472,9 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+  habilitaFecha() {
+    this.isFechaR = false;
   }
 
 }

@@ -133,7 +133,7 @@
   <form [formGroup]="mecanicoForm">
     <ion-item>
       <ion-label color="primary">Mecanico</ion-label>
-      <ion-select formControlName="mecanico" placeholder="Selecciona.." [(ngModel)]="agenda.idMecanico">
+      <ion-select formControlName="mecanico" placeholder="Selecciona.." [(ngModel)]="agenda.idMecanico" (ionChange)="habilitaFecha()">
         <ion-select-option *ngFor="let mecanico of Mecanicos" [value]="mecanico.$key">{{mecanico.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -143,6 +143,7 @@
                     displayFormat="DD MMM YYYY"
                     cancelText="Cancelar!!!"
                     done-text="Ok"
+                    [disabled]="isFechaR"
                     [dayShortNames]="nombreDias"
                     [monthShortNames]="nombreMeses"
                     (ionChange)="fechaMantencion($event)"
@@ -157,35 +158,11 @@
           </ion-col>
         </ion-row>
         <ion-row offset="2" class="ion-text-center ion-margin-top">
-          <ion-col>
-            <ion-chip id="btn-9" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">09:00</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col>
-            <ion-chip id="btn-11" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">11:00</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col>
-            <ion-chip id="btn-13" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">13:00</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col>
-            <ion-chip id="btn-15" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">15:00</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col>
-            <ion-chip id="btn-17" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">17:00</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col>
-            <ion-chip id="btn-19" color="primary" class="ion-text-sm-center" (click)="selectedHora($event)">
-              <ion-label color="secondary">19:00</ion-label>
-            </ion-chip>
+          <ion-col *ngFor="let horario of Horarios">
+            <ion-button id="{{horario.$key}}" shape="round" class="ion-text-sm-center" color="color-secondary-shade" disabled="{{horario.bloquear}}" (click)="selectedHora(horario.$key, horario.hora)">
+              <ion-icon name="{{horario.icono}}" color="secondary"></ion-icon>
+              <ion-label color="secondary">{{horario.hora}}</ion-label>
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
