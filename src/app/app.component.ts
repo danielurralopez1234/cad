@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthenticationService } from './services/authentication.service';
 import {Router} from '@angular/router';
+import {UsersService} from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import {Router} from '@angular/router';
 export class AppComponent {
   navigate: any;
   nombre: string;
+  img: string;
 
   constructor(
     private router: Router,
@@ -22,7 +24,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authenticationService: AuthenticationService,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    private usersService: UsersService
   ) {
     this.initializeApp();
     this.sideMenu();
@@ -34,9 +37,22 @@ export class AppComponent {
       this.splashScreen.hide();
 
       this.authenticationService.authState.subscribe(async state => {
+        this.img = '';
         if (state) {
-          await this.authenticationService.getSesionStorage().then((res) => {
+          await this.authenticationService.getSesionStorage().then(async (res) => {
             this.nombre = res.nombre.toUpperCase();
+            if (res.foto !== undefined && res.foto.length > 0) {
+              this.img = res.foto;
+            } else {
+              this.img = '../assets/shapes.svg';
+            }
+            await this.usersService.getUser(res.id).then(resp => {
+              resp.subscribe(it => {
+                if (it['foto'].length > 0) {
+                  this.img = it['foto'];
+                }
+              });
+            });
             if (res.rol === 2) {
               this.router.navigate(['app/tabs/notificaciones']);
             } else if (res.rol === 3) {

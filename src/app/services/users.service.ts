@@ -13,6 +13,18 @@ export class UsersService {
     this.afDB.database.ref('usuario/' + uid).set(user);
 
   }
+  async updateUsers(user: Usuario, uid: string) {
+    this.afDB.database.ref('usuario/' + uid).update({
+      nombre: user.nombre,
+      apellido: user.apellido,
+      telefono: user.telefono,
+      region: user.region,
+      comuna: user.comuna,
+      direccion: user.direccion,
+      sector: user.sector,
+      foto: user.foto});
+
+  }
   async getUser(id: string) {
      return this.afDB.object('usuario/' + id).valueChanges();
   }

@@ -70,6 +70,7 @@ export class AuthenticationService {
                       this.usrData.id = uid;
                       this.usrData.nombre = this.userRes.nombre;
                       this.usrData.rol = this.userRes.rol;
+                      this.usrData.foto = this.userRes.foto;
                       this.currentUser.next(this.userRes);
                       this.storage.set('USER_DATA', this.usrData).then(async (response) => {
                           this.authState.next(true);
@@ -120,6 +121,10 @@ export class AuthenticationService {
 
   getUserSubject() {
       return this.currentUser.asObservable();
+  }
+
+  getUserService(id: string) {
+      return this.usersService.getUser(id);
   }
 
   login2(email: string, password: string) {

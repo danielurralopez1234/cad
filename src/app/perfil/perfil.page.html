@@ -12,6 +12,10 @@
   <form [formGroup]="miperfilForm" (ngSubmit)="updatePerfil()">
     <ion-list>
       <ion-item>
+        <ion-label position="stacked">Foto</ion-label>
+        <ion-input [(ngModel)]="usuario.foto" (change)="uploadFoto($event)" name="foto" formControlName="foto" autocomplete="off" type="file" accept="image/*"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label position="floating">Nombre</ion-label>
         <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
         <ion-icon name="create-outline" slot="end"></ion-icon>
@@ -24,6 +28,23 @@
       <ion-item>
         <ion-label position="stacked">Telefono</ion-label>
         <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off" type="tel"></ion-input>
+        <ion-icon name="create-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Region</ion-label>
+        <ion-select formControlName="region" placeholder="Selecciona.." [(ngModel)]="usuario.region" [disabled]="isRegion">
+          <ion-select-option *ngFor="let region of Region" [value]="region.id">{{region.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Comuna</ion-label>
+        <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="usuario.comuna" (ionChange)="selectSector()">
+          <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Direccion</ion-label>
+        <ion-input [(ngModel)]="usuario.direccion" name="direccion" formControlName="direccion" autocomplete="off" type="text"></ion-input>
         <ion-icon name="create-outline" slot="end"></ion-icon>
       </ion-item>
       <!--

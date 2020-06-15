@@ -8,6 +8,7 @@ export class Usuario {
     telefono: number;
     region: string;
     comuna: string;
+    direccion: string
     rol: number;
     estado: boolean;
     foto: string;
