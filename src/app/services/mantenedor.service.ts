@@ -48,6 +48,9 @@ export class MantenedorService {
   getAllAceite() {
     return this.afDB.list('aceite');
   }
+  getAllMisAutos() {
+    return this.afDB.list('misAutos');
+  }
 
   getAllTipoCombustible() {
     return this.afDB.list('tipoCombustible');
@@ -128,6 +131,10 @@ export class MantenedorService {
   getReservaByIdAgenda(id: string) {
     return this.afDB.database.ref('reserva').
     orderByChild('idAgenda').equalTo(id);
+  }
+  getMisAutosByIdUsuario(id: string) {
+    return this.afDB.database.ref('misAutos').
+    orderByChild('idUsuario').equalTo(id);
   }
   async saveServicio(servicio: Servicio) {
     this.afDB.database.ref('servicio/').push().set(servicio);
@@ -245,7 +252,7 @@ export class MantenedorService {
     });
   }
 
-  getMisautosById(id: string) {
+  getMisAutosById(id: string) {
     return this.afDB.object('misAutos/' + id).valueChanges();
   }
   getMisautosByPatente(patente: string) {

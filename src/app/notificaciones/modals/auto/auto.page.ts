@@ -18,7 +18,7 @@ export class AutoPage implements OnInit {
 
   async ngOnInit() {
     const idMisautos = this.navParams.get('ID');
-    await this.mantService.getMisautosById(idMisautos).subscribe(snap => {
+    await this.mantService.getMisAutosById(idMisautos).subscribe(snap => {
       this.autoRes = snap;
       this.mantService.getMarcaById(this.autoRes.marca).subscribe(marca => {
         this.marcaRes = marca;
