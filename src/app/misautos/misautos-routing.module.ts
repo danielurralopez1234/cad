@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: MisautosPage
+  },
+  {
+    path: 'edit-misautos',
+    loadChildren: () => import('./edit-misautos/edit-misautos.module').then( m => m.EditMisautosPageModule)
   }
 ];
 

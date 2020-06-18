@@ -70,8 +70,19 @@ export class MantenedorService {
       valor: aceite.valor
     });
   }
+  async updateMisAutosPop(id: string, misautos: MisAutos) {
+    this.afDB.database.ref('misAutos/' + id).update({
+      marca: misautos.marca,
+      modelo: misautos.modelo,
+      anio: misautos.anio,
+      cilindrada: misautos.cilindrada
+    });
+  }
   async deleteAceite(id: string) {
     this.afDB.object('aceite/' + id).remove();
+  }
+  async deleteMisAutos(id: string) {
+    this.afDB.object('misAutos/' + id).remove();
   }
   async saveFormaPago(formaPago: FormaPago) {
     this.afDB.database.ref('formaPago').push().set(formaPago);

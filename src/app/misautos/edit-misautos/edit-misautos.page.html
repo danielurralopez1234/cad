@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mis Autos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="misAutosForm" (ngSubmit)="updateMisAutos()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating" color="primary">Patente</ion-label>
+        <ion-input formControlName="patente" placeholder="MMBB00" [(ngModel)]="misAutos.patente" disabled="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Marca</ion-label>
+        <ion-select formControlName="marca" placeholder="Seleccione..." (ionChange)="selectModel($event)" [(ngModel)]="misAutos.marca">
+          <ion-select-option *ngFor="let marca of Marca" [value]="marca.$key">{{marca.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Modelo</ion-label>
+        <ion-select formControlName="modelo" placeholder="Seleccione..." [(ngModel)]="misAutos.modelo">
+          <ion-select-option *ngFor="let modelo of Modelo" [value]="modelo.$key">{{modelo.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" color="primary">Año</ion-label>
+        <ion-datetime placeholder="2000" formControlName="anio" [(ngModel)]="anio" (ionChange)="parseDate()"
+                      displayFormat="YYYY"
+                      doneText="Ok"
+                      cancelText="Cancelar!!!"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" color="primary">Cilindrada</ion-label>
+        <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="misAutos.cilindrada"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" type="submit">Actualizar</ion-button>
+  </form>
+
+</ion-content>
