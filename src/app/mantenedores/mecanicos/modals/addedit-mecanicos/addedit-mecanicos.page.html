@@ -14,80 +14,54 @@
     <ion-list>
 
       <ion-item>
-        <ion-label position="stacked">Rut</ion-label>
-        <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" type="number" ngModel
-          clearOnEdit="true">
+        <ion-label position="stacked" color="primary">Rut</ion-label>
+        <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" (ionBlur)="formatRut()" [disabled]="isRut">
         </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"
-          ngModel required></ion-input>
+        <ion-label position="stacked" color="primary">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuario.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Apellido</ion-label>
-        <ion-input [(ngModel)]="usuario.apellido" name="apellidoPaterno" formControlName="apellidoPaterno"
-          autocomplete="off" type="text" ngModel required></ion-input>
+        <ion-label position="stacked" color="primary">Apellido</ion-label>
+        <ion-input [(ngModel)]="usuario.apellido" name="apellido" formControlName="apellido"
+          autocomplete="off" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Fecha Nacimiento</ion-label>
-        <ion-input [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" formControlName="fechaNacimiento"
-          autocomplete="off" type="text" ngModel required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input [(ngModel)]="usuario.email" name="mail" formControlName="mail" autocomplete="off" type="email" ngModel
-          required>
+        <ion-label position="stacked" color="primary">Email</ion-label>
+        <ion-input [(ngModel)]="usuario.email" name="mail" formControlName="mail" autocomplete="off" type="email" disabled="true">
         </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Telefono</ion-label>
-        <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off"
-          type="text" ngModel required>
+        <ion-label position="stacked" color="primary">Telefono</ion-label>
+        <ion-input [(ngModel)]="usuario.telefono" name="telefono" formControlName="telefono" autocomplete="off" type="text">
         </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input [(ngModel)]="usuario.region" name="region" formControlName="region" autocomplete="off" type="text"
-        [value]="7" ngModel>Región Metropolitana de Santiago</ion-input>
+        <ion-label position="stacked" color="primary">Region</ion-label>
+        <ion-select formControlName="region" placeholder="Selecciona.." [(ngModel)]="usuario.region" [disabled]="isRegion">
+          <ion-select-option *ngFor="let region of Region" [value]="region.id">{{region.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked" color="primary">Comuna</ion-label>
+        <ion-select formControlName="comuna"  placeholder="Selecciona.." [(ngModel)]="usuario.comuna" (ionChange)="selectArea()">
+          <ion-select-option *ngFor="let comuna of Comuna" [value]="comuna.id">{{comuna.nombre}}</ion-select-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-searchbar expand="full" [(ngModel)]="usuario.comuna" name="comuna" formControlName="comuna"
-          (input)="searchComuna($event)" placeholder="Comuna">
-        </ion-searchbar>
-      </ion-item>
-
-      <ion-list>
-        <ion-radio-group (ionChange)="checkValue($event)">
-          <ion-item *ngFor="let comuna of Comuna">
-            <ion-label>{{comuna.nombre}}</ion-label>
-            <ion-radio value={{comuna.id}}></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-list>
-
-      <ion-item>
-        <ion-label position="stacked">Area</ion-label>
-        <ion-input *ngFor="let area of Area" name="area" formControlName="area"
-          value={{area.id}} autocomplete="off" type="text" ngModel required>
-          {{area.nombre}}
+        <ion-label position="stacked" color="primary">Sector</ion-label>
+        <ion-input name="area" formControlName="area" type="text" disabled="true" [(ngModel)]="area">
         </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Foto</ion-label>
-        <ion-input [(ngModel)]="usuario.foto" (change)="uploadFile($event)" name="foto" formControlName="foto"
-          autocomplete="off" type="file" accept="image/*"></ion-input>
       </ion-item>
 
     </ion-list>
-    <ion-button expand="block" share="round" color="success" type="submit">Guardar
-    </ion-button>
+    <ion-button expand="block" share="round" color="success" type="submit">Guardar</ion-button>
   </form>
 </ion-content>

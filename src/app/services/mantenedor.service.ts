@@ -239,9 +239,6 @@ export class MantenedorService {
   async updateUsuario(id: string, est: boolean) {
     this.afDB.database.ref('usuario/' + id).update({ estado: est });
   }
-  getAllmecanico() {
-    return this.afDB.list('usuario');
-  }
 
   getAllregion() {
     return this.afDB.list('region');

@@ -24,7 +24,7 @@ export class AddeditFormaPagoPage implements OnInit {
               private loadingController: LoadingController) {
     this.formaPagoForm = formBuilder.group({
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
-      comentario: ['', Validators.compose([Validators.maxLength(300), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      comentario: ['', Validators.compose([Validators.required])]
     });
   }
 

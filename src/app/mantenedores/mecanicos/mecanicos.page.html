@@ -13,7 +13,8 @@
     <ion-item-sliding *ngFor="let usuario of Usuario">
       <ion-item>
         <ion-avatar slot="start">
-          <img [src]="usuario.foto">
+          <img *ngIf="usuario.foto" [src]="usuario.foto">
+          <img *ngIf="!usuario.foto" src="/assets/icon/favicon.png">
         </ion-avatar>
         <ion-label>
           <h2>{{usuario.nombre}}</h2>

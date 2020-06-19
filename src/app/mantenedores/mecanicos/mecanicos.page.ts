@@ -3,6 +3,7 @@ import {AlertController, ModalController, ToastController} from '@ionic/angular'
 import {AddeditMecanicosPage} from './modals/addedit-mecanicos/addedit-mecanicos.page';
 import {MantenedorService} from '../../services/mantenedor.service';
 import { Usuario } from '../../models/usuario';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-mecanicos',
@@ -10,25 +11,23 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./mecanicos.page.scss'],
 })
 export class MecanicosPage implements OnInit {
-  shell: boolean;
   Usuario: any;
   auxUsuarios: any;
 
   constructor(private modalController: ModalController,
               private mantService: MantenedorService,
               private toastController: ToastController,
-              private alertController: AlertController) {  }
+              private alertController: AlertController,
+              private usersService: UsersService) {  }
 
-  ngOnInit() {
-    const formaPagoRes = this.mantService.getAllmecanico();
-    formaPagoRes.snapshotChanges().subscribe(res => {
+  async ngOnInit() {
+    await this.usersService.getAllUsuarios().snapshotChanges().subscribe(res => {
       this.Usuario = [];
       res.forEach(item => {
         const u = item.payload.toJSON();
         u['$key'] = item.key;
         const j = u as Usuario;
-
-        if(j.rol === 2) {
+        if (j.rol === 2) {
         this.Usuario.push(u as Usuario);
         }
         this.auxUsuarios = this.Usuario;

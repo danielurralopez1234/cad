@@ -6,6 +6,7 @@ import { Comuna } from '../../../../models/comuna';
 import { Area } from '../../../../models/area';
 import { MantenedorService } from '../../../../services/mantenedor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {UsersService} from '../../../../services/users.service';
 
 
 @Component({
@@ -20,69 +21,94 @@ export class AddeditMecanicosPage implements OnInit {
   id: string;
   Region: any;
   Comuna: any;
-  Area: any;
+  area: any;
   key = '$key';
-  comunaBusca = '';
   check: any;
   r: any;
   file: any;
-  TipoCom: any;
   mecanicoForm: FormGroup;
+  isRegion = true;
+  isRut = true;
 
   constructor(private modalController: ModalController,
               private mantService: MantenedorService,
+              private userService: UsersService,
               private toastController: ToastController,
               private navParams: NavParams,
               private formBuilder: FormBuilder,
               private alertController: AlertController,
               private loadingController: LoadingController) {
     this.mecanicoForm = formBuilder.group({
-      rut: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
-      dv: ['', Validators.compose([Validators.maxLength(1), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
+      rut: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[0-9kK.-]*'), Validators.required])],
       nombre: ['', Validators.compose([Validators.required])],
-      apellidoPaterno: ['', Validators.compose([Validators.required])],
-      apellidoMaterno: ['', Validators.compose([Validators.required])],
-      fechaNacimiento: ['', Validators.compose([Validators.required])],
+      apellido: ['', Validators.compose([Validators.required])],
       mail: ['', Validators.compose([Validators.required])],
-      contrasena: ['', Validators.compose([Validators.required])],
-      direccion: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
       telefono: ['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
       region: ['', Validators.compose([Validators.required])],
       comuna: ['', Validators.compose([Validators.required])],
-      area: ['', Validators.compose([Validators.required])],
-      foto: ['', Validators.compose([Validators.required])],
+      area: ['', Validators.compose([Validators.required])]
 
     });
   }
 
   async ngOnInit() {
-    const regionRes = this.mantService.getAllregion();
-    regionRes.snapshotChanges().subscribe(res => {
+   await this.mantService.getAllregion().snapshotChanges().subscribe(res => {
       this.Region = [];
       res.forEach(item => {
         const r = item.payload.toJSON();
         r[this.key] = item.key;
-        if (item.key === 'Región Metropolitana de Santiago') {
-          this.Region.push(r as Region);
+        if (r['id'] === 7) {
+          this.usuario.region = r['id'];
+          this.selectComuna(r['id']);
         }
+        this.Region.push(r as Region);
       });
     });
-    if (this.navParams.get('data') !== null) {
+   if (this.navParams.get('data') !== null) {
       await this.presentLoading();
       this.auxParam.push(this.navParams.get('data') as Usuario);
       this.auxParam.forEach(item => {
         this.usuario.rut = item[0].rut;
         this.usuario.nombre = item[0].nombre;
         this.usuario.apellido = item[0].apellido;
-        this.usuario.fechaNacimiento = item[0].fechaNacimiento;
         this.usuario.email = item[0].email;
         this.usuario.telefono = item[0].telefono;
-        this.usuario.region = item[0].region;
         this.usuario.comuna = item[0].comuna;
-        this.usuario.foto = item[0].foto;
+        if (this.usuario.comuna.length > 0) {
+          this.selectComuna(Number(this.usuario.comuna));
+        }
         this.id = item[0].$key;
       });
-    }
+    } else {
+     this.isRut = false;
+   }
+  }
+  async selectComuna(id: number) {
+    this.usuario.comuna = '';
+    const comuna = await this.mantService.getComunaByRegion(id);
+    this.Comuna = [];
+    comuna.on('child_added', (snapshot) => {
+      const a = snapshot.val();
+      this.Comuna.push(a as Comuna);
+    });
+  }
+  async selectArea() {
+    let idArea;
+    this.Comuna.forEach(r => {
+      if (r.id === this.usuario.comuna) {
+        idArea = r.sector;
+      }
+    });
+    await this.mantService.getAllarea().snapshotChanges().subscribe(resp => {
+      this.area = '';
+      resp.forEach(item => {
+        const r = item.payload.toJSON();
+        if (r['id'] === idArea) {
+          this.area = r['nombre'];
+          this.usuario.sector = r['id'];
+        }
+      });
+    });
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -100,30 +126,11 @@ export class AddeditMecanicosPage implements OnInit {
   }
   async saveUpdateUsuario() {
     if (this.mecanicoForm.valid) {
-      if (this.auxParam.length === 0) {
-        this.usuario.estado = false;
-        this.usuario.rol = 2;
-        await this.mantService.saveUsuario(this.usuario).then(async resId => {
-          console.log('id usuario: ' + resId);
-          await this.mantService.upLoadImage(this.file, resId.toString()).then(resPathImg => {
-            console.log('path img: ' + resPathImg);
-            this.mantService.updateUsuarioFoto(resId.toString(), resPathImg.toString());
-          });
-          this.presentToast('Registro exitoso.');
-        }).catch(err => this.presentToast('Error al guardar registro'));
-      } else {
-        await this.mantService.updateUsuarioPop(this.id, this.usuario).then(async res => {
-          if (this.file !== undefined) {
-            await this.mantService.upLoadImage(this.file, this.id).then(resPathImg => {
-              console.log('path img update: ' + resPathImg);
-              this.mantService.updateUsuarioFoto(this.id, resPathImg.toString());
-            });
-          }
-          this.presentToast('Actualizado.');
-        }).catch(err => this.presentToast('Problemas al guardar registro.'));
+      this.usuario.rol = 2;
+      await this.userService.updateUserMecanico(this.usuario, this.id).then(async res => {
+        this.presentToast('Actualizado.');
+      }).catch(err => {this.presentToast('Problemas al guardar registro.'); console.log(err); });
 
-
-      }
       this.modalClose();
     } else {
       this.presentAlert();
@@ -148,65 +155,40 @@ export class AddeditMecanicosPage implements OnInit {
     await alert.present();
   }
 
-  uploadFile(value) {
-    this.file = value.target.files[0];
-  }
- async searchComuna(comuna) {
-    const val = [];
-    val.push(comuna.data);
+  async formatRut() {
+    if (this.mecanicoForm.get('rut').value !== undefined) {
+      await this.userService.getUsuarioByRut(this.mecanicoForm.get('rut').value).then(async resp => {
+        this.id = resp.key;
+        this.usuario.nombre = resp.val().nombre;
+        this.usuario.apellido = resp.val().apellido;
+        this.usuario.email = resp.val().email;
+        this.usuario.telefono = resp.val().telefono;
+        this.usuario.comuna = resp.val().comuna;
+        if (this.usuario.comuna !== undefined && this.usuario.comuna.length > 0) {
+          this.selectComuna(Number(this.usuario.comuna));
+        }
+      });
 
-    const comunanRes = this.mantService.getAllcomuna();
+      let rut = this.mecanicoForm.get('rut').value;
 
-    for (const j of val) {
-      if (j === null) {
-        this.comunaBusca = '';
+      if (rut.length > 0) {
+        rut = this.clean(rut);
+
+        let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
+        for (let i = 4; i < rut.length; i += 3) {
+          result = rut.slice(-3 - i, -i) + '.' + result;
+        }
+        this.mecanicoForm.controls['rut'].setValue(result);
       } else {
-        this.comunaBusca = this.comunaBusca + j;
-      }
-    }
-
-    comunanRes.snapshotChanges().subscribe(res => {
-      this.Comuna = [];
-      res.forEach(item => {
-        const c = item.payload.toJSON();
-        const j = c as Comuna;
-        if (this.min(j.nombre).indexOf(this.min(this.comunaBusca)) > -1) {
-          this.Comuna.push(c as Comuna);
-        }
-      });
-    });
-  }
-
-  min(value) {
-    if (value !== '' || value !== null || value !== 'undefinide') {
-      return value.toString().toLowerCase();
-    }
-  }
-  checkValue(value) {
-    this.check = value.detail.value;
-
-    const m = this.buscaComuna(this.check);
-    const areasRes = this.mantService.getAllarea();
-    areasRes.snapshotChanges().subscribe(res => {
-      this.Area = [];
-      res.forEach(item => {
-        const a = item.payload.toJSON();
-        const j = a as Area;
-        if (j.id === m.sector) {
-          this.Area.push(a as Area);
-        }
-      });
-    });
-  }
-
-  buscaComuna(val) {
-    for (const j of this.Comuna) {
-      if (j.id === parseInt(val)) {
-        return j;
+        this.mecanicoForm.controls['rut'].setValue(rut);
       }
     }
   }
 
-
+  clean(rut) {
+    return typeof rut === 'string'
+        ? rut.replace(/^0+|[^0-9kK]+/g, '').toUpperCase()
+        : '';
+  }
 
 }
