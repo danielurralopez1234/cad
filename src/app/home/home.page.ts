@@ -70,6 +70,7 @@ export class HomePage implements OnInit {
   preId: any;
   horaAg = [];
   isFechaR = true;
+  isMisAutos = false;
 
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
               private alertController: AlertController,
@@ -416,10 +417,11 @@ export class HomePage implements OnInit {
       }
     });
     this.misAutos.estado = true;
-    await this.mantService.saveMisAutos(this.misAutos).then(resId => {
-      this.reserva.idAuto = resId.toString();
-    }).catch(err => console.log('error al guardar ' + err));
-
+    if (this.isMisAutos) {
+      await this.mantService.saveMisAutos(this.misAutos).then(resId => {
+        this.reserva.idAuto = resId.toString();
+      }).catch(err => console.log('error al guardar ' + err));
+    }
     this.agenda.estado = 1;
     await this.mantService.saveAgenda(this.agenda).then(respId => {
       this.reserva.idAgenda = respId.toString();
@@ -436,6 +438,7 @@ export class HomePage implements OnInit {
   async buscarMisAutos() {
     if (this.misAutos.patente !== undefined) {
       this.isCilindrada = false;
+      this.isMisAutos = false;
       this.isMarca = false;
       this.isAnio = false;
       this.misAutos.anio = 0;
@@ -452,6 +455,7 @@ export class HomePage implements OnInit {
         this.isMarca = true;
         this.isAnio = true;
         if (resp.val().idUsuario === uid) {
+          this.isMisAutos = true;
           this.misAutos.anio = resp.val().anio;
           this.anio = resp.val().anio + 1;
           this.misAutos.cilindrada = resp.val().cilindrada;

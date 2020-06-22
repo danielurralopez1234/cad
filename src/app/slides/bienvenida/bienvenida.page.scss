@@ -5,9 +5,6 @@ img {
   height: 70% !important;
   width: 70% !important;
 }
-.slide-img-padding {
-  padding: 40px;
-}
 
 ion-slides {
   --bullet-background: grey;
@@ -15,11 +12,11 @@ ion-slides {
 }
 
 ion-content.imgPortada{
-  --background: url("/assets/img/portadaSoloLogo.svg") 0 0/100% 100% no-repeat;
+  --background: url("/assets/img/portada.png") 0 0/100% 100% no-repeat;
 }
 
-.imgPostadaFooter{
-  background: url("/assets/img/soloFooter2.svg") 0 0/100% 100% no-repeat;
+.imgFooter{
+  background: url("/assets/img/footer.svg") 0 0/100% 100% no-repeat;
 }
 a.button-native{
   background-color: #2B4FC5 !important;
@@ -33,4 +30,7 @@ strong {
 }
 .ion-margin-bottom {
   margin-bottom: 135px;
+}
+h6 {
+  font-size: 14px;
 }
