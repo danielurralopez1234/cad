@@ -17,6 +17,8 @@ import {AuthenticationService} from '../services/authentication.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
 import {Finaliza} from '../models/finaliza';
 import {Horario} from '../models/horario';
+import {TipoCombustible} from '../models/tipoCombustible';
+import {Aceite} from '../models/aceite';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +29,7 @@ export class HomePage implements OnInit {
   isModelo = true;
   isCilindrada = true;
   isMarca = true;
+  isTipo = true;
   isAnio = true;
   isTipoServicio = true;
   isRegion = true;
@@ -42,6 +45,7 @@ export class HomePage implements OnInit {
   TipoMantencion: any;
   Region: any;
   anio: any;
+  TipoCom: any = [];
 
   carForm: FormGroup;
   serviceForm: FormGroup;
@@ -71,6 +75,7 @@ export class HomePage implements OnInit {
   horaAg = [];
   isFechaR = true;
   isMisAutos = false;
+  AceiteFoto: any;
 
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
               private alertController: AlertController,
@@ -84,6 +89,7 @@ export class HomePage implements OnInit {
       modelo: ['', Validators.compose([Validators.required])],
       anio: ['', Validators.compose([Validators.required])],
       cilindrada: ['', Validators.compose([Validators.maxLength(3), Validators.pattern('[0-9.]*'), Validators.required])],
+      tipo: ['', Validators.compose([Validators.required])]
     });
     this.serviceForm = formBuilder.group({
       tipo: ['', Validators.compose([Validators.required])],
@@ -112,6 +118,13 @@ export class HomePage implements OnInit {
         a['$key'] = item.key;
         this.Marca.push(a as Marca);
       });
+    });
+    await this.mantService.getAllTipoCombustible().snapshotChanges().subscribe( res => {
+        res.forEach(item => {
+            const a = item.payload.toJSON();
+            a['$key'] = item.key;
+            this.TipoCom.push(a as TipoCombustible);
+        });
     });
     await this.mantService.getAllTipoServicio().snapshotChanges().subscribe(res => {
       this.TipoServicio = [];
@@ -174,6 +187,7 @@ export class HomePage implements OnInit {
   }
 
   async validaCarForm() {
+    console.log(this.misAutos.combustible);
     if (this.carForm.valid) {
       this.hideC1 = false;
       this.hidePaso2 = false;
@@ -310,6 +324,7 @@ export class HomePage implements OnInit {
     this.isModelo = true;
     this.isAnio = true;
     this.isCilindrada = true;
+    this.isTipo = true;
   }
 
   async selectComuna(id: number) {
@@ -441,6 +456,7 @@ export class HomePage implements OnInit {
       this.isMisAutos = false;
       this.isMarca = false;
       this.isAnio = false;
+      this.isTipo = false;
       this.misAutos.anio = 0;
       this.anio = '';
       this.misAutos.cilindrada = '';
@@ -479,6 +495,21 @@ export class HomePage implements OnInit {
   }
   habilitaFecha() {
     this.isFechaR = false;
+  }
+
+  async selectAceite() {
+    await this.mantService.getAllAceite().snapshotChanges().subscribe(snap => {
+      this.AceiteFoto = [];
+      let x = 1;
+      snap.forEach(item => {
+        const a = item.payload.toJSON();
+        if (a['tipoCom'] === this.misAutos.combustible && x < 4) {
+          a['$key'] = item.key;
+          this.AceiteFoto.push(a as Aceite);
+          x = x + 1;
+        }
+      });
+    });
   }
 
 }

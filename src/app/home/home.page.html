@@ -60,6 +60,12 @@
       <ion-label position="floating" color="primary">Cilindrada</ion-label>
       <ion-input formControlName="cilindrada" placeholder="1.2" [(ngModel)]="misAutos.cilindrada" [disabled]="isCilindrada"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Tipo de Combustible</ion-label>
+      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()">
+        <ion-select-option *ngFor="let tipo of TipoCom" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="validaCarForm()" color="tertiary">
@@ -81,6 +87,20 @@
         <ion-select-option *ngFor="let tipo of TipoMantencion" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let aceiteFoto of AceiteFoto">
+        <div class="slide-img-padding">
+          <ion-label><h1 [innerHTML]="aceiteFoto.nombre"></h1></ion-label>
+        </div>
+        <div>
+          <img [src]="aceiteFoto.foto">
+        </div>
+        <div class="div-padding">
+          <ion-label><h2 [innerHTML]="aceiteFoto.valor | currency:'USD':true:'1.0-0'"></h2></ion-label>
+          <ion-checkbox color="primary"></ion-checkbox>
+        </div>
+      </ion-slide>
+    </ion-slides>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="validaServiceForm()" color="tertiary">

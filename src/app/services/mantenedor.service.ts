@@ -143,6 +143,10 @@ export class MantenedorService {
     return this.afDB.database.ref('reserva').
     orderByChild('idAgenda').equalTo(id);
   }
+  getAceiteByTipoCom(idCom: string) {
+    return this.afDB.database.ref('aceite').
+    orderByChild('tipoCom').equalTo(idCom);
+  }
   getMisAutosByIdUsuario(id: string) {
     return this.afDB.database.ref('misAutos').
     orderByChild('idUsuario').equalTo(id);

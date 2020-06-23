@@ -6,8 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddeditAceitePageRoutingModule } from './addedit-aceite-routing.module';
 
-import { AddeditAceitePage } from './addedit-aceite.page';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -15,7 +13,6 @@ import { AddeditAceitePage } from './addedit-aceite.page';
         IonicModule,
         AddeditAceitePageRoutingModule,
         ReactiveFormsModule
-    ],
-  declarations: [AddeditAceitePage]
+    ]
 })
 export class AddeditAceitePageModule {}

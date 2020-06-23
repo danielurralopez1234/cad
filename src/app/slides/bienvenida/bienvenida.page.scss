@@ -11,12 +11,15 @@ ion-slides {
   --bullet-background-active: #8890B2;
 }
 
-ion-content.imgPortada{
-  --background: url("/assets/img/portada.png") 0 0/100% 100% no-repeat;
+.imgPortada{
+  //--background: url("/assets/img/portada.png") 0 0/100% 100% no-repeat;
+  --background: url("/assets/img/portada.png") center center/90% 90% no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .imgFooter{
-  background: url("/assets/img/footer.svg") 0 0/100% 100% no-repeat;
+  background: url("/assets/img/footer.png") 0 0/100% 100% no-repeat;
 }
 a.button-native{
   background-color: #2B4FC5 !important;
@@ -32,5 +35,5 @@ strong {
   margin-bottom: 135px;
 }
 h6 {
-  font-size: 14px;
+  font-size: 12px;
 }
