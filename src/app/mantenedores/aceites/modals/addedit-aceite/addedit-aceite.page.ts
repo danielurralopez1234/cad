@@ -77,9 +77,7 @@ export class AddeditAceitePage implements OnInit {
       if (this.auxParam.length === 0) {
         this.aceite.estado = false;
         await this.mantService.saveAceite(this.aceite).then(async resId => {
-          console.log('id aceite: ' + resId);
           await this.mantService.upLoadImage(this.file, resId.toString()).then(resPathImg => {
-            console.log('path img: ' + resPathImg);
             this.mantService.updateAceiteFoto(resId.toString(), resPathImg.toString());
           });
           this.presentToast('Registro exitoso.');
@@ -88,7 +86,6 @@ export class AddeditAceitePage implements OnInit {
         await this.mantService.updateAceitePop(this.id, this.aceite).then(async res => {
           if (this.file !== undefined) {
             await this.mantService.upLoadImage(this.file, this.id).then(resPathImg => {
-              console.log('path img update: ' + resPathImg);
               this.mantService.updateAceiteFoto(this.id, resPathImg.toString());
             });
           }

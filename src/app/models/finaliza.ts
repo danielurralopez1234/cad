@@ -4,4 +4,5 @@ export class Finaliza {
     mantencion: string;
     fecha: string;
     direccion: string;
+    valorTotal: number;
 }

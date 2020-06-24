@@ -131,7 +131,7 @@ export class MantenedorService {
     return this.afDB.database.ref('tipoMantencion').
     orderByChild('tipoServicio').equalTo(id);
   }
-  getMecanicoByRolSector(id: number, sector: number) {
+  getMecanicoByRolSector(id: number) {
     return this.afDB.database.ref('usuario').
     orderByChild('rol').equalTo(id);
   }

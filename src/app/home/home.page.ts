@@ -76,6 +76,8 @@ export class HomePage implements OnInit {
   isFechaR = true;
   isMisAutos = false;
   AceiteFoto: any;
+  idAceiteAux: any;
+  checkAceiteAux: any;
 
   constructor(private modalController: ModalController, private router: Router, public formBuilder: FormBuilder,
               private alertController: AlertController,
@@ -187,7 +189,6 @@ export class HomePage implements OnInit {
   }
 
   async validaCarForm() {
-    console.log(this.misAutos.combustible);
     if (this.carForm.valid) {
       this.hideC1 = false;
       this.hidePaso2 = false;
@@ -199,7 +200,7 @@ export class HomePage implements OnInit {
   }
 
   validaServiceForm() {
-    if (this.serviceForm.valid) {
+    if (this.serviceForm.valid && this.checkAceiteAux === true) {
       this.hideC2 = false;
       this.hidePaso3 = false;
       this.hideC3 = true;
@@ -230,23 +231,27 @@ export class HomePage implements OnInit {
 
   async validaDireccionForm() {
     if (this.placeForm.valid) {
-      this.hideC3 = false;
-      this.hidePaso4 = false;
-      this.hideC4 = true;
-      this.valueDefault = 'paso4';
-      this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum;
-      await this.Comuna.forEach(c => {
-        if (c.$key === this.reserva.idComuna) {
-          console.log(c.nombre);
-          this.finaliza.direccion += c.nombre + ' - ';
+        if (this.Mecanicos !== undefined && this.Mecanicos.length > 0) {
+            this.hideC3 = false;
+            this.hidePaso4 = false;
+            this.hideC4 = true;
+            this.valueDefault = 'paso4';
+            this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum;
+            await this.Comuna.forEach(c => {
+                if (c.$key === this.reserva.idComuna) {
+                    console.log(c.nombre);
+                    this.finaliza.direccion += c.nombre + ' - ';
+                }
+            });
+            await this.Region.forEach(r => {
+                if (r.$key === this.reserva.idRegion) {
+                    console.log(r.nombre);
+                    this.finaliza.direccion += r.nombre + ' ';
+                }
+            });
+        } else {
+            this.presentAlertSinMeca('Comuna sin mecanicos disponible!!');
         }
-      });
-      await this.Region.forEach(r => {
-        if (r.$key === this.reserva.idRegion) {
-          console.log(r.nombre);
-          this.finaliza.direccion += r.nombre + ' ';
-        }
-      });
     } else {
       this.presentAlert();
     }
@@ -305,6 +310,15 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
+  async presentAlertSinMeca(mensaje: string) {
+      const alert = await this.alertController.create({
+          header: 'Formulario',
+          message: mensaje,
+          buttons: ['OK']
+      });
+      await alert.present();
+  }
+
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Porfavor espere...',
@@ -349,7 +363,6 @@ export class HomePage implements OnInit {
   }
 
   async selectMecanico() {
-    // agregar el sector una vez se pueda agregar mecanicos
     let sec;
     this.Comuna.forEach(r => {
       if (r.id === this.reserva.idComuna) {
@@ -357,11 +370,16 @@ export class HomePage implements OnInit {
       }
     });
     this.agenda.idMecanico = '';
-    await this.mantService.getMecanicoByRolSector(2, sec).on('child_added', (snapshot) => {
-      this.Mecanicos = [];
-      const a = snapshot.val();
-      a['$key'] = snapshot.key;
-      this.Mecanicos.push(a as Mecanico);
+    await this.mantService.getMecanicoByRolSector(2).on('value', (snapshot) => {
+        this.Mecanicos = [];
+        snapshot.forEach(item => {
+            if (item.val().sector === sec) {
+                const a = item.val();
+                a['$key'] = item.key;
+                this.Mecanicos.push(a as Mecanico);
+            }
+        });
+
     });
   }
 
@@ -398,6 +416,9 @@ export class HomePage implements OnInit {
               a['icono'] = 'checkmark-circle';
             }
           });
+        } else {
+            a['bloquear'] = false;
+            a['icono'] = 'checkmark-circle';
         }
         this.Horarios.push(a as Horario);
       });
@@ -445,6 +466,7 @@ export class HomePage implements OnInit {
     await this.mantService.saveReserva(this.reserva).then(respId => {
       console.log('guardado ok: ' + respId);
       this.finaliza.idReserva = respId.toString();
+      this.finaliza.valorTotal = this.reserva.valor;
       this.finalizaModal(this.finaliza);
     }).catch(err => console.log('Error al guardar ' + err));
 
@@ -510,6 +532,22 @@ export class HomePage implements OnInit {
         }
       });
     });
+  }
+
+  selectTipoAceite(evt: any, valor: number) {
+      if (this.idAceiteAux === undefined) {
+          this.idAceiteAux = evt.target.id;
+          this.checkAceiteAux = evt.target.checked;
+          this.reserva.idAceite = this.idAceiteAux;
+      } else {
+          if (this.idAceiteAux !== evt.target.id && this.checkAceiteAux === true) {
+              document.getElementById(this.idAceiteAux).click();
+          }
+          this.idAceiteAux = evt.target.id;
+          this.checkAceiteAux = evt.target.checked;
+          this.reserva.idAceite = this.idAceiteAux;
+          this.reserva.valor = valor;
+      }
   }
 
 }

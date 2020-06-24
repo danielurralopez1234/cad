@@ -12,4 +12,5 @@ export class Reserva {
     idAgenda: string;
     idPago: string;
     estado: string;
+    valor: number;
 }
