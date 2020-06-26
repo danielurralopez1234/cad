@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
       comuna: ['', Validators.compose([Validators.required])],
       calle: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       calleNum: ['', Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
+      dataOp: ['']
     });
     this.mecanicoForm = formBuilder.group({
       mecanico: ['', Validators.compose([Validators.required])],
@@ -231,22 +232,25 @@ export class HomePage implements OnInit {
 
   async validaDireccionForm() {
     if (this.placeForm.valid) {
+        if (this.reserva.opcional === undefined) {
+            this.reserva.opcional = '';
+        }
         if (this.Mecanicos !== undefined && this.Mecanicos.length > 0) {
             this.hideC3 = false;
             this.hidePaso4 = false;
             this.hideC4 = true;
             this.valueDefault = 'paso4';
-            this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum;
+            this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum + ' ' + this.reserva.opcional;
             await this.Comuna.forEach(c => {
-                if (c.$key === this.reserva.idComuna) {
+                if (c.id === this.reserva.idComuna) {
                     console.log(c.nombre);
-                    this.finaliza.direccion += c.nombre + ' - ';
+                    this.finaliza.direccion = this.finaliza.direccion + ' - ' + c.nombre + ' - ';
                 }
             });
             await this.Region.forEach(r => {
-                if (r.$key === this.reserva.idRegion) {
+                if (r.id === this.reserva.idRegion) {
                     console.log(r.nombre);
-                    this.finaliza.direccion += r.nombre + ' ';
+                    this.finaliza.direccion = this.finaliza.direccion + ' ' + r.nombre + ' ';
                 }
             });
         } else {
@@ -453,7 +457,7 @@ export class HomePage implements OnInit {
       }
     });
     this.misAutos.estado = true;
-    if (this.isMisAutos) {
+    if (!this.isMisAutos) {
       await this.mantService.saveMisAutos(this.misAutos).then(resId => {
         this.reserva.idAuto = resId.toString();
       }).catch(err => console.log('error al guardar ' + err));
@@ -464,7 +468,6 @@ export class HomePage implements OnInit {
     }).catch(err => console.log('error al guardar ' + err));
 
     await this.mantService.saveReserva(this.reserva).then(respId => {
-      console.log('guardado ok: ' + respId);
       this.finaliza.idReserva = respId.toString();
       this.finaliza.valorTotal = this.reserva.valor;
       this.finalizaModal(this.finaliza);
@@ -484,6 +487,7 @@ export class HomePage implements OnInit {
       this.misAutos.cilindrada = '';
       this.misAutos.modelo = '';
       this.misAutos.marca = '';
+      this.misAutos.combustible = '';
       let uid = '';
       await this.authService.getSesionStorage().then(data => {
         uid = data.id;
@@ -492,11 +496,13 @@ export class HomePage implements OnInit {
         this.isCilindrada = true;
         this.isMarca = true;
         this.isAnio = true;
+        this.isTipo = true;
         if (resp.val().idUsuario === uid) {
           this.isMisAutos = true;
           this.misAutos.anio = resp.val().anio;
           this.anio = resp.val().anio + 1;
           this.misAutos.cilindrada = resp.val().cilindrada;
+          this.misAutos.combustible = resp.val().combustible;
           this.misAutos.modelo = resp.val().modelo;
           this.misAutos.marca = resp.val().marca;
         } else {
@@ -539,6 +545,7 @@ export class HomePage implements OnInit {
           this.idAceiteAux = evt.target.id;
           this.checkAceiteAux = evt.target.checked;
           this.reserva.idAceite = this.idAceiteAux;
+          this.reserva.valor = valor;
       } else {
           if (this.idAceiteAux !== evt.target.id && this.checkAceiteAux === true) {
               document.getElementById(this.idAceiteAux).click();

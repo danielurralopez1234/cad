@@ -62,7 +62,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Tipo de Combustible</ion-label>
-      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()">
+      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()" [(ngModel)]="misAutos.combustible">
         <ion-select-option *ngFor="let tipo of TipoCom" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -135,6 +135,10 @@
     <ion-item>
       <ion-label position="floating" color="primary">Numero</ion-label>
       <ion-input formControlName="calleNum" [(ngModel)]="reserva.calleNum"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Departamento/Oficina</ion-label>
+      <ion-input formControlName="dataOp" [(ngModel)]="reserva.opcional" placeholder="Opcional"></ion-input>
     </ion-item>
   </form>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -242,9 +246,6 @@
         <ion-col><ion-label class="ion-float-md-right"><h1>Total: </h1><h1>{{reserva.valor | currency:'USD':true:'1.0-0'}}</h1></ion-label></ion-col>
       </ion-row>
     </ion-grid>
-
-
-    <!-- Mensaje de finalizacion, y se limpian los campos y se vuelve a la pagina principal, deberia quedar registrado en la parte mis reservas -->
   </form>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button (click)="pagoFormBack()" color="tertiary">

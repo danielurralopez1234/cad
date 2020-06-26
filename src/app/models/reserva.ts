@@ -9,6 +9,7 @@ export class Reserva {
     idComuna: string;
     calle: string;
     calleNum: number;
+    opcional: string;
     idAgenda: string;
     idPago: string;
     estado: string;
