@@ -14,7 +14,6 @@ import { AddeditServicioPage } from './addedit-servicio.page';
     FormsModule,
     IonicModule,
     AddeditServicioPageRoutingModule
-  ],
-  declarations: [AddeditServicioPage]
+  ]
 })
 export class AddeditServicioPageModule {}
