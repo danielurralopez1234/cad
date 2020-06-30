@@ -1,7 +1,7 @@
 export class Reserva {
     idUsuario: string;
     fecha: string;
-    idAuto: string;
+    idMiAuto: string;
     idTipoServicio: string;
     idTipoMantencion: string;
     idAceite: string;

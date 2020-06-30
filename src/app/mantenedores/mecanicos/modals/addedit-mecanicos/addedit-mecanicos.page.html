@@ -15,7 +15,7 @@
 
       <ion-item>
         <ion-label position="stacked" color="primary">Rut</ion-label>
-        <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" (ionBlur)="formatRut()" [disabled]="isRut">
+        <ion-input [(ngModel)]="usuario.rut" name="rut" formControlName="rut" autocomplete="off" (ionBlur)="formatRut()" [disabled]="isRut" (ionChange)="parseUpperCase()" >
         </ion-input>
       </ion-item>
 

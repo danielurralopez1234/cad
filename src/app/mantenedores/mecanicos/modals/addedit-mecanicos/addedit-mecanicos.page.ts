@@ -125,17 +125,20 @@ export class AddeditMecanicosPage implements OnInit {
     await this.modalController.dismiss();
   }
   async saveUpdateUsuario() {
-    if (this.mecanicoForm.valid) {
-      this.usuario.rol = 2;
-      await this.userService.updateUserMecanico(this.usuario, this.id).then(async res => {
-        this.presentToast('Actualizado.');
-      }).catch(err => {this.presentToast('Problemas al guardar registro.'); console.log(err); });
+    if (this.id !== undefined) {
+      if (this.mecanicoForm.valid) {
+        this.usuario.rol = 2;
+        await this.userService.updateUserMecanico(this.usuario, this.id).then(async res => {
+          this.presentToast('Actualizado.');
+        }).catch(err => {this.presentToast('Problemas al guardar registro.'); console.log(err); });
 
-      this.modalClose();
+        this.modalClose();
+      } else {
+        this.presentAlertMessage('Faltan campos que llenar.');
+      }
     } else {
-      this.presentAlert();
+      this.presentAlertMessage('Usuario no registrado!!.');
     }
-
   }
   async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
@@ -145,10 +148,10 @@ export class AddeditMecanicosPage implements OnInit {
     toast.present();
   }
 
-  async presentAlert() {
+  async presentAlertMessage(msg: string) {
     const alert = await this.alertController.create({
       header: 'Formulario',
-      message: 'Faltan campos que llenar.',
+      message: msg,
       buttons: ['OK']
     });
 
@@ -156,21 +159,9 @@ export class AddeditMecanicosPage implements OnInit {
   }
 
   async formatRut() {
-    if (this.mecanicoForm.get('rut').value !== undefined) {
-      await this.userService.getUsuarioByRut(this.mecanicoForm.get('rut').value).then(async resp => {
-        this.id = resp.key;
-        this.usuario.nombre = resp.val().nombre;
-        this.usuario.apellido = resp.val().apellido;
-        this.usuario.email = resp.val().email;
-        this.usuario.telefono = resp.val().telefono;
-        this.usuario.comuna = resp.val().comuna;
-        if (this.usuario.comuna !== undefined && this.usuario.comuna.length > 0) {
-          this.selectComuna(Number(this.usuario.comuna));
-        }
-      });
-
-      let rut = this.mecanicoForm.get('rut').value;
-
+    this.limpiar();
+    let rut = this.mecanicoForm.get('rut').value;
+    if (rut !== undefined) {
       if (rut.length > 0) {
         rut = this.clean(rut);
 
@@ -182,13 +173,37 @@ export class AddeditMecanicosPage implements OnInit {
       } else {
         this.mecanicoForm.controls['rut'].setValue(rut);
       }
+      await this.userService.getUsuarioByRut(rut).then(async resp => {
+        this.id = resp.key;
+        this.usuario.nombre = resp.val().nombre;
+        this.usuario.apellido = resp.val().apellido;
+        this.usuario.email = resp.val().email;
+        this.usuario.telefono = resp.val().telefono;
+        this.usuario.comuna = resp.val().comuna;
+        if (this.usuario.comuna !== undefined && this.usuario.comuna.length > 0) {
+          this.selectComuna(Number(this.usuario.comuna));
+        }
+      });
     }
+  }
+
+  limpiar() {
+    this.id = undefined;
+    this.usuario.nombre = '';
+    this.usuario.apellido = '';
+    this.usuario.email = '';
+    this.usuario.telefono = undefined;
+    this.usuario.comuna = '';
   }
 
   clean(rut) {
     return typeof rut === 'string'
         ? rut.replace(/^0+|[^0-9kK]+/g, '').toUpperCase()
         : '';
+  }
+
+  parseUpperCase() {
+    this.usuario.rut = this.usuario.rut.toUpperCase();
   }
 
 }

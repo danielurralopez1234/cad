@@ -62,7 +62,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Tipo de Combustible</ion-label>
-      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()" [(ngModel)]="misAutos.combustible">
+      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()">
         <ion-select-option *ngFor="let tipo of TipoCom" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>

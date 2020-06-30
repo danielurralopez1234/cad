@@ -191,10 +191,14 @@ export class HomePage implements OnInit {
 
   async validaCarForm() {
     if (this.carForm.valid) {
-      this.hideC1 = false;
-      this.hidePaso2 = false;
-      this.valueDefault = 'paso2';
-      this.hideC2 = true;
+        if (this.AceiteFoto === undefined) {
+            this.presentAlertWithMessage('Sin Aceite Disponible');
+        } else {
+            this.hideC1 = false;
+            this.hidePaso2 = false;
+            this.valueDefault = 'paso2';
+            this.hideC2 = true;
+        }
     } else {
       this.presentAlert();
     }
@@ -254,7 +258,7 @@ export class HomePage implements OnInit {
                 }
             });
         } else {
-            this.presentAlertSinMeca('Comuna sin mecanicos disponible!!');
+            this.presentAlertWithMessage('Comuna sin mecanicos disponible!!');
         }
     } else {
       this.presentAlert();
@@ -314,7 +318,7 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  async presentAlertSinMeca(mensaje: string) {
+  async presentAlertWithMessage(mensaje: string) {
       const alert = await this.alertController.create({
           header: 'Formulario',
           message: mensaje,
@@ -459,7 +463,7 @@ export class HomePage implements OnInit {
     this.misAutos.estado = true;
     if (!this.isMisAutos) {
       await this.mantService.saveMisAutos(this.misAutos).then(resId => {
-        this.reserva.idAuto = resId.toString();
+        this.reserva.idMiAuto = resId.toString();
       }).catch(err => console.log('error al guardar ' + err));
     }
     this.agenda.estado = 1;
@@ -499,6 +503,7 @@ export class HomePage implements OnInit {
         this.isTipo = true;
         if (resp.val().idUsuario === uid) {
           this.isMisAutos = true;
+          this.reserva.idMiAuto = resp.key;
           this.misAutos.anio = resp.val().anio;
           this.anio = resp.val().anio + 1;
           this.misAutos.cilindrada = resp.val().cilindrada;

@@ -52,7 +52,7 @@ export class NotificacionesPage implements OnInit {
           a['nomComuna'] = nomComuna;
           a['nomRegion'] = nomRegion;
           a['idUsuario'] = rba.val().idUsuario;
-          a['idAuto'] = rba.val().idAuto;
+          a['idAuto'] = rba.val().idMiAuto;
           this.Agenda.push(a as AgendaMecanico);
         });
       });
@@ -64,7 +64,7 @@ export class NotificacionesPage implements OnInit {
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
-      duration: 500
+      duration: 700
     });
     await loading.present();
 

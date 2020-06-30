@@ -35,7 +35,11 @@ ion-content ion-toolbar {
 }
 
 .text-size-seg {
-  font-size: 9px;
+  font-size: 7px;
+}
+
+ion-segment-button {
+  min-height: 10px;
 }
 
 .button-seg {
