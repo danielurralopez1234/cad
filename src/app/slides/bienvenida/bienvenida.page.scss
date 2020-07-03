@@ -20,6 +20,7 @@ ion-slides {
 
 .imgFooter{
   background: url("/assets/img/footer.png") 0 0/100% 100% no-repeat;
+  padding-top: 90px;
 }
 a.button-native{
   background-color: #2B4FC5 !important;
@@ -35,5 +36,9 @@ strong {
   margin-bottom: 135px;
 }
 h6 {
-  font-size: 12px;
+  font-size: 9px;
+}
+
+.ion-padding-bottom {
+  padding-bottom: 40px;
 }
