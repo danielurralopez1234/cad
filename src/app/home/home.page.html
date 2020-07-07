@@ -62,7 +62,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Tipo de Combustible</ion-label>
-      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo" (ionChange)="selectAceite()">
+      <ion-select [(ngModel)]="misAutos.combustible" placeholder="Selecciona..." formControlName="tipo" [disabled]="isTipo">
         <ion-select-option *ngFor="let tipo of TipoCom" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -82,8 +82,8 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label color="primary">Tipo Mantencion</ion-label>
-      <ion-select formControlName="mantencion" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoMantencion">
+      <ion-label color="primary">Rendimiento KM</ion-label>
+      <ion-select formControlName="mantencion" placeholder="Selecciona.." [(ngModel)]="reserva.idTipoMantencion" (ionChange)="selectAceite($event)">
         <ion-select-option *ngFor="let tipo of TipoMantencion" [value]="tipo.$key">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>

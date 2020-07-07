@@ -18,6 +18,7 @@
         <ion-label>
           <h2>{{aceite.nombre}}</h2>
           <h3>{{aceite.descripcion}}</h3>
+          <p>{{aceite.nomKm}}</p>
           <p>{{aceite.valor}}</p>
         </ion-label>
         <ion-toggle slot="end" color="success" [(ngModel)]="aceite.estado" (click)="updateAceite(aceite.$key, aceite.estado)"></ion-toggle>

@@ -4,5 +4,6 @@ export class Aceite {
     valor: number;
     foto: any;
     tipoCom: string;
+    idKm: string
     estado: boolean;
 }

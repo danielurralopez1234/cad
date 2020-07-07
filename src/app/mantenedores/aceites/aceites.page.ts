@@ -25,6 +25,14 @@ export class AceitesPage implements OnInit {
       res.forEach(item => {
         const a = item.payload.toJSON();
         a['$key'] = item.key;
+        this.mantService.getAllTipoMantencion().snapshotChanges().subscribe(sus => {
+          sus.forEach(it => {
+            const x = it.payload.toJSON();
+            if (a['idKm'] === it.key) {
+              a['nomKm'] = x['nombre'];
+            }
+          });
+        });
         this.Aceites.push(a as Aceite);
         this.auxAceites = this.Aceites;
       });

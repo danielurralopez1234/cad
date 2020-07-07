@@ -19,6 +19,12 @@
         </ion-select>
       </ion-item>
       <ion-item>
+        <ion-label position="stacked">Kilometraje</ion-label>
+        <ion-select [(ngModel)]="aceite.idKm" placeholder="Selecciona..." [value]="aceite.idKm" formControlName="km">
+          <ion-select-option *ngFor="let tipokm of TipoKm" [value]="tipokm.$key">{{tipokm.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
         <ion-input [(ngModel)]="aceite.nombre" name="nombre" formControlName="nombre" autocomplete="off" type="text"></ion-input>
       </ion-item>

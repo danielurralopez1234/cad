@@ -191,39 +191,39 @@ export class HomePage implements OnInit {
 
   async validaCarForm() {
     if (this.carForm.valid) {
-        if (this.AceiteFoto === undefined) {
-            this.presentAlertWithMessage('Sin Aceite Disponible');
-        } else {
-            this.hideC1 = false;
-            this.hidePaso2 = false;
-            this.valueDefault = 'paso2';
-            this.hideC2 = true;
-        }
+      this.hideC1 = false;
+      this.hidePaso2 = false;
+      this.valueDefault = 'paso2';
+      this.hideC2 = true;
     } else {
       this.presentAlert();
     }
   }
 
   validaServiceForm() {
-    if (this.serviceForm.valid && this.checkAceiteAux === true) {
-      this.hideC2 = false;
-      this.hidePaso3 = false;
-      this.hideC3 = true;
-      this.valueDefault = 'paso3';
-      this.TipoServicio.forEach(s => {
-        if (s.$key === this.reserva.idTipoServicio) {
-          this.agenda.servicio = s.nombre;
-        }
-      });
-      this.TipoMantencion.forEach(t => {
-        if (t.$key === this.reserva.idTipoMantencion) {
-          this.finaliza.mantencion = t.nombre;
-          this.agenda.mantencion = t.nombre;
-        }
-      });
-
+    if (this.AceiteFoto === undefined || this.AceiteFoto.length === 0) {
+      this.presentAlertWithMessage('Sin Aceite Disponible');
     } else {
-      this.presentAlert();
+      if (this.serviceForm.valid && this.checkAceiteAux === true) {
+        this.hideC2 = false;
+        this.hidePaso3 = false;
+        this.hideC3 = true;
+        this.valueDefault = 'paso3';
+        this.TipoServicio.forEach(s => {
+          if (s.$key === this.reserva.idTipoServicio) {
+            this.agenda.servicio = s.nombre;
+          }
+        });
+        this.TipoMantencion.forEach(t => {
+          if (t.$key === this.reserva.idTipoMantencion) {
+            this.finaliza.mantencion = t.nombre;
+            this.agenda.mantencion = t.nombre;
+          }
+        });
+
+      } else {
+        this.presentAlert();
+      }
     }
   }
 
@@ -530,18 +530,22 @@ export class HomePage implements OnInit {
     this.isFechaR = false;
   }
 
-  async selectAceite() {
+  async selectAceite(evt: any) {
+    const evtKm = evt.target.value;
     await this.mantService.getAllAceite().snapshotChanges().subscribe(snap => {
       this.AceiteFoto = [];
       let x = 1;
       snap.forEach(item => {
         const a = item.payload.toJSON();
-        if (a['tipoCom'] === this.misAutos.combustible && x < 4) {
+        if (a['tipoCom'] === this.misAutos.combustible && evtKm === a['idKm'] && x < 4) {
           a['$key'] = item.key;
           this.AceiteFoto.push(a as Aceite);
           x = x + 1;
         }
       });
+      if (this.AceiteFoto === undefined || this.AceiteFoto.length === 0) {
+        this.presentAlertWithMessage('Sin Aceite Disponible');
+      }
     });
   }
 

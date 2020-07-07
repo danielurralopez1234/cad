@@ -4,6 +4,7 @@ import {Aceite} from '../../../../models/aceite';
 import {MantenedorService} from '../../../../services/mantenedor.service';
 import {TipoCombustible} from '../../../../models/tipoCombustible';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TipoMantencion} from '../../../../models/tipoMantencion';
 
 @Component({
   selector: 'app-addedit-aceite',
@@ -16,6 +17,7 @@ export class AddeditAceitePage implements OnInit {
   id: string;
   file: any;
   TipoCom: any = [];
+  TipoKm: any = [];
   aceiteForm: FormGroup;
 
   constructor(private modalController: ModalController, private mantService: MantenedorService,
@@ -27,6 +29,7 @@ export class AddeditAceitePage implements OnInit {
 
     this.aceiteForm = formBuilder.group({
       tipo: ['', Validators.compose([Validators.required])],
+      km: ['', Validators.compose([Validators.required])],
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9- ]*$'), Validators.required])],
       descripcion: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9- ]*$'), Validators.required])],
       precio: ['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9]*'), Validators.required])],
@@ -43,12 +46,20 @@ export class AddeditAceitePage implements OnInit {
         this.TipoCom.push(a as TipoCombustible);
       });
     });
+    await this.mantService.getAllTipoMantencion().snapshotChanges().subscribe( res => {
+      res.forEach(item => {
+        const a = item.payload.toJSON();
+        a['$key'] = item.key;
+        this.TipoKm.push(a as TipoMantencion);
+      });
+    });
 
     if (this.navParams.get('data') !== null) {
       await this.presentLoading();
       this.auxParam.push(this.navParams.get('data'));
       this.auxParam.forEach(item => {
         this.aceite.tipoCom = item[0].tipoCom;
+        this.aceite.idKm = item[0].idKm;
         this.aceite.nombre = item[0].nombre;
         this.aceite.descripcion = item[0].descripcion;
         this.aceite.valor = item[0].valor;
