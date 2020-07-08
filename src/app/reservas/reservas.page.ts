@@ -27,23 +27,25 @@ export class ReservasPage implements OnInit {
           snapshot.forEach(val => {
             this.Agenda = [];
             this.mantService.getAgendaById(val.val().idAgenda).once('value').then(ag => {
-              const a = ag.val();
-              a['$key'] = ag.key;
-              const newDate = new Date(a.fecha);
-              if (a.hora.substring(0, 2) > 11) {
-                a.hora = a.hora + ' PM';
-              } else {
-                a.hora = a.hora + ' AM';
+              if (ag.val() !== null) {
+                const a = ag.val();
+                a['$key'] = ag.key;
+                const newDate = new Date(a.fecha);
+                if (a.hora.substring(0, 2) > 11) {
+                  a.hora = a.hora + ' PM';
+                } else {
+                  a.hora = a.hora + ' AM';
+                }
+                a.fecha = this.nombreMeses[newDate.getMonth()] + ' ' + newDate.toLocaleDateString().substring(0, 2) + ' ' + newDate.getFullYear();
+                if (a.estado === 1) {
+                  a['color'] = 'warning';
+                } else if (a.estado === 2) {
+                  a['color'] = 'success';
+                } else {
+                  a['color'] = 'danger';
+                }
+                this.Agenda.push(a as AgendaMecanico);
               }
-              a.fecha = this.nombreMeses[newDate.getMonth()] + ' ' + newDate.toLocaleDateString().substring(0, 2);
-              if (a.estado === 1) {
-                a['color'] = 'warning';
-              } else if (a.estado === 2) {
-                a['color'] = 'success';
-              } else {
-                a['color'] = 'danger';
-              }
-              this.Agenda.push(a as AgendaMecanico);
             });
           });
         });

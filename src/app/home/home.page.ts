@@ -247,13 +247,11 @@ export class HomePage implements OnInit {
             this.finaliza.direccion = this.reserva.calle + ' ' + this.reserva.calleNum + ' ' + this.reserva.opcional;
             await this.Comuna.forEach(c => {
                 if (c.id === this.reserva.idComuna) {
-                    console.log(c.nombre);
                     this.finaliza.direccion = this.finaliza.direccion + ' - ' + c.nombre + ' - ';
                 }
             });
             await this.Region.forEach(r => {
                 if (r.id === this.reserva.idRegion) {
-                    console.log(r.nombre);
                     this.finaliza.direccion = this.finaliza.direccion + ' ' + r.nombre + ' ';
                 }
             });
@@ -273,7 +271,6 @@ export class HomePage implements OnInit {
   }
 
   async validaMecanicoForm() {
-    console.log(this.agenda.hora);
     if (this.mecanicoForm.valid && this.agenda.hora !== undefined) {
       this.hideC4 = false;
       this.hidePaso5 = false;
@@ -436,8 +433,6 @@ export class HomePage implements OnInit {
 
   selectedHora(evt: any, hora: any) {
     const idbtn = evt;
-    console.log(idbtn);
-    console.log(this.preId);
     if (this.preId !== undefined) {
       if (this.preId !== idbtn) {
         document.getElementById(this.preId).classList.remove('color-activated');

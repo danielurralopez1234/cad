@@ -43,6 +43,10 @@ const routes: Routes = [
     loadChildren: () => import('./misautos/misautos.module').then( m => m.MisautosPageModule),
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'clientes',
+    loadChildren: () => import('./mantenedores/clientes/clientes.module').then( m => m.ClientesPageModule)
+  },
 ];
 
 @NgModule({

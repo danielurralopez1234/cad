@@ -37,7 +37,7 @@ export class MecanicosPage implements OnInit {
 
   async updateUsuario(id: string, est: boolean) {
     est = !est;
-    await this.mantService.updateUsuario(id, est).then(res => {
+    await this.usersService.updateUser(id, est).then(res => {
       this.presentToast('Actualizado.');
     }).catch(err => this.presentToast('Problemas al guardar registro.'));
   }
@@ -76,14 +76,14 @@ export class MecanicosPage implements OnInit {
     return await modal.present();
   }
   async deleteUsuario(id: string) {
-    await this.mantService.deleteUsuario(id).then(res => {
-      this.presentToast('Eliminado.');
-    }).catch(err => this.presentToast('Problemas al eliminar registro.'));
+    await this.usersService.updateMecanicoUser(1, id).then(res => {
+      this.presentToast('rol como Mecanico cambiando.');
+    }).catch(err => this.presentToast('Problemas al cambiar rol.'));
   }
   async deleteAlertConfirm(key: string, nombre: string) {
     const alert = await this.alertController.create({
       header: 'Confirmacion!',
-      message: 'Eliminar mecanico<strong> ' + nombre + ' </strong>!!! ???',
+      message: 'Dejar de ser mecanico<strong> ' + nombre + ' </strong>!!! ???',
       buttons: [
         {
           text: 'Cancelar',

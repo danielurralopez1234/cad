@@ -3,6 +3,7 @@ export class Usuario {
     idAuto: string;
     nombre: string;
     apellido: string;
+    fechaReg: string;
     fechaNacimiento: string;
     email: string;
     telefono: number;

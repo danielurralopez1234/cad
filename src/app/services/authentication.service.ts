@@ -64,7 +64,9 @@ export class AuthenticationService {
               const uid = res.user.uid;
               let getUser: any = null;
               (await this.usersService.getUser(uid)).subscribe(usr => {
-                  if (usr !== null) {
+                  console.log(usr);
+                  console.log(usr['estado']);
+                  if (usr !== null && usr['estado']) {
                       getUser = 0;
                       this.userRes = usr;
                       this.usrData.id = uid;
@@ -75,6 +77,8 @@ export class AuthenticationService {
                       this.storage.set('USER_DATA', this.usrData).then(async (response) => {
                           this.authState.next(true);
                       });
+                  } else {
+                      this.logout();
                   }
                   resolve(getUser);
               });
@@ -90,6 +94,7 @@ export class AuthenticationService {
               user.comuna = '';
               user.estado = true;
               user.fechaNacimiento = '';
+              user.fechaReg = new Date().toLocaleTimeString();
               user.foto = '';
               user.idAuto = '';
               user.region = '';

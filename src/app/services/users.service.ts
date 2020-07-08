@@ -37,6 +37,13 @@ export class UsersService {
       rol: user.rol});
 
   }
+  async updateUser(id: string, est: boolean) {
+    this.afDB.database.ref('usuario/' + id).update({ estado: est });
+  }
+  async updateMecanicoUser(role: number, uid: string) {
+    this.afDB.database.ref('usuario/' + uid).update({
+      rol: role});
+  }
   async getUser(id: string) {
      return this.afDB.object('usuario/' + id).valueChanges();
   }

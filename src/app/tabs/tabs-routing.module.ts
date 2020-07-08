@@ -37,6 +37,10 @@ const routes: Routes = [
             loadChildren: () => import('../mantenedores/mecanicos/mecanicos.module').then( m => m.MecanicosPageModule)
           },
           {
+            path: 'clientes',
+            loadChildren: () => import('../mantenedores/clientes/clientes.module').then( m => m.ClientesPageModule)
+          },
+          {
             path: 'aceites',
             loadChildren: () => import('../mantenedores/aceites/aceites.module').then( m => m.AceitesPageModule)
           },

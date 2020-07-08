@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {AlertController, ToastController} from '@ionic/angular';
 import {Usuario} from '../../models/usuario';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ export class RegisterPage implements OnInit {
   condicion = false;
   constructor(private router: Router, private authService: AuthenticationService, private toastController: ToastController,
               private formBuilder: FormBuilder,
-              private alertController: AlertController) {
+              private alertController: AlertController,
+              private userService: UsersService) {
     this.registroForm = formBuilder.group({
       rut: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[0-9kK.-]*'), Validators.required])],
       nombre: ['', Validators.compose([Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.required])],
@@ -36,27 +38,31 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
-    console.log(this.condicion);
     if (this.registroForm.valid) {
       if (this.confirmaPass === this.password) {
         if (this.condicion) {
           this.usuario.rut = this.clean(this.usuario.rut);
-          await this.authService.onRegister(this.usuario, this.password).then(res => {
-            this.presentToast('Registro exitoso.');
-            this.router.navigate(['/login']);
-          }).catch(err => {
-            let msg = '';
-            if (err.code === 'auth/weak-password') {
-              msg = 'Error, Clave minima de 6 caracteres.';
-            } else if (err.code === 'auth/email-already-in-use') {
-              msg = 'Error, Cuenta registrada por otro usuario.';
-            } else {
-              msg = 'Error al crear usuario.';
-            }
-            this.presentToast(msg);
-          });
+          const findRut = await this.userService.getUsuarioByRut(this.usuario.rut);
+          if (!findRut.exists()) {
+            await this.authService.onRegister(this.usuario, this.password).then(res => {
+              this.presentToast('Registro exitoso.');
+              this.router.navigate(['/login']);
+            }).catch(err => {
+              let msg = '';
+              if (err.code === 'auth/weak-password') {
+                msg = 'Error, Clave minima de 6 caracteres.';
+              } else if (err.code === 'auth/email-already-in-use') {
+                msg = 'Error, Cuenta registrada por otro usuario.';
+              } else {
+                msg = 'Error al crear usuario.';
+              }
+              this.presentToast(msg);
+            });
+          } else {
+            this.presentAlert('Problemas al registrar, llamar a sucursal.');
+          }
         } else {
-          this.presentAlert('Falta Aceptar términos y condiciones');
+          this.presentAlert('Falta Aceptar términos y condiciones.');
         }
       } else {
         this.presentAlert('Contraseña no coincide.');

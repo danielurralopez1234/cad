@@ -16,7 +16,7 @@
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
       <ion-label>{{agenda.servicio}} {{agenda.mantencion}}</ion-label>
-      <ion-button fill="outline" slot="end" [color]="agenda.color">
+      <ion-button fill="outline" slot="end" [color]="agenda.color" (click)="aceptarReserva(agenda.$key, agenda.estado)">
         <ion-icon name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-item>
@@ -43,6 +43,11 @@
       <ion-col>
         <ion-button color="primary" size="small" (click)="getCar(agenda.idAuto)">
           <ion-icon name='car-outline'></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="primary" size="small" (click)="getAceite(agenda.idAceite)">
+          <ion-icon name="water-outline"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>

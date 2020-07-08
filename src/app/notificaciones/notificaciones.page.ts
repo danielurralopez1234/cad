@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
 import {MantenedorService} from '../services/mantenedor.service';
 import {AgendaMecanico} from '../models/agendaMecanico';
-import {LoadingController, ModalController} from '@ionic/angular';
+import {LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {ClientePage} from './modals/cliente/cliente.page';
 import {UbicacionPage} from './modals/ubicacion/ubicacion.page';
 import {AutoPage} from './modals/auto/auto.page';
+import {AceiteInfoPage} from './modals/aceite-info/aceite-info.page';
 
 @Component({
   selector: 'app-notificaciones',
@@ -19,7 +20,8 @@ export class NotificacionesPage implements OnInit {
   constructor(private authService: AuthenticationService,
               private mantService: MantenedorService,
               private loadingController: LoadingController,
-              private modalController: ModalController) { }
+              private modalController: ModalController,
+              private toastController: ToastController) { }
 
   async ngOnInit() {
     const uid = await this.authService.getSesionStorageByUid();
@@ -53,6 +55,7 @@ export class NotificacionesPage implements OnInit {
           a['nomRegion'] = nomRegion;
           a['idUsuario'] = rba.val().idUsuario;
           a['idAuto'] = rba.val().idMiAuto;
+          a['idAceite'] = rba.val().idAceite;
           this.Agenda.push(a as AgendaMecanico);
         });
       });
@@ -104,6 +107,35 @@ export class NotificacionesPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async getAceite(id: string) {
+    const modal = await this.modalController.create({
+      component: AceiteInfoPage,
+      componentProps: {
+        ID: id
+      }
+    });
+    return await modal.present();
+  }
+
+  async aceptarReserva(id: any, std: any) {
+    if (std === 1) {
+      await this.mantService.updateAgenda(id, 2).then(upd => {
+        this.presentToast('Reserva Confirmada.');
+      }).catch(err => {this.presentToast('Error al actualizar.'); });
+    } else if (std === 2) {
+      this.presentToast('Reserva se encuentra aceptada.');
+    } else {
+      this.presentToast('Reserva rechazada.');
+    }
+  }
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

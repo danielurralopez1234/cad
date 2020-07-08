@@ -243,9 +243,6 @@ export class MantenedorService {
   async deleteUsuario(id: string) {
     this.afDB.object('usuario/' + id).remove();
   }
-  async updateUsuario(id: string, est: boolean) {
-    this.afDB.database.ref('usuario/' + id).update({ estado: est });
-  }
 
   getAllregion() {
     return this.afDB.list('region');
@@ -279,6 +276,9 @@ export class MantenedorService {
   }
   getMarcaById(id: string) {
     return this.afDB.object('marca/' + id).valueChanges();
+  }
+  getAceiteById(id: string) {
+    return this.afDB.object('aceite/' + id).valueChanges();
   }
 
   saveAgenda(agenda: AgendaMecanico) {

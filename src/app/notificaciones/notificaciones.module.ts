@@ -10,6 +10,7 @@ import { NotificacionesPage } from './notificaciones.page';
 import {ClientePage} from './modals/cliente/cliente.page';
 import {UbicacionPage} from './modals/ubicacion/ubicacion.page';
 import {AutoPage} from './modals/auto/auto.page';
+import {AceiteInfoPage} from './modals/aceite-info/aceite-info.page';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {AutoPage} from './modals/auto/auto.page';
     IonicModule,
     NotificacionesPageRoutingModule
   ],
-  declarations: [NotificacionesPage, ClientePage, UbicacionPage, AutoPage],
-  entryComponents: [ClientePage, UbicacionPage, AutoPage]
+  declarations: [NotificacionesPage, ClientePage, UbicacionPage, AutoPage, AceiteInfoPage],
+  entryComponents: [ClientePage, UbicacionPage, AutoPage, AceiteInfoPage]
 })
 export class NotificacionesPageModule {}

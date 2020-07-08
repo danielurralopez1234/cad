@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'auto',
     loadChildren: () => import('./modals/auto/auto.module').then( m => m.AutoPageModule)
+  },
+  {
+    path: 'aceite-info',
+    loadChildren: () => import('./modals/aceite-info/aceite-info.module').then( m => m.AceiteInfoPageModule)
   }
 ];
 
