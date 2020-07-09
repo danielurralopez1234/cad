@@ -38,25 +38,27 @@ export class NotificacionesPage implements OnInit {
             nomRegion = reg.val().nombre;
           });
           const a = item.val();
-          a['$key'] = item.key;
-          const newDate = new Date(a.fecha);
-          a.fecha = newDate.toLocaleDateString().substring(0, 2) + ' ' + this.nombreMeses[newDate.getMonth()];
-          if (a.estado === 1) {
-            a['color'] = 'warning';
-          } else if (a.estado === 2) {
-            a['color'] = 'success';
-          } else {
-            a['color'] = 'danger';
+          if (a.estado !== 3 && a.estado !== 0) {
+            a['$key'] = item.key;
+            const newDate = new Date(a.fecha);
+            a.fecha = newDate.toLocaleDateString().substring(0, 2) + ' ' + this.nombreMeses[newDate.getMonth()];
+            if (a.estado === 1) {
+              a['color'] = 'warning';
+            } else if (a.estado === 2) {
+              a['color'] = 'success';
+            } else {
+              a['color'] = 'danger';
+            }
+            a['direccion'] = rba.val().calle + ' ' + rba.val().calleNum + ' - ' + nomComuna + ' - ' + nomRegion;
+            a['calle'] = rba.val().calle;
+            a['calleNum'] = rba.val().calleNum;
+            a['nomComuna'] = nomComuna;
+            a['nomRegion'] = nomRegion;
+            a['idUsuario'] = rba.val().idUsuario;
+            a['idAuto'] = rba.val().idMiAuto;
+            a['idAceite'] = rba.val().idAceite;
+            this.Agenda.push(a as AgendaMecanico);
           }
-          a['direccion'] = rba.val().calle + ' ' + rba.val().calleNum + ' - ' + nomComuna + ' - ' + nomRegion;
-          a['calle'] = rba.val().calle;
-          a['calleNum'] = rba.val().calleNum;
-          a['nomComuna'] = nomComuna;
-          a['nomRegion'] = nomRegion;
-          a['idUsuario'] = rba.val().idUsuario;
-          a['idAuto'] = rba.val().idMiAuto;
-          a['idAceite'] = rba.val().idAceite;
-          this.Agenda.push(a as AgendaMecanico);
         });
       });
     });

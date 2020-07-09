@@ -289,6 +289,7 @@ export class HomePage implements OnInit {
   }
 
   async validaPagoForm() {
+      // this.finalizaModal(this.finaliza);
     if (this.pagoForm.valid) {
       this.reserva.idPago = this.pagoForm.value.pago;
       this.reserva.fecha = new Date().toLocaleDateString();
@@ -378,7 +379,7 @@ export class HomePage implements OnInit {
     await this.mantService.getMecanicoByRolSector(2).on('value', (snapshot) => {
         this.Mecanicos = [];
         snapshot.forEach(item => {
-            if (item.val().sector === sec) {
+            if (item.val().sector === sec && item.val().estado) {
                 const a = item.val();
                 a['$key'] = item.key;
                 this.Mecanicos.push(a as Mecanico);

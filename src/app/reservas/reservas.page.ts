@@ -29,29 +29,34 @@ export class ReservasPage implements OnInit {
             this.mantService.getAgendaById(val.val().idAgenda).once('value').then(ag => {
               if (ag.val() !== null) {
                 const a = ag.val();
-                a['$key'] = ag.key;
-                const newDate = new Date(a.fecha);
-                if (a.hora.substring(0, 2) > 11) {
-                  a.hora = a.hora + ' PM';
-                } else {
-                  a.hora = a.hora + ' AM';
+                if (a.estado !== 3 && a.estado !== 0) {
+                  a['$key'] = ag.key;
+                  const newDate = new Date(a.fecha);
+                  if (a.hora.substring(0, 2) > 11) {
+                    a.hora = a.hora + ' PM';
+                  } else {
+                    a.hora = a.hora + ' AM';
+                  }
+                  a.fecha = this.nombreMeses[newDate.getMonth()] + ' ' + newDate.toLocaleDateString().substring(0, 2) + ' ' + newDate.getFullYear();
+                  if (a.estado === 1) {
+                    a['color'] = 'warning';
+                  } else if (a.estado === 2) {
+                    a['color'] = 'success';
+                  } else {
+                    a['color'] = 'danger';
+                  }
+                  this.Agenda.push(a as AgendaMecanico);
                 }
-                a.fecha = this.nombreMeses[newDate.getMonth()] + ' ' + newDate.toLocaleDateString().substring(0, 2) + ' ' + newDate.getFullYear();
-                if (a.estado === 1) {
-                  a['color'] = 'warning';
-                } else if (a.estado === 2) {
-                  a['color'] = 'success';
-                } else {
-                  a['color'] = 'danger';
-                }
-                this.Agenda.push(a as AgendaMecanico);
               }
             });
           });
         });
       }
     });
-    this.presentLoading();
+    await this.presentLoading();
+    if (this.Agenda !== undefined) {
+      this.Agenda = this.Agenda.slice().reverse();
+    }
   }
 
   async presentLoading() {
@@ -108,6 +113,38 @@ export class ReservasPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  async jobRealizado(id: string, std: number) {
+    await this.mantService.updateAgenda(id, std).then(res => {
+      this.presentToast('Trabajo Realizado');
+      this.ngOnInit();
+    }).catch(err => this.presentToast('Problemas al guardar registro.'));
+  }
+
+  async jobConfirm(key: string, estado: number) {
+    if (estado === 2) {
+      const alert = await this.alertController.create({
+        header: 'Confirmacion!',
+        message: 'Trabajo Realizado ???',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary'
+          }, {
+            text: 'Si',
+            handler: () => {
+              this.jobRealizado(key, 3);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    } else {
+      this.presentToast('Reserva aun no confirmada.');
+    }
   }
 
 }

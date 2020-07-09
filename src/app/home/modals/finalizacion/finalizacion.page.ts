@@ -17,7 +17,11 @@ export class FinalizacionPage implements OnInit {
     if (this.navParams.get('data')  !== null) {
       this.auxParam.push(this.navParams.get('data') as Finaliza);
       this.auxParam.forEach(item => {
-        console.log(item);
+        this.data.nombre = item.nombre;
+        this.data.idReserva = item.idReserva;
+        this.data.mantencion = item.mantencion;
+        this.data.fecha = item.fecha;
+        this.data.direccion = item.direccion;
       });
     }
   }

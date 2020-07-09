@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="searchUsuario($event)" placeholder="Buscar"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let usuario of Usuario">
+      <ion-avatar slot="start">
+        <img *ngIf="usuario.foto" [src]="usuario.foto">
+        <img *ngIf="!usuario.foto" src="/assets/icon/favicon.png">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{usuario.nombre}} {{usuario.apellido}}</h2>
+        <h3>{{usuario.direccion}}</h3>
+      </ion-label>
+      <ion-toggle slot="end" color="success" [(ngModel)]="usuario.estado" (click)="updateUsuario(usuario.$key, usuario.estado)"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

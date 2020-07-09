@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Felicidades, ya registramos tu reserva!!</ion-title>
+  <ion-toolbar color="danger">
+    <ion-title class="ion-text-center">Felicidades, ya registramos tu reserva!!</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="modalClose()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -10,9 +10,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-label>Estimado/a: {{data.nombre}}</ion-label><br>
-  <ion-label>codigo reserva: {{data.idReserva}}</ion-label><br>
-  <ion-label>tu servicio de mantencion {{data.mantencion}} fue agendado para el dia {{data.fecha}}</ion-label><br>
-  <ion-label>en la dirección {{data.direccion}}</ion-label>
-
+  <ion-card class="color-card">
+    <ion-card-header>
+      <ion-card-title>Estimado/a: {{data.nombre}}</ion-card-title>
+      <ion-card-subtitle>codigo reserva: {{data.idReserva}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      tu servicio de mantencion {{data.mantencion}} fue agendado para el dia {{data.fecha}}
+      en la dirección {{data.direccion}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

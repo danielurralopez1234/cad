@@ -64,8 +64,6 @@ export class AuthenticationService {
               const uid = res.user.uid;
               let getUser: any = null;
               (await this.usersService.getUser(uid)).subscribe(usr => {
-                  console.log(usr);
-                  console.log(usr['estado']);
                   if (usr !== null && usr['estado']) {
                       getUser = 0;
                       this.userRes = usr;
