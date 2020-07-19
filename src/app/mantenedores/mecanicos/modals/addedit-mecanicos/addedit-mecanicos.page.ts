@@ -69,6 +69,7 @@ export class AddeditMecanicosPage implements OnInit {
       this.auxParam.push(this.navParams.get('data') as Usuario);
       this.auxParam.forEach(item => {
         this.usuario.rut = item[0].rut;
+        this.formateoRut(this.usuario.rut);
         this.usuario.nombre = item[0].nombre;
         this.usuario.apellido = item[0].apellido;
         this.usuario.email = item[0].email;
@@ -128,6 +129,7 @@ export class AddeditMecanicosPage implements OnInit {
     if (this.id !== undefined) {
       if (this.mecanicoForm.valid) {
         this.usuario.rol = 2;
+        this.usuario.rut = this.clean(this.usuario.rut);
         await this.userService.updateUserMecanico(this.usuario, this.id).then(async res => {
           this.presentToast('Actualizado.');
         }).catch(err => {this.presentToast('Problemas al guardar registro.'); console.log(err); });
@@ -160,28 +162,24 @@ export class AddeditMecanicosPage implements OnInit {
 
   async formatRut() {
     this.limpiar();
-    let rut = this.mecanicoForm.get('rut').value;
+    const rut = this.mecanicoForm.get('rut').value;
     if (rut !== undefined) {
-      if (rut.length > 0) {
-        rut = this.clean(rut);
-
-        let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
-        for (let i = 4; i < rut.length; i += 3) {
-          result = rut.slice(-3 - i, -i) + '.' + result;
-        }
-        this.mecanicoForm.controls['rut'].setValue(result);
-      } else {
-        this.mecanicoForm.controls['rut'].setValue(rut);
-      }
+      this.formateoRut(rut);
       await this.userService.getUsuarioByRut(rut).then(async resp => {
-        this.id = resp.key;
-        this.usuario.nombre = resp.val().nombre;
-        this.usuario.apellido = resp.val().apellido;
-        this.usuario.email = resp.val().email;
-        this.usuario.telefono = resp.val().telefono;
-        this.usuario.comuna = resp.val().comuna;
-        if (this.usuario.comuna !== undefined && this.usuario.comuna.length > 0) {
-          this.selectComuna(Number(this.usuario.comuna));
+        if (resp.val() != null) {
+          resp.forEach(it => {
+            this.id = it.key;
+            this.usuario.nombre = it.val().nombre;
+            this.usuario.apellido = it.val().apellido;
+            this.usuario.email = it.val().email;
+            this.usuario.telefono = it.val().telefono;
+            this.usuario.comuna = it.val().comuna;
+            if (this.usuario.comuna !== undefined && this.usuario.comuna.length > 0) {
+              this.selectComuna(Number(this.usuario.comuna));
+            }
+          });
+        } else {
+          this.presentToast('No se encuentran registros!.');
         }
       });
     }
@@ -204,6 +202,20 @@ export class AddeditMecanicosPage implements OnInit {
 
   parseUpperCase() {
     this.usuario.rut = this.usuario.rut.toUpperCase();
+  }
+
+  formateoRut(rut: any) {
+    if (rut.length > 0) {
+      rut = this.clean(rut);
+
+      let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
+      for (let i = 4; i < rut.length; i += 3) {
+        result = rut.slice(-3 - i, -i) + '.' + result;
+      }
+      this.mecanicoForm.controls['rut'].setValue(result);
+    } else {
+      this.mecanicoForm.controls['rut'].setValue(rut);
+    }
   }
 
 }

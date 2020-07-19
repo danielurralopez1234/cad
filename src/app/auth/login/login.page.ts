@@ -25,7 +25,13 @@ export class LoginPage implements OnInit {
       } else {
         this.presentToast('Sesion iniciada.');
       }
-    }).catch(err => this.presentToast('Los datos son incorrectos o no existe usuario.'));
+    }).catch(err => {
+      if (err.code === 'auth/user-disabled') {
+        this.presentToast('Cuenta desactivada.');
+      } else {
+        this.presentToast('Los datos son incorrectos o no existe usuario.');
+      }
+    });
   }
 
   async presentToast(mensaje: string) {

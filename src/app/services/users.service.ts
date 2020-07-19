@@ -52,6 +52,6 @@ export class UsersService {
   }
   getUsuarioByRut(rut: string) {
     return this.afDB.database.ref('usuario').
-    orderByChild('rut').equalTo(rut).once('child_added');
+    orderByChild('rut').equalTo(rut).once('value');
   }
 }

@@ -42,24 +42,29 @@ export class RegisterPage implements OnInit {
       if (this.confirmaPass === this.password) {
         if (this.condicion) {
           this.usuario.rut = this.clean(this.usuario.rut);
-          const findRut = await this.userService.getUsuarioByRut(this.usuario.rut);
-          if (!findRut.exists()) {
-            await this.authService.onRegister(this.usuario, this.password).then(res => {
-              this.presentToast('Registro exitoso.');
-              this.router.navigate(['/login']);
-            }).catch(err => {
-              let msg = '';
-              if (err.code === 'auth/weak-password') {
-                msg = 'Error, Clave minima de 6 caracteres.';
-              } else if (err.code === 'auth/email-already-in-use') {
-                msg = 'Error, Cuenta registrada por otro usuario.';
+          if (this.digitoCorrecto(this.usuario.rut)) {
+            await this.userService.getUsuarioByRut(this.usuario.rut).then(async usr => {
+              if (!usr.exists()) {
+                await this.authService.onRegister(this.usuario, this.password).then(res => {
+                  this.presentToast('Registro exitoso.');
+                  this.router.navigate(['/login']);
+                }).catch(err => {
+                  let msg = '';
+                  if (err.code === 'auth/weak-password') {
+                    msg = 'Error, Clave minima de 6 caracteres.';
+                  } else if (err.code === 'auth/email-already-in-use') {
+                    msg = 'Error, Cuenta registrada por otro usuario.';
+                  } else {
+                    msg = 'Error al crear usuario.';
+                  }
+                  this.presentToast(msg);
+                });
               } else {
-                msg = 'Error al crear usuario.';
+                this.presentAlert('Problemas al registrar usuario!!!.');
               }
-              this.presentToast(msg);
             });
           } else {
-            this.presentAlert('Problemas al registrar, llamar a sucursal.');
+            this.presentToast('Rut invalido!!');
           }
         } else {
           this.presentAlert('Falta Aceptar términos y condiciones.');
@@ -91,20 +96,23 @@ export class RegisterPage implements OnInit {
   }
 
   formatRut() {
-    let rut = this.registroForm.get('rut').value;
+    if (this.registroForm.get('rut').value !== undefined) {
+      let rut = this.registroForm.get('rut').value;
+      if (rut.length > 0) {
+        rut = this.clean(rut);
+        if (!this.digitoCorrecto(rut)) {
+          this.presentToast('Rut invalido!!');
+        }
 
-    if (rut.length > 0) {
-      rut = this.clean(rut);
-
-      let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
-      for (let i = 4; i < rut.length; i += 3) {
-        result = rut.slice(-3 - i, -i) + '.' + result;
+        let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
+        for (let i = 4; i < rut.length; i += 3) {
+          result = rut.slice(-3 - i, -i) + '.' + result;
+        }
+        this.registroForm.controls['rut'].setValue(result);
+      } else {
+        this.registroForm.controls['rut'].setValue(rut);
       }
-      this.registroForm.controls['rut'].setValue(result);
-    } else {
-      this.registroForm.controls['rut'].setValue(rut);
     }
-
   }
 
   clean(rut) {
@@ -113,5 +121,49 @@ export class RegisterPage implements OnInit {
         : '';
   }
 
+  getDigito(rut) {
+    let suma = 0;
+    let mul = 2;
+    let ret;
+    for (let i = rut.length - 1; i >= 0; i--) {
+      suma = suma + rut.charAt(i) * mul;
+      if (mul === 7) {
+        mul = 2;
+      } else {
+        mul++;
+      }
+    }
+    const res = suma % 11;
+    if (res === 1) {
+      return 'k';
+    } else if (res === 0) {
+      return '0';
+    } else {
+      ret = 11 - res;
+      return ret.toString();
+    }
+  }
+
+  digitoCorrecto(crut) {
+    const largo = crut.length;
+    let rut;
+    if (largo < 2) {
+      return false;
+    }
+    if (largo > 2) {
+      rut = crut.substring(0, largo - 1);
+    } else {
+      rut = crut.charAt(0);
+    }
+    const dv = crut.charAt(largo - 1);
+    if (rut == null || dv == null) {
+      return 0;
+    }
+    const dvr = this.getDigito(rut);
+    if (dvr !== dv.toLowerCase()) {
+      return false;
+    }
+    return true;
+  }
 
 }

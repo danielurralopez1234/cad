@@ -92,7 +92,7 @@ export class AuthenticationService {
               user.comuna = '';
               user.estado = true;
               user.fechaNacimiento = '';
-              user.fechaReg = new Date().toLocaleTimeString();
+              user.fechaReg = new Date().toLocaleString();
               user.foto = '';
               user.idAuto = '';
               user.region = '';
