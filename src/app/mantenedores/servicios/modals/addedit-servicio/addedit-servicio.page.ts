@@ -49,7 +49,6 @@ export class AddeditServicioPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
   }
 
   async modalClose() {
@@ -61,7 +60,6 @@ export class AddeditServicioPage implements OnInit {
       if (this.auxParam.length === 0) {
         this.servicio.estado = false;
         await this.mantService.saveServicio(this.servicio).then(async resId => {
-          console.log('id servicio: ' + resId);
           this.presentToast('Registro exitoso.');
         }).catch(err => this.presentToast('Error al guardar registro'));
       } else {

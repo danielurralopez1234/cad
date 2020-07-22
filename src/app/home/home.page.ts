@@ -192,6 +192,7 @@ export class HomePage implements OnInit {
   async validaCarForm() {
     if (this.carForm.valid) {
       this.hideC1 = false;
+      this.hidePaso1 = true;
       this.hidePaso2 = false;
       this.valueDefault = 'paso2';
       this.hideC2 = true;
@@ -206,6 +207,7 @@ export class HomePage implements OnInit {
     } else {
       if (this.serviceForm.valid && this.checkAceiteAux === true) {
         this.hideC2 = false;
+        this.hidePaso2 = true;
         this.hidePaso3 = false;
         this.hideC3 = true;
         this.valueDefault = 'paso3';
@@ -229,6 +231,7 @@ export class HomePage implements OnInit {
 
   serviceFormBack() {
     this.hideC1 = true;
+    this.hidePaso1 = false;
     this.hidePaso2 = true;
     this.hideC2 = false;
     this.valueDefault = 'paso1';
@@ -241,6 +244,7 @@ export class HomePage implements OnInit {
         }
         if (this.Mecanicos !== undefined && this.Mecanicos.length > 0) {
             this.hideC3 = false;
+            this.hidePaso3 = true;
             this.hidePaso4 = false;
             this.hideC4 = true;
             this.valueDefault = 'paso4';
@@ -265,6 +269,7 @@ export class HomePage implements OnInit {
 
   direccionFormBack() {
     this.hideC2 = true;
+    this.hidePaso2 = false;
     this.hidePaso3 = true;
     this.hideC3 = false;
     this.valueDefault = 'paso2';
@@ -273,6 +278,7 @@ export class HomePage implements OnInit {
   async validaMecanicoForm() {
     if (this.mecanicoForm.valid && this.agenda.hora !== undefined) {
       this.hideC4 = false;
+      this.hidePaso4 = true;
       this.hidePaso5 = false;
       this.hideC5 = true;
       this.valueDefault = 'paso5';
@@ -283,6 +289,7 @@ export class HomePage implements OnInit {
 
   mecanicoFormBack() {
     this.hideC3 = true;
+    this.hidePaso3 = false;
     this.hidePaso4 = true;
     this.hideC4 = false;
     this.valueDefault = 'paso3';
@@ -301,6 +308,7 @@ export class HomePage implements OnInit {
 
   pagoFormBack() {
     this.hideC4 = true;
+    this.hidePaso4 = false;
     this.hidePaso5 = true;
     this.hideC5 = false;
     this.valueDefault = 'paso4';

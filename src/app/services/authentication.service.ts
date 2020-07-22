@@ -119,62 +119,18 @@ export class AuthenticationService {
        });
        await loading.present();
        const { role, data } = await loading.onDidDismiss();
-       console.log('Loading dismissed!');
   }
 
   getUserSubject() {
       return this.currentUser.asObservable();
   }
 
-  getUserService(id: string) {
-      return this.usersService.getUser(id);
-  }
-
-  login2(email: string, password: string) {
-    return this.http.post(this.env.API_URL + 'auth/login',
-        {email,  password}
-    ).pipe(
-        tap(token => {
-          this.storage.set('token', token)
-              .then(
-                  () => {
-                    console.log('Token Stored');
-                  },
-                  error => console.error('Error storing item', error)
-              );
-          this.token = token;
-          this.isLoggedIn = true;
-          return token;
-        }),
-    );
-  }
 
   logout() {
     this.storage.remove('USER_DATA').then(() => {
       this.router.navigate(['bienvenida']);
       this.authState.next(false);
     });
-  }
-
-  logout2() {
-    const headers = new HttpHeaders({
-      'Authorization': this.token["token_type"]+" "+this.token["access_token"]
-    });
-    return this.http.get(this.env.API_URL + 'auth/logout', { headers })
-        .pipe(
-            tap(data => {
-              this.storage.remove("token");
-              this.isLoggedIn = false;
-              delete this.token;
-              return data;
-            })
-        );
-  }
-
-  register2(fName: string, lName: string, email: string, password: string) {
-    return this.http.post(this.env.API_URL + 'auth/register',
-        {fName, lName, email, password}
-    );
   }
 
   isAuthenticated() {

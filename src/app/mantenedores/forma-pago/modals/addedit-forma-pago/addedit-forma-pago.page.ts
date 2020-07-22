@@ -47,7 +47,6 @@ export class AddeditFormaPagoPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
   }
   async modalClose() {
     await this.modalController.dismiss();
@@ -58,7 +57,6 @@ export class AddeditFormaPagoPage implements OnInit {
       if (this.auxParam.length === 0) {
         this.formaPago.estado = false;
         await this.mantService.saveFormaPago(this.formaPago).then(async resId => {
-          console.log('id formaPago: ' + resId);
           this.presentToast('Registro exitoso.');
         }).catch(err => this.presentToast('Error al guardar registro'));
       } else {

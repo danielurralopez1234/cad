@@ -64,7 +64,6 @@ export class AddeditAutoPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
   }
   async modalClose() {
     await this.modalController.dismiss();
@@ -75,7 +74,6 @@ export class AddeditAutoPage implements OnInit {
       if (this.auxParam.length === 0) {
         this.auto.estado = false;
         await this.mantService.saveAuto(this.auto).then(async resId => {
-          console.log('id auto: ' + resId);
           this.presentToast('Registro exitoso.');
         }).catch(err => this.presentToast('Error al guardar registro'));
       } else {

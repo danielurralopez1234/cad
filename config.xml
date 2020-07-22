@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.cad" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MSpeed</name>
+<widget id="io.ionic.cad" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MasterSpeed</name>
     <description>App de toma de hora para mantención de vehículo</description>
     <author email="semillafamilia130320201720@gmail.com" href="http://ionicframework.com/">Semilla Team</author>
     <content src="index.html" />

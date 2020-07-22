@@ -119,7 +119,6 @@ export class AddeditMecanicosPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
   }
 
   async modalClose() {

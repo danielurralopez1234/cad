@@ -17,7 +17,6 @@ export class ModeloPage implements OnInit {
               private mantService: MantenedorService,
               private loadingController: LoadingController) {
     this.key = activatedRoute.snapshot.paramMap.get('id');
-    console.log(this.key);
   }
 
   async ngOnInit() {
@@ -26,7 +25,6 @@ export class ModeloPage implements OnInit {
       const a = snapshot.val();
       a['$key'] = snapshot.key;
       this.Modelo.push(a as Modelo);
-      console.log(this.Modelo);
     });
   }
 
