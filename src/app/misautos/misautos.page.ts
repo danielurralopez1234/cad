@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MisAutos} from '../models/misAutos';
 import {MantenedorService} from '../services/mantenedor.service';
 import {AuthenticationService} from '../services/authentication.service';
-import {AlertController, ModalController, ToastController} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {EditMisautosPage} from './edit-misautos/edit-misautos.page';
 
 @Component({
@@ -18,14 +18,13 @@ export class MisautosPage implements OnInit {
               private authService: AuthenticationService,
               private alertController: AlertController,
               private toastController: ToastController,
-              private modalController: ModalController) {
-    this.authService.getSesionStorage().then(resp => {
-      this.uid = resp.id;
-    });
-  }
+              private modalController: ModalController) {}
 
   async ngOnInit() {
-    await this.mantService.getAllMisAutos().snapshotChanges().subscribe(resp => {
+    await this.mantService.getAllMisAutos().snapshotChanges().subscribe(async resp => {
+      await this.authService.getSesionStorage().then(str => {
+        this.uid = str.id;
+      });
       this.MisAutos = [];
       resp.forEach(item => {
         const a = item.payload.toJSON();
@@ -88,7 +87,5 @@ export class MisautosPage implements OnInit {
       }
     });
     return await modal.present();
-
   }
-
 }

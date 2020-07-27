@@ -206,39 +206,23 @@
 
 <ion-content [fullscreen]="true" id="c5" *ngIf="hideC5">
   <form [formGroup]="pagoForm">
-    <ion-radio-group formControlName="pago" class="ion-margin-bottom">
+    <ion-radio-group formControlName="pago" class="ion-margin-bottom ion-padding-top">
       <ion-list-header>
         <ion-label color="primary"><h1>Forma de pago</h1></ion-label>
       </ion-list-header>
-      <ion-item>
-        <ion-label color="primary">Transferencia Bancaria</ion-label>
-        <ion-radio slot="start" value="tb"></ion-radio>
-      </ion-item>
-      <ion-list class="ion-margin-start">
-        <ion-card>
-          <ion-card-content>
-            <ion-item>
-              <ion-label class="color-text-info">Nombre: Servicentro Ltda. </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label class="color-text-info">Rut: 78.548.666-7 </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label class="color-text-info">Banco: Estado </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label class="color-text-info">Cuenta: Corriente </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label class="color-text-info">N° cuenta: 001-548-98847</ion-label>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-      <ion-item>
-        <ion-label color="primary">Efectivo</ion-label>
-        <ion-radio slot="start" value="ef"></ion-radio>
-      </ion-item>
+      <ion-item-group *ngFor="let fpago of FormaPago">
+        <ion-item>
+          <ion-label color="primary">{{fpago.nombre}}</ion-label>
+          <ion-radio slot="start" value="{{fpago.$key}}"></ion-radio>
+        </ion-item>
+        <ion-list class="ion-margin-start" *ngIf="fpago.tf">
+          <ion-card>
+            <ion-card-content>
+              {{fpago.comentario}}
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </ion-item-group>
     </ion-radio-group>
     <ion-grid class="ion-margin-top">
       <ion-row class="ion-text-right">

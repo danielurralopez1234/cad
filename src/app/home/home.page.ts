@@ -19,6 +19,7 @@ import {Finaliza} from '../models/finaliza';
 import {Horario} from '../models/horario';
 import {TipoCombustible} from '../models/tipoCombustible';
 import {Aceite} from '../models/aceite';
+import {FormaPago} from '../models/formaPago';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +45,7 @@ export class HomePage implements OnInit {
   TipoServicio: any;
   TipoMantencion: any;
   Region: any;
+  FormaPago: any;
   anio: any;
   TipoCom: any = [];
 
@@ -155,6 +157,20 @@ export class HomePage implements OnInit {
           this.reserva.idRegion = item.id;
           this.selectComuna(item.id);
           return;
+        }
+      });
+    });
+    await this.mantService.getAllformaPago().snapshotChanges().subscribe(res => {
+      this.FormaPago = [];
+      res.forEach(item => {
+        const f = item.payload.toJSON();
+        if (f['estado']) {
+          f['$key'] = item.key;
+          const str = f['nombre'];
+          if (str.toUpperCase().includes('TRANSFERENCIA')) {
+            f['tf'] = true;
+          }
+          this.FormaPago.push(f as FormaPago);
         }
       });
     });
@@ -469,6 +485,10 @@ export class HomePage implements OnInit {
       await this.mantService.saveMisAutos(this.misAutos).then(resId => {
         this.reserva.idMiAuto = resId.toString();
       }).catch(err => console.log('error al guardar ' + err));
+    } else {
+      await this.mantService.updateMisAutos(this.reserva.idMiAuto, this.misAutos.idUsuario).then(resId => {
+        console.log('Seactualiza idUsuario MisAutos');
+      }).catch(err => console.log('error al guardar ' + err));
     }
     this.agenda.estado = 1;
     await this.mantService.saveAgenda(this.agenda).then(respId => {
@@ -505,31 +525,18 @@ export class HomePage implements OnInit {
         this.isMarca = true;
         this.isAnio = true;
         this.isTipo = true;
-        if (resp.val().idUsuario === uid) {
-          this.isMisAutos = true;
-          this.reserva.idMiAuto = resp.key;
-          this.misAutos.anio = resp.val().anio;
-          this.anio = resp.val().anio + 1;
-          this.misAutos.cilindrada = resp.val().cilindrada;
-          this.misAutos.combustible = resp.val().combustible;
-          this.misAutos.modelo = resp.val().modelo;
-          this.misAutos.marca = resp.val().marca;
-        } else {
-          this.isModelo = true;
-          await this.presentAlertBuscar();
-        }
+        this.isMisAutos = true;
+        this.reserva.idMiAuto = resp.key;
+        this.misAutos.anio = resp.val().anio;
+        this.anio = resp.val().anio + 1;
+        this.misAutos.cilindrada = resp.val().cilindrada;
+        this.misAutos.combustible = resp.val().combustible;
+        this.misAutos.modelo = resp.val().modelo;
+        this.misAutos.marca = resp.val().marca;
       });
     }
   }
-  async presentAlertBuscar() {
-    const alert = await this.alertController.create({
-      header: 'Formulario',
-      message: 'Patente registrada a otro cliente.',
-      buttons: ['OK']
-    });
 
-    await alert.present();
-  }
   habilitaFecha() {
     this.isFechaR = false;
   }

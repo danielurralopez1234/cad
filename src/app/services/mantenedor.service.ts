@@ -81,6 +81,11 @@ export class MantenedorService {
       cilindrada: misautos.cilindrada
     });
   }
+  async updateMisAutos(id: string, idUsu: string) {
+    this.afDB.database.ref('misAutos/' + id).update({
+      idUsuario: idUsu
+    });
+  }
   async deleteAceite(id: string) {
     this.afDB.object('aceite/' + id).remove();
   }
